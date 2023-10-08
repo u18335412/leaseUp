@@ -23,5 +23,8 @@ module.exports = {
   },
   ignorePatterns: ['node_modules/', 'dist/', '.eslintrc.js'],
 
-  rules: {},
+  rules: {
+    '@typescript-eslint/no-unsafe-assignment': 'error',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+  },
 };

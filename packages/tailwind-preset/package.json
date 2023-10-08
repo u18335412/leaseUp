@@ -1,0 +1,19 @@
+{
+  "name": "tailwind-preset",
+  "version": "1.0.0",
+  "description": "Global tailwindcss preset for react projects",
+  "main": "./index.tsx",
+  "types": "./index.tsx",
+  "private": true,
+  "scripts": {},
+  "author": "Awelani Murovhi",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.3.3",
+    "tailwindcss-animate": "^1.0.7",
+    "@types/node": "^20.5.2",
+    "eslint-config-custom": "*",
+    "tsconfig": "*",
+    "typescript": "^4.5.2"
+  }
+}
