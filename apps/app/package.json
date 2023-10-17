@@ -57,6 +57,7 @@
     "superjson": "^1.12.4",
     "tailwind-preset": "*",
     "ui": "*",
+    "lib": "*",
     "zod": "^3.22.4"
   },
   "devDependencies": {

@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 
 const steps = [
   { id: 'Step 1', name: 'Type' },
@@ -12,13 +12,16 @@ export const Progress: FC<{
 }> = ({ setCurrentStep, currentStep }) => {
   return (
     <nav aria-label="Progress">
-      <ol role="list" className="space-y-4 md:flex md:space-x-8 md:space-y-0">
+      <ol className="space-y-4 md:flex md:space-x-8 md:space-y-0">
         {steps.map((step, index) => (
-          <li key={step.name} className="md:flex-1">
+          <li className="md:flex-1" key={step.name}>
             {index < currentStep ? (
               <button
-                onClick={() => setCurrentStep(index)}
                 className="group w-full flex flex-col border-l-4 border-primary py-2 pl-4 hover:border-indigo-800 md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4"
+                onClick={() => {
+                  setCurrentStep(index);
+                }}
+                type="button"
               >
                 <span className="text-xs font-medium text-primary group-hover:text-indigo-800">
                   {step.id}
@@ -27,9 +30,12 @@ export const Progress: FC<{
               </button>
             ) : index === currentStep ? (
               <button
-                onClick={() => setCurrentStep(index)}
-                className="flex flex-col w-full border-l-4 border-primary py-2 pl-4 md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4"
                 aria-current="step"
+                className="flex flex-col w-full border-l-4 border-primary py-2 pl-4 md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4"
+                onClick={() => {
+                  setCurrentStep(index);
+                }}
+                type="button"
               >
                 <span className="text-xs font-medium text-primary">
                   {step.id}
@@ -38,8 +44,11 @@ export const Progress: FC<{
               </button>
             ) : (
               <button
-                onClick={() => setCurrentStep(index)}
                 className="group w-full flex flex-col border-l-4 border-gray-200 py-2 pl-4 hover:border-gray-300 md:border-l-0 md:border-t-4 md:pb-0 md:pl-0 md:pt-4"
+                onClick={() => {
+                  setCurrentStep(index);
+                }}
+                type="button"
               >
                 <span className="text-xs font-medium text-gray-500 group-hover:text-gray-700">
                   {step.id}

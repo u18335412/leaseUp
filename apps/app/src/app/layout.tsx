@@ -1,9 +1,9 @@
 import '../styles/globals.css';
 import type { Metadata } from 'next';
-import { Plus_Jakarta_Sans } from 'next/font/google';
+import { Outfit } from 'next/font/google';
 import { ClerkProvider } from '@clerk/nextjs';
-import Layout from '@/components/Layout';
-const inter = Plus_Jakarta_Sans({ subsets: ['latin'] });
+import Layout from '@/components/layout';
+const inter = Outfit({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'LeaseUp',

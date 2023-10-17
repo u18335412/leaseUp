@@ -1,5 +1,4 @@
-import { FC } from 'react';
-import { Step } from './step-wrapper';
+import type { FC } from 'react';
 import {
   FormField,
   FormItem,
@@ -8,9 +7,11 @@ import {
   FormMessage,
   Input,
 } from 'ui';
-import { createPropertyFormSchema, formFields } from './constants';
-import { UseFormReturn } from 'react-hook-form';
-import * as z from 'zod';
+import type { UseFormReturn } from 'react-hook-form';
+import type * as z from 'zod';
+import type { createPropertyFormSchema} from './constants';
+import { formFields } from './constants';
+import { Step } from './step-wrapper';
 
 export const PropertyDetailsStep: FC<{
   form: UseFormReturn<z.infer<typeof createPropertyFormSchema>>;
@@ -18,14 +19,14 @@ export const PropertyDetailsStep: FC<{
   return (
     <div>
       <Step
-        title="Property Details"
         description="Lets fill in the property details"
+        title="Property Details"
       >
         <div className="grid mt-4 grid-cols-4 gap-4">
           {formFields.map(({ name, label, placeholder }) => (
             <FormField
-              key={name}
               control={form.control}
+              key={name}
               name={name}
               render={({ field }) => (
                 <FormItem className=" col-span-2">

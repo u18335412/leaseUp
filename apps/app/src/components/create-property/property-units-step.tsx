@@ -1,5 +1,4 @@
-import { FC } from 'react';
-import { Step } from './step-wrapper';
+import type { FC } from 'react';
 import {
   FormField,
   FormItem,
@@ -9,10 +8,12 @@ import {
   Input,
   Button,
 } from 'ui';
-import { createPropertyFormSchema } from './constants';
-import { UseFormReturn, useFieldArray } from 'react-hook-form';
-import * as z from 'zod';
+import type { UseFormReturn } from 'react-hook-form';
+import { useFieldArray } from 'react-hook-form';
+import type * as z from 'zod';
 import { PlusIcon, X } from 'lucide-react';
+import type { createPropertyFormSchema } from './constants';
+import { Step } from './step-wrapper';
 
 const unitFields = [
   {
@@ -40,33 +41,31 @@ const unitFields = [
 export const PropertyUnitsStep: FC<{
   form: UseFormReturn<z.infer<typeof createPropertyFormSchema>>;
 }> = ({ form }) => {
-  const { fields, append, prepend, remove, swap, move, insert } = useFieldArray(
-    {
-      control: form.control,
-      name: 'units',
-    },
-  );
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: 'units',
+  });
 
   return (
     <div>
       <Step
-        title="Property Units"
         description="Please add the units for this property"
+        title="Property Units"
       >
         <div className="mt-4">
           {fields.map((item, fieldsIndex) => (
-            <div key={item.id} className="flex items-end gap-x-2">
+            <div className="flex items-end gap-x-2" key={item.id}>
               <div className="grid grid-cols-4 gap-x-4">
-                {unitFields.map(({ name, label, type }, index) => (
+                {unitFields.map(({ name, label, type }) => (
                   <FormField
-                    key={name}
                     control={form.control}
-                    name={`units.${fieldsIndex as number}.name`}
-                    render={({ field }) => (
+                    key={name}
+                    name={`units.${fieldsIndex}.name`}
+                    render={() => (
                       <FormItem>
                         <FormLabel className="sr-only">{label}</FormLabel>
                         <FormControl>
-                          <Input type={type} placeholder={label} />
+                          <Input placeholder={label} type={type} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -75,11 +74,13 @@ export const PropertyUnitsStep: FC<{
                 ))}
               </div>
               <Button
-                variant="ghost"
-                size="sm"
                 className="group hover:bg-transparent"
+                onClick={() => {
+                  remove(fieldsIndex);
+                }}
+                size="sm"
                 type="button"
-                onClick={() => remove(fieldsIndex)}
+                variant="ghost"
               >
                 <span className="sr-only">Remove</span>
                 <X className="w-4 h-4 group-hover:text-primary transition-colors" />
@@ -89,20 +90,20 @@ export const PropertyUnitsStep: FC<{
 
           <div className="mt-4">
             <Button
-              size="sm"
               className="flex gap-x-2 w-full"
-              variant="secondary"
-              onClick={() =>
+              onClick={() => {
                 append({
                   name: '',
                   bedrooms: 0,
                   bathrooms: 0,
                   rent: 0,
-                })
-              }
+                });
+              }}
+              size="sm"
               type="button"
+              variant="secondary"
             >
-              <PlusIcon className="w-4 h-4 flex-shrink-0"></PlusIcon>
+              <PlusIcon className="w-4 h-4 flex-shrink-0" />
               Add Unit
             </Button>
           </div>

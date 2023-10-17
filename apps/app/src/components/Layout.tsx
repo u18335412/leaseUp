@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion -- allow null assertion */
 'use client';
 
 import { UserButton } from '@clerk/nextjs';
 import { Dialog, DialogContent, DialogTrigger, Input } from 'ui';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -42,39 +43,36 @@ export default function Layout({
         <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
           <div className="flex h-16 shrink-0 items-center">
             <Link href="/">
-              <Image src={logoImage} width={100} height={100} alt="" />
+              <Image alt="" height={100} src={logoImage} width={100} />
             </Link>
           </div>
           <nav className="flex flex-1 flex-col">
-            <ul role="list" className="flex flex-1 flex-col gap-y-7">
+            <ul className="flex flex-1 flex-col gap-y-7">
               <li>
-                <ul role="list" className="-mx-2 space-y-1">
+                <ul className="-mx-2 space-y-1">
                   {navigation.map((item) => (
                     <li key={item.name}>
                       <a
-                        href={item.href}
                         className={cn(
                           'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold items-center',
                           {
                             'bg-muted/50 text-primary font-bold': isCurrentUrl(
                               item.href,
-                              path as string,
+                              path!,
                             ),
                             'text-gray-700 hover:text-primary hover:bg-gray-50 transition-all':
-                              !isCurrentUrl(item.href, path as string),
+                              !isCurrentUrl(item.href, path!),
                           },
                         )}
+                        href={item.href}
                       >
                         <item.icon
-                          className={cn('h-4 w-4 shrink-0', {
-                            'text-primary': isCurrentUrl(
-                              item.href,
-                              path as string,
-                            ),
-                            'text-gray-400 group-hover:text-indigo-600':
-                              !isCurrentUrl(item.href, path as string),
-                          })}
                           aria-hidden="true"
+                          className={cn('h-4 w-4 shrink-0', {
+                            'text-primary': isCurrentUrl(item.href, path!),
+                            'text-gray-400 group-hover:text-indigo-600':
+                              !isCurrentUrl(item.href, path!),
+                          })}
                         />
                         {item.name}
                       </a>
@@ -106,39 +104,33 @@ export default function Layout({
                       </p>
                     </div>
                     <nav className="flex flex-1 flex-col">
-                      <ul role="list" className="flex flex-1 flex-col gap-y-7">
+                      <ul className="flex flex-1 flex-col gap-y-7">
                         <li>
-                          <ul role="list" className="-mx-2 space-y-1">
+                          <ul className="-mx-2 space-y-1">
                             {navigation.map((item) => (
                               <li key={item.name}>
                                 <a
-                                  href={item.href}
                                   className={cn(
                                     'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-medium items-center',
                                     {
                                       'bg-muted/50 text-primary font-bold':
-                                        isCurrentUrl(item.href, path as string),
+                                        isCurrentUrl(item.href, path!),
                                       'text-gray-700 hover:text-primary hover:bg-gray-50 transition-all':
-                                        !isCurrentUrl(
-                                          item.href,
-                                          path as string,
-                                        ),
+                                        !isCurrentUrl(item.href, path!),
                                     },
                                   )}
+                                  href={item.href}
                                 >
                                   <item.icon
+                                    aria-hidden="true"
                                     className={cn('h-4 w-4 shrink-0', {
                                       'text-primary': isCurrentUrl(
                                         item.href,
-                                        path as string,
+                                        path!,
                                       ),
                                       'text-gray-400 group-hover:text-indigo-600':
-                                        !isCurrentUrl(
-                                          item.href,
-                                          path as string,
-                                        ),
+                                        !isCurrentUrl(item.href, path!),
                                     })}
-                                    aria-hidden="true"
                                   />
                                   {item.name}
                                 </a>
@@ -154,16 +146,16 @@ export default function Layout({
             </div>
 
             <div className="flex rounded-t-lg mt-4 bg-white flex-1 self-stretch">
-              <form className="relative flex flex-1" action="#" method="GET">
-                <label htmlFor="search-field" className="sr-only">
+              <form action="#" className="relative flex flex-1" method="GET">
+                <label className="sr-only" htmlFor="search-field">
                   Search
                 </label>
                 <Search
-                  className="pointer-events-none absolute inset-y-0 left-4 h-full w-4 text-gray-400"
                   aria-hidden="true"
+                  className="pointer-events-none absolute inset-y-0 left-4 h-full w-4 text-gray-400"
                 />
                 <Input
-                  className="block h-full w-full border-none py-0 pr-2 pl-10 text-gray-900 shadow-none placeholder:text-gray-400 focus:ring-0 sm:text-sm"
+                  className="block h-full w-full max-w-xl border-none py-0 pr-2 pl-10 text-gray-900 shadow-none placeholder:text-gray-400 focus:ring-0 sm:text-sm"
                   placeholder="Search for anything"
                   type="search"
                 />

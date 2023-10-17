@@ -1,23 +1,24 @@
+/* eslint-disable @typescript-eslint/no-misused-promises -- Expected */
 'use client';
 
-import {
-  PageHeader,
-  PageHeaderDescription,
-  PageHeaderHeading,
-} from '@/components/PageHeading';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { NextPage } from 'next';
+import type { NextPage } from 'next';
 import { useForm } from 'react-hook-form';
 import { Button, Form } from 'ui';
+import type * as z from 'zod';
+import { useState } from 'react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import {
   PropertyTypeStep,
   PropertyDetailsStep,
   createPropertyFormSchema,
   Progress,
 } from '@/components/create-property';
-import * as z from 'zod';
-import { useState } from 'react';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import {
+  PageHeader,
+  PageHeaderDescription,
+  PageHeaderHeading,
+} from '@/components/PageHeading';
 import { PropertyUnitsStep } from '@/components/create-property/property-units-step';
 
 const CreateProperty: NextPage = () => {
@@ -31,8 +32,8 @@ const CreateProperty: NextPage = () => {
     },
   });
 
-  const onSubmit = (data: any) => {
-    alert(JSON.stringify(data));
+  const onSubmit = (data: z.infer<typeof createPropertyFormSchema>) => {
+    const _data = data;
   };
 
   return (
@@ -46,7 +47,7 @@ const CreateProperty: NextPage = () => {
 
       <div className="mt-8 max-w-xl pt-6">
         <div>
-          <Progress setCurrentStep={setCurrentStep} currentStep={currentStep} />
+          <Progress currentStep={currentStep} setCurrentStep={setCurrentStep} />
         </div>
       </div>
 
@@ -58,21 +59,25 @@ const CreateProperty: NextPage = () => {
             {currentStep === 2 && <PropertyUnitsStep form={form} />}
             <div className="flex justify-between mt-8">
               <Button
+                className="flex items-center gap-x-2"
                 disabled={currentStep === 0}
+                onClick={() => {
+                  setCurrentStep(currentStep - 1);
+                }}
+                size="sm"
                 type="button"
                 variant="outline"
-                className="flex items-center gap-x-2"
-                onClick={() => setCurrentStep(currentStep - 1)}
-                size="sm"
               >
                 <ArrowLeft className="w-4 h-4" />
                 Back
               </Button>
               <Button
-                type="button"
                 className="flex items-center gap-x-2"
-                onClick={() => setCurrentStep(currentStep + 1)}
+                onClick={() => {
+                  setCurrentStep(currentStep + 1);
+                }}
                 size="sm"
+                type="button"
               >
                 Next
                 <ArrowRight className="w-4 h-4" />
