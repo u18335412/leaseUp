@@ -3,6 +3,8 @@
 import { UserButton } from '@clerk/nextjs';
 import { Dialog, DialogContent, DialogTrigger, Input } from 'ui';
 import { ReactNode } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 import {
   LayoutDashboard,
   Home,
@@ -15,12 +17,13 @@ import {
 } from 'lucide-react';
 import { cn } from 'lib';
 import { usePathname } from 'next/navigation';
+import logoImage from 'public/logo.png';
 
 const navigation = [
   { name: 'Dashboard', icon: LayoutDashboard, href: '/' },
   { name: 'Properties', icon: Home, href: '/properties' },
   { name: 'Units', icon: DoorClosed, href: '/units' },
-  { name: 'Tenants', icon: Users2, href: '/tenants' },
+  { name: 'People', icon: Users2, href: '/people' },
   { name: 'Documents', icon: Archive, href: '/documents' },
   { name: 'Reports', icon: Files, href: '/reports' },
 ];
@@ -38,9 +41,9 @@ export default function Layout({
       <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
         <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
           <div className="flex h-16 shrink-0 items-center">
-            <p className="font-semibold border border-border py-0.5 px-1.5 text-sm bg-primary text-primary-foreground">
-              LeaseUp
-            </p>
+            <Link href="/">
+              <Image src={logoImage} width={100} height={100} alt="" />
+            </Link>
           </div>
           <nav className="flex flex-1 flex-col">
             <ul role="list" className="flex flex-1 flex-col gap-y-7">
@@ -51,9 +54,9 @@ export default function Layout({
                       <a
                         href={item.href}
                         className={cn(
-                          'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-medium items-center',
+                          'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold items-center',
                           {
-                            'bg-muted/50 text-primary': isCurrentUrl(
+                            'bg-muted/50 text-primary font-bold': isCurrentUrl(
                               item.href,
                               path as string,
                             ),
@@ -84,9 +87,9 @@ export default function Layout({
         </div>
       </div>
 
-      <div className="lg:pl-72">
-        <div className="sticky top-0 z-40 lg:mx-auto lg:max-w-7xl lg:px-8">
-          <div className="flex h-16 items-center gap-x-4  bg-white px-4  sm:gap-x-6 sm:px-6 lg:px-0 lg:shadow-none">
+      <div className="lg:pl-72 bg-gray-100">
+        <div className=" z-40 lg:mx-auto lg:max-w-7xl">
+          <div className="flex h-16 items-center gap-x-4 px-4 sm:gap-x-6 sm:px-6 lg:px-0 lg:shadow-none ">
             <div className="md:hidden">
               <Dialog>
                 <DialogTrigger asChild>
@@ -113,10 +116,8 @@ export default function Layout({
                                   className={cn(
                                     'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-medium items-center',
                                     {
-                                      'bg-muted/50 text-primary': isCurrentUrl(
-                                        item.href,
-                                        path as string,
-                                      ),
+                                      'bg-muted/50 text-primary font-bold':
+                                        isCurrentUrl(item.href, path as string),
                                       'text-gray-700 hover:text-primary hover:bg-gray-50 transition-all':
                                         !isCurrentUrl(
                                           item.href,
@@ -152,34 +153,30 @@ export default function Layout({
               </Dialog>
             </div>
 
-            <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
-              <form
-                className="relative flex flex-1 mt-2"
-                action="#"
-                method="GET"
-              >
+            <div className="flex rounded-t-lg mt-4 bg-white flex-1 self-stretch">
+              <form className="relative flex flex-1" action="#" method="GET">
                 <label htmlFor="search-field" className="sr-only">
                   Search
                 </label>
                 <Search
-                  className="pointer-events-none absolute inset-y-0 left-2 h-full w-4 text-gray-400"
+                  className="pointer-events-none absolute inset-y-0 left-4 h-full w-4 text-gray-400"
                   aria-hidden="true"
                 />
                 <Input
-                  className="block h-full w-full border-none py-0 pr-2 pl-8 text-gray-900 shadow-none placeholder:text-gray-400 focus:ring-0 sm:text-sm"
+                  className="block h-full w-full border-none py-0 pr-2 pl-10 text-gray-900 shadow-none placeholder:text-gray-400 focus:ring-0 sm:text-sm"
                   placeholder="Search for anything"
                   type="search"
                 />
               </form>
-              <div className="flex items-center gap-x-4 lg:gap-x-6">
+              <div className="flex items-center pr-4">
                 <UserButton />
               </div>
             </div>
           </div>
         </div>
 
-        <main>
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <main className="bg-gray-100 min-h-screen">
+          <div className="mx-auto max-w-7xl rounded-b-lg px-4 sm:px-6 pb-4 lg:pb-8 lg:px-8 bg-white">
             {children}
           </div>
         </main>

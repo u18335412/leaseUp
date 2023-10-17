@@ -1,51 +1,41 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-datasource db {
-  provider = "postgres"
-  url      = env("DATABASE_URL")
-}
-
 generator client {
   provider = "prisma-client-js"
 }
 
-enum Role {
-  PROSPECT
-  TENANT
-  OWNER
-}
-
-model Post {
-  id        String   @id @default(uuid())
-  title     String
-  text      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Property {
-  id        String   @id @default(uuid())
-  name      String
-  address   String
-  city      String
-  province  String
-  zip       String
-  country   String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-  Unit      Unit[]
+  id          String              @id @default(uuid())
+  name        String
+  address     String
+  city        String
+  province    String
+  zip         String
+  country     String
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @default(now()) @updatedAt
+  description PropertyDescription
+  type        PropertyType
+  Unit        Unit[]
 }
 
 model Unit {
-  id         String   @id @default(uuid())
-  name       String
-  property   Property @relation(fields: [propertyId], references: [id])
-  propertyId String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @default(now()) @updatedAt
-  Tenant     Tenant?  @relation(fields: [tenantId], references: [id])
-  tenantId   String?
+  id             String   @id @default(uuid())
+  name           String
+  propertyId     String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now()) @updatedAt
+  tenantId       String?
+  furnished      Boolean  @default(false)
+  occupied       Boolean  @default(false)
+  petsAllowed    Boolean  @default(false)
+  smokingAllowed Boolean  @default(false)
+  marketRent     Float
+  property       Property @relation(fields: [propertyId], references: [id])
+  Tenant         Tenant?  @relation(fields: [tenantId], references: [id])
 }
 
 model Tenant {
@@ -65,4 +55,24 @@ model User {
   type      Role     @default(PROSPECT)
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+}
+
+enum Role {
+  PROSPECT
+  TENANT
+  OWNER
+}
+
+enum PropertyType {
+  RESIDENTIAL
+  COMMERCIAL
+}
+
+enum PropertyDescription {
+  SINGLEFAMILY
+  MULTIFAMILY
+  APARTMENT
+  HOUSE
+  TOWNHOUSE
+  OTHER
 }

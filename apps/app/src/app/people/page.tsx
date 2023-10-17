@@ -5,17 +5,17 @@ import {
 } from '@/components/PageHeading';
 import { NextPage } from 'next';
 
-const Documents: NextPage = () => {
+const People: NextPage = () => {
   return (
     <div>
       <PageHeader>
-        <PageHeaderHeading>Documents</PageHeaderHeading>
+        <PageHeaderHeading>People</PageHeaderHeading>
         <PageHeaderDescription>
-          Your documents are here for you to view, manage and download.
+          Manage all the people in your business
         </PageHeaderDescription>
       </PageHeader>
     </div>
   );
 };
 
-export default Documents;
+export default People;
