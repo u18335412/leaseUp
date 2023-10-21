@@ -7,16 +7,16 @@
  * @see https://trpc.io/docs/v10/router
  * @see https://trpc.io/docs/v10/procedures
  */
-
+import { transformer } from '@/utils/transformer';
 import { initTRPC } from '@trpc/server';
-import { transformer } from '~/utils/transformer';
-import { Context } from './context';
+import type { SuperJSON } from 'superjson';
+import type { Context } from './context';
 
 const t = initTRPC.context<Context>().create({
   /**
    * @see https://trpc.io/docs/v10/data-transformers
    */
-  transformer,
+  transformer: transformer as unknown as SuperJSON,
   /**
    * @see https://trpc.io/docs/v10/error-formatting
    */

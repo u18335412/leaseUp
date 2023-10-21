@@ -1,4 +1,4 @@
-import { globalPreset } from 'tailwind-preset';
+import { globalPreset } from 'config';
 import type { Config } from 'tailwindcss/types/config';
 
 module.exports = {

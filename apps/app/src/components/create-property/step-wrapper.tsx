@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import type { FC } from 'react';
 
 export const Step: FC<{
   title: string;
@@ -6,10 +6,10 @@ export const Step: FC<{
   children: React.ReactNode;
 }> = ({ title, description, children }) => {
   return (
-    <div>
+    <div className="animate-in fade-in">
       <div>
-        <h2 className="tracking-tight">{title}</h2>
-        <p className="text-muted-foreground text-sm mt-1">{description}</p>
+        <h2 className="font-medium tracking-tight">{title}</h2>
+        <p className="text-muted-foreground">{description}</p>
       </div>
 
       <div>{children}</div>

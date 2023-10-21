@@ -6,9 +6,13 @@ import { Plus } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { useForm } from 'react-hook-form';
 import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  buttonVariants,
+  Button,
   Dialog,
   DialogTrigger,
-  Button,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -21,10 +25,6 @@ import {
   FormLabel,
   FormMessage,
   Input,
-  Alert,
-  AlertDescription,
-  AlertTitle,
-  buttonVariants,
   Select,
   SelectContent,
   SelectItem,
@@ -60,7 +60,7 @@ export function CreateUnit(): ReactNode {
     <Dialog>
       <DialogTrigger asChild>
         <Button className="flex gap-x-2">
-          <Plus aria-hidden className="w-4 h-4" />
+          <Plus aria-hidden className="h-4 w-4" />
           Create Unit
         </Button>
       </DialogTrigger>
@@ -84,7 +84,7 @@ export function CreateUnit(): ReactNode {
                   )}
                   href="/properties/create-property"
                 >
-                  <Plus aria-hidden className="w-4 h-4" />
+                  <Plus aria-hidden className="h-4 w-4" />
                   Create Property
                 </Link>
               </div>
@@ -101,14 +101,14 @@ export function CreateUnit(): ReactNode {
             <div>
               <Form {...form}>
                 <form
-                  className="gap-4 grid grid-cols-4"
+                  className="grid grid-cols-4 gap-4"
                   onSubmit={form.handleSubmit(handleSubmit)}
                 >
                   <FormField
                     control={form.control}
                     name="propertyId"
                     render={({ field }) => (
-                      <FormItem className=" col-span-4">
+                      <FormItem className="col-span-4">
                         <FormLabel>Property</FormLabel>
                         <Select
                           defaultValue={field.value}
@@ -130,7 +130,7 @@ export function CreateUnit(): ReactNode {
                       </FormItem>
                     )}
                   />
-                  {createUnitFormFields.map(({ name, label }) => {
+                  {createUnitFormFields.map(({ name, label, type }) => {
                     return (
                       <FormField
                         control={form.control}
@@ -140,7 +140,7 @@ export function CreateUnit(): ReactNode {
                           <FormItem className="col-span-2">
                             <FormLabel>{label}</FormLabel>
                             <FormControl>
-                              <Input {...field} />
+                              <Input {...field} type={type} />
                             </FormControl>
                             <FormMessage />
                           </FormItem>

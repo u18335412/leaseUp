@@ -2,7 +2,7 @@ import {
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
-} from '@/components/PageHeading';
+} from '@/components/page-heading';
 import { currentUser } from '@clerk/nextjs';
 import type { User } from '@clerk/nextjs/api';
 

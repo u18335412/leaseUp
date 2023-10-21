@@ -1,4 +1,3 @@
-import { PropertyDescription, PropertyType } from '@prisma/client';
 import { Home, School, Building2, Building, Warehouse } from 'lucide-react';
 import * as z from 'zod';
 

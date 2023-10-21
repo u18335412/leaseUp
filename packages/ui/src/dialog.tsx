@@ -109,6 +109,8 @@ const DialogDescription = React.forwardRef<
 ));
 DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
+const DialogDismiss = DialogPrimitive.Close;
+
 export {
   Dialog,
   DialogPortal,
@@ -119,4 +121,5 @@ export {
   DialogFooter,
   DialogTitle,
   DialogDescription,
+  DialogDismiss,
 };

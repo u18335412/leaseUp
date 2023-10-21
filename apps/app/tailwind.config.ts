@@ -1,5 +1,5 @@
 import type { Config } from 'tailwindcss';
-import { globalPreset } from 'tailwind-preset';
+import { globalPreset } from 'config';
 
 const config: Config = {
   presets: [globalPreset],

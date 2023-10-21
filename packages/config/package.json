@@ -1,5 +1,5 @@
 {
-  "name": "tailwind-preset",
+  "name": "config",
   "version": "1.0.0",
   "description": "Global tailwindcss preset for react projects",
   "main": "./index.tsx",

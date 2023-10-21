@@ -1,4 +1,7 @@
 import type { FC } from 'react';
+import { PlusIcon, X } from 'lucide-react';
+import type { UseFormReturn } from 'react-hook-form';
+import { useFieldArray } from 'react-hook-form';
 import {
   FormField,
   FormItem,
@@ -8,12 +11,10 @@ import {
   Input,
   Button,
 } from 'ui';
-import type { UseFormReturn } from 'react-hook-form';
-import { useFieldArray } from 'react-hook-form';
 import type * as z from 'zod';
-import { PlusIcon, X } from 'lucide-react';
-import type { createPropertyFormSchema } from './constants';
 import { Step } from './step-wrapper';
+import type { createPropertyFormSchema } from './constants';
+
 
 const unitFields = [
   {
@@ -54,7 +55,10 @@ export const PropertyUnitsStep: FC<{
       >
         <div className="mt-4">
           {fields.map((item, fieldsIndex) => (
-            <div className="flex items-end gap-x-2" key={item.id}>
+            <div
+              className="flex items-end gap-x-2 animate-in fade-in"
+              key={item.id}
+            >
               <div className="grid grid-cols-4 gap-x-4">
                 {unitFields.map(({ name, label, type }) => (
                   <FormField
@@ -82,15 +86,15 @@ export const PropertyUnitsStep: FC<{
                 type="button"
                 variant="ghost"
               >
-                <span className="sr-only">Remove</span>
-                <X className="w-4 h-4 group-hover:text-primary transition-colors" />
+                <span className="sr-only">Remove unit</span>
+                <X className="h-4 w-4 transition-colors group-hover:text-primary" />
               </Button>
             </div>
           ))}
 
           <div className="mt-4">
             <Button
-              className="flex gap-x-2 w-full"
+              className="flex w-full gap-x-2"
               onClick={() => {
                 append({
                   name: '',
@@ -103,7 +107,7 @@ export const PropertyUnitsStep: FC<{
               type="button"
               variant="secondary"
             >
-              <PlusIcon className="w-4 h-4 flex-shrink-0" />
+              <PlusIcon className="h-4 w-4 flex-shrink-0" />
               Add Unit
             </Button>
           </div>

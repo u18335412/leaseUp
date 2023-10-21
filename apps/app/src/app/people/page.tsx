@@ -1,9 +1,9 @@
+import type { NextPage } from 'next';
 import {
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
-} from '@/components/PageHeading';
-import { NextPage } from 'next';
+} from '@/components/page-heading';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from 'ui';
 
 const People: NextPage = () => {
