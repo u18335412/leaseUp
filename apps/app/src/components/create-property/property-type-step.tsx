@@ -1,7 +1,7 @@
-import type { FC } from 'react';
-import { cn } from 'lib';
-import { CheckCircle2 } from 'lucide-react';
-import type { UseFormReturn } from 'react-hook-form';
+import type { FC } from "react";
+import { cn } from "lib";
+import { CheckCircle2 } from "lucide-react";
+import type { UseFormReturn } from "react-hook-form";
 import {
   FormField,
   FormItem,
@@ -10,11 +10,11 @@ import {
   FormMessage,
   RadioGroup,
   RadioGroupItem,
-} from 'ui';
-import type * as z from 'zod';
-import { Step } from './step-wrapper';
-import type { createPropertyFormSchema } from './constants';
-import { propertyDescription, propertyTypes } from './constants';
+} from "ui";
+import type * as z from "zod";
+import { Step } from "./step-wrapper";
+import type { createPropertyFormSchema } from "./constants";
+import { propertyDescription, propertyTypes } from "./constants";
 
 export const PropertyTypeStep: FC<{
   form: UseFormReturn<z.infer<typeof createPropertyFormSchema>>;
@@ -39,9 +39,9 @@ export const PropertyTypeStep: FC<{
                   {propertyDescription.map((propertyType) => (
                     <FormItem
                       className={cn(
-                        'relative flex h-10 flex-row items-center gap-x-2  space-y-0  rounded-md border border-border px-2 text-muted-foreground transition-colors',
+                        "relative flex h-10 flex-row items-center gap-x-2  space-y-0  rounded-md border border-border px-2 text-muted-foreground transition-colors",
                         propertyType.name === field.value &&
-                          'border-2 border-primary text-primary',
+                          "border-2 border-primary text-primary",
                       )}
                       key={propertyType.name}
                     >
@@ -60,8 +60,8 @@ export const PropertyTypeStep: FC<{
                       )}
                       <FormLabel
                         className={cn(
-                          'ml-0 space-x-0 text-xs',
-                          propertyType.name === field.value && 'font-bold',
+                          "ml-0 space-x-0 text-xs",
+                          propertyType.name === field.value && "font-bold",
                         )}
                       >
                         {propertyType.label}
@@ -93,9 +93,9 @@ export const PropertyTypeStep: FC<{
                   {propertyTypes.map((propertyType) => (
                     <FormItem
                       className={cn(
-                        'relative flex h-10 flex-row items-center gap-x-2 space-y-0 rounded-md border border-border px-2 text-muted-foreground transition-colors',
+                        "relative flex h-10 flex-row items-center gap-x-2 space-y-0 rounded-md border border-border px-2 text-muted-foreground transition-colors",
                         propertyType.name === field.value &&
-                          'border-2 border-primary text-primary',
+                          "border-2 border-primary text-primary",
                       )}
                       key={propertyType.name}
                     >
@@ -117,8 +117,8 @@ export const PropertyTypeStep: FC<{
                       )}
                       <FormLabel
                         className={cn(
-                          'ml-0 space-x-0 text-xs',
-                          propertyType.name === field.value && 'font-bold',
+                          "ml-0 space-x-0 text-xs",
+                          propertyType.name === field.value && "font-bold",
                         )}
                       >
                         {propertyType.label}

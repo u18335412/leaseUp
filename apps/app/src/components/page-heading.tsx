@@ -1,4 +1,4 @@
-import { cn } from 'lib';
+import { cn } from "lib";
 
 function PageHeader({
   className,
@@ -7,7 +7,7 @@ function PageHeader({
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <section
-      className={cn('flex flex-col items-start pt-8 md:pt-12', className)}
+      className={cn("flex flex-col items-start pt-8 md:pt-12", className)}
       {...props}
     >
       {children}
@@ -23,7 +23,7 @@ function PageHeaderHeading({
   return (
     <h1
       className={cn(
-        'text-lg font-bold leading-tight tracking-tighter md:text-2xl lg:leading-[1.1]',
+        "text-lg font-bold leading-tight tracking-tighter md:text-2xl lg:leading-[1.1]",
         className,
       )}
       {...props}
@@ -40,7 +40,7 @@ function PageHeaderDescription({
   return (
     <p
       className={cn(
-        'mt-2 max-w-lg text-sm text-muted-foreground sm:text-base',
+        "mt-2 max-w-lg text-sm text-muted-foreground sm:text-base",
         className,
       )}
       {...props}

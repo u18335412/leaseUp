@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-misused-promises -- Expected */
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Plus } from 'lucide-react';
-import type { ReactNode } from 'react';
-import { useForm } from 'react-hook-form';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Plus } from "lucide-react";
+import type { ReactNode } from "react";
+import { useForm } from "react-hook-form";
 import {
   Alert,
   AlertDescription,
@@ -30,17 +30,17 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from 'ui';
-import type * as z from 'zod';
-import { cn } from 'lib';
-import Link from 'next/link';
-import { createUnitSchema, createUnitFormFields } from './constants';
+} from "ui";
+import type * as z from "zod";
+import { cn } from "lib";
+import Link from "next/link";
+import { createUnitSchema, createUnitFormFields } from "./constants";
 
 const dummyProperties = [
-  'Property 1',
-  'Property 2',
-  'Property 3',
-  'Property 4',
+  "Property 1",
+  "Property 2",
+  "Property 3",
+  "Property 4",
 ];
 
 export function CreateUnit(): ReactNode {
@@ -53,7 +53,7 @@ export function CreateUnit(): ReactNode {
 
   const handleSubmit = (_data: z.infer<typeof createUnitSchema>) => {
     const data = _data;
-    data.name = 'test';
+    data.name = "test";
   };
 
   return (
@@ -78,9 +78,9 @@ export function CreateUnit(): ReactNode {
                 <Link
                   className={cn(
                     buttonVariants({
-                      size: 'sm',
+                      size: "sm",
                     }),
-                    'mt-4 flex gap-x-2',
+                    "mt-4 flex gap-x-2",
                   )}
                   href="/properties/create-property"
                 >

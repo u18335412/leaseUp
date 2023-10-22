@@ -1,9 +1,9 @@
-import type { NextPage } from 'next';
+import type { NextPage } from "next";
 import {
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
-} from '@/components/page-heading';
+} from "@/components/page-heading";
 
 const Reports: NextPage = () => {
   return (

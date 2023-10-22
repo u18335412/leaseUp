@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/require-await -- Expected this a a server component */
-import type { NextPage } from 'next';
-import Link from 'next/link';
-import { cn } from 'lib';
-import { Home, Plus } from 'lucide-react';
+import type { NextPage } from "next";
+import Link from "next/link";
+import { cn } from "lib";
+import { Home, Plus } from "lucide-react";
 import {
   EmptyState,
   EmptyStateDescription,
   EmptyStateFooter,
   EmptyStateTitle,
   buttonVariants,
-} from 'ui';
+} from "ui";
 import {
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
-} from '@/components/page-heading';
+} from "@/components/page-heading";
 
 const Properties: NextPage = async () => {
   return (
@@ -27,7 +27,7 @@ const Properties: NextPage = async () => {
           </PageHeaderDescription>
         </div>
         <Link
-          className={cn(buttonVariants(), 'flex items-center gap-x-2')}
+          className={cn(buttonVariants(), "flex items-center gap-x-2")}
           href="/properties/create-property"
         >
           <Plus aria-hidden="true" className="h-4 w-4" />
@@ -47,13 +47,13 @@ const Properties: NextPage = async () => {
             You haven&apos;t created any properties yet.
           </EmptyStateDescription>
           <EmptyStateFooter>
-          <Link
-          className={cn(buttonVariants(), 'flex items-center gap-x-2')}
-          href="/properties/create-property"
-        >
-          <Plus aria-hidden="true" className="h-4 w-4" />
-          Create Property
-        </Link>
+            <Link
+              className={cn(buttonVariants(), "flex items-center gap-x-2")}
+              href="/properties/create-property"
+            >
+              <Plus aria-hidden="true" className="h-4 w-4" />
+              Create Property
+            </Link>
           </EmptyStateFooter>
         </EmptyState>
       </div>

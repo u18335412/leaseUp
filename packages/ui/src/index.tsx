@@ -9,3 +9,4 @@ export * from './form';
 export * from './radio';
 export * from './tabs';
 export * from './select';
+export * from './separator';

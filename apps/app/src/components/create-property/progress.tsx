@@ -1,24 +1,24 @@
 /* eslint-disable no-nested-ternary -- Disable rule for now */
-import type { FC } from 'react';
-import { Check } from 'lucide-react';
-import { cn } from 'lib';
+import type { FC } from "react";
+import { Check } from "lucide-react";
+import { cn } from "lib";
 
 const steps = [
   {
-    name: 'Type',
-    description: 'Property type and description goes here.',
+    name: "Type",
+    description: "Property type and description goes here.",
   },
   {
-    name: 'Address',
-    description: 'Add the address of the property.',
+    name: "Address",
+    description: "Add the address of the property.",
   },
   {
-    name: 'Units',
-    description: 'Add the units for this property.',
+    name: "Units",
+    description: "Add the units for this property.",
   },
   {
-    name: 'Finalize',
-    description: 'Finalize the property creation.',
+    name: "Finalize",
+    description: "Finalize the property creation.",
   },
 ];
 
@@ -32,8 +32,8 @@ export const Progress: FC<{
         {steps.map((step, stepIdx) => (
           <li
             className={cn(
-              stepIdx !== steps.length - 1 ? 'pb-10' : '',
-              'relative',
+              stepIdx !== steps.length - 1 ? "pb-10" : "",
+              "relative",
             )}
             key={step.name}
           >

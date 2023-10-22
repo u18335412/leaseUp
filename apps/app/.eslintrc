@@ -1,5 +1,5 @@
 {
-  "extends": ["custom/next"],
+  "extends": ["custom/next", "prettier"],
   "parserOptions": {
     "project": "tsconfig.json",
     "ecmaVersion": 2018,

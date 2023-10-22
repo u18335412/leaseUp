@@ -3,11 +3,11 @@
  * This is an example router, you can delete this file and then update `../pages/api/trpc/[trpc].tsx`
  */
 
-import { router, publicProcedure } from '../trpc';
-import { prisma } from '@/server/prisma';
-import { Prisma } from '@prisma/client';
-import { TRPCError } from '@trpc/server';
-import { z } from 'zod';
+import { router, publicProcedure } from "../trpc";
+import { prisma } from "@/server/prisma";
+import { Prisma } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
+import { z } from "zod";
 
 /**
  * Default selector for Post.
@@ -51,7 +51,7 @@ export const postRouter = router({
             }
           : undefined,
         orderBy: {
-          createdAt: 'desc',
+          createdAt: "desc",
         },
       });
       let nextCursor: typeof cursor | undefined;
@@ -82,7 +82,7 @@ export const postRouter = router({
       });
       if (!post) {
         throw new TRPCError({
-          code: 'NOT_FOUND',
+          code: "NOT_FOUND",
           message: `No post with id '${id}'`,
         });
       }

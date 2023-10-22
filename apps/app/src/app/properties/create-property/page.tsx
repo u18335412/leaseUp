@@ -1,27 +1,26 @@
-'use client';
+"use client";
 
 /* eslint-disable @typescript-eslint/no-misused-promises -- Expected */
 
-import { useState } from 'react';
-import type { NextPage } from 'next';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { useForm } from 'react-hook-form';
-import { Button, Form } from 'ui';
-import type * as z from 'zod';
+import { useState } from "react";
+import type { NextPage } from "next";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { Button, Form } from "ui";
+import type * as z from "zod";
 import {
   PropertyTypeStep,
   PropertyDetailsStep,
   createPropertyFormSchema,
   Progress,
-} from '@/components/create-property';
-import { PropertyUnitsStep } from '@/components/create-property/property-units-step';
+} from "@/components/create-property";
+import { PropertyUnitsStep } from "@/components/create-property/property-units-step";
 import {
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
-} from '@/components/page-heading';
-
+} from "@/components/page-heading";
 
 const CreateProperty: NextPage = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
@@ -29,8 +28,8 @@ const CreateProperty: NextPage = () => {
   const form = useForm<z.infer<typeof createPropertyFormSchema>>({
     resolver: zodResolver(createPropertyFormSchema),
     defaultValues: {
-      propertyType: 'SINGLEFAMILY',
-      propertyDescription: 'COMMERCIAL',
+      propertyType: "SINGLEFAMILY",
+      propertyDescription: "COMMERCIAL",
     },
   });
 

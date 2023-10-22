@@ -1,5 +1,6 @@
 import { Plus, DoorOpen, FileText, Home, User } from "lucide-react";
-import type { FC } from "react";
+import { useRouter } from "next/navigation";
+import { useRef, type FC } from "react";
 import {
   Button,
   Card,
@@ -21,13 +22,13 @@ const entities = [
     name: "Property",
     description: "A property is a physical location that you own or manage.",
     icon: Home,
-    href: "/",
+    href: "/properties/create-property",
   },
   {
     name: "Unit",
     icon: DoorOpen,
     description: "A unit is a physical space that you own or manage.",
-    href: "/properties",
+    href: "/units",
   },
   {
     name: "Person",
@@ -44,11 +45,14 @@ const entities = [
 ];
 
 export const CreateEntityModal: FC = () => {
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const router = useRouter();
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="w-full flex gap-x-2">
-          <Plus className="w-4 h-4 shrink-0" />
+        <Button className="flex w-full gap-x-2">
+          <Plus className="h-4 w-4 shrink-0" />
           Create Entity
         </Button>
       </DialogTrigger>
@@ -63,17 +67,28 @@ export const CreateEntityModal: FC = () => {
         <div className="grid grid-cols-2 gap-4">
           {entities.map((entity) => (
             <button
-              className="text-left h-full"
+              className="h-full text-left"
               key={entity.name}
+              onClick={() => {
+                closeButtonRef.current?.click();
+                router.push(entity.href);
+              }}
               type="button"
             >
-              <Card className=" h-full">
-                <CardHeader>
-                  <entity.icon className="w-5 h-5 text-primary shrink-0 mb-2" />
-                  <CardTitle>{entity.name}</CardTitle>
-                  <CardDescription className="mt-1">
-                    {entity.description}
-                  </CardDescription>
+              <Card className="h-full">
+                <CardHeader className="flex flex-row items-center">
+                  <div>
+                    <CardTitle>{entity.name}</CardTitle>
+                    <CardDescription className="mt-1">
+                      {entity.description}
+                    </CardDescription>
+                  </div>
+                  <span className="grid h-10 w-10 shrink-0 place-content-center rounded-full bg-primary/10 ">
+                    <entity.icon
+                      aria-hidden="true"
+                      className="h-5 w-5 shrink-0 text-primary"
+                    />
+                  </span>
                 </CardHeader>
               </Card>
             </button>
@@ -81,7 +96,7 @@ export const CreateEntityModal: FC = () => {
         </div>
 
         <DialogFooter>
-          <DialogDismiss asChild>
+          <DialogDismiss asChild ref={closeButtonRef}>
             <Button variant="secondary">Cancel</Button>
           </DialogDismiss>
         </DialogFooter>

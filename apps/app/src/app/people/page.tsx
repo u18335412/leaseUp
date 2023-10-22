@@ -1,10 +1,10 @@
-import type { NextPage } from 'next';
+import type { NextPage } from "next";
 import {
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
-} from '@/components/page-heading';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from 'ui';
+} from "@/components/page-heading";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "ui";
 
 const People: NextPage = () => {
   return (

@@ -11,15 +11,17 @@ import { cn } from "lib";
 import {
   LayoutDashboard,
   Home,
-  DoorClosed,
+  FileText,
   Users2,
   Files,
   Archive,
   Search,
   MenuSquare,
+  MessageSquarePlus,
+  Info,
 } from "lucide-react";
 import logoImage from "public/logo.png";
-import { Dialog, DialogContent, DialogTrigger, Input } from "ui";
+import { Dialog, DialogContent, DialogTrigger, Input, Separator } from "ui";
 import { CreateEntityModal } from "./create-entity-modal";
 
 const navigation = [
@@ -34,9 +36,9 @@ const navigation = [
     href: "/properties",
   },
   {
-    name: "Units",
-    icon: DoorClosed,
-    href: "/units",
+    name: "Leases",
+    icon: FileText,
+    href: "/leases",
   },
   {
     name: "People",
@@ -90,11 +92,11 @@ export default function Layout({
                           {
                             "bg-muted/50 font-bold text-primary": isCurrentUrl(
                               item.href,
-                              path!
+                              path!,
                             ),
                             "text-gray-700 transition-all hover:bg-gray-50 hover:text-primary":
                               !isCurrentUrl(item.href, path!),
-                          }
+                          },
                         )}
                         href={item.href}
                       >
@@ -114,11 +116,28 @@ export default function Layout({
               </div>
             </div>
           </nav>
+          <Separator />
+          <div className="flex flex-col gap-y-4 text-sm">
+            <span className="flex items-center gap-x-2">
+              <Info
+                aria-hidden="true"
+                className="h-4 w-4 text-muted-foreground"
+              />
+              Help Center
+            </span>
+            <span className="flex items-center gap-x-2">
+              <MessageSquarePlus
+                aria-hidden="true"
+                className="h-4 w-4 text-muted-foreground"
+              />
+              Provide Feedback
+            </span>
+          </div>
         </div>
       </div>
 
       <div className="bg-gray-100 lg:pl-72">
-        <div className=" z-40 lg:mx-auto lg:max-w-7xl">
+        <div className="z-40 lg:mx-auto lg:max-w-7xl">
           <div className="flex h-16 items-center gap-x-4 px-4 sm:gap-x-6 sm:px-6 lg:px-0 lg:shadow-none ">
             <div className="md:hidden">
               <Dialog>
@@ -149,7 +168,7 @@ export default function Layout({
                                         isCurrentUrl(item.href, path!),
                                       "text-gray-700 transition-all hover:bg-gray-50 hover:text-primary":
                                         !isCurrentUrl(item.href, path!),
-                                    }
+                                    },
                                   )}
                                   href={item.href}
                                 >
@@ -158,7 +177,7 @@ export default function Layout({
                                     className={cn("h-4 w-4 shrink-0", {
                                       "text-primary": isCurrentUrl(
                                         item.href,
-                                        path!
+                                        path!,
                                       ),
                                       "text-gray-400 group-hover:text-indigo-600":
                                         !isCurrentUrl(item.href, path!),
@@ -188,7 +207,7 @@ export default function Layout({
                 />
                 <Input
                   className="block h-full w-full max-w-xl border-none py-0 pl-10 pr-2 text-gray-900 shadow-none placeholder:text-gray-400 focus:ring-0 sm:text-sm"
-                  placeholder="Search for anything"
+                  placeholder="Search for properties, leases, people, etc."
                   type="search"
                 />
               </form>

@@ -1,12 +1,12 @@
-import type { NextRequest } from 'next/server';
-import { getAuth } from '@clerk/nextjs/server';
-import type { AnyRouter } from '@trpc/server';
-import { fetchRequestHandler } from '@trpc/server/adapters/fetch';
-import { appRouter } from '@/server/routers/_app';
+import type { NextRequest } from "next/server";
+import { getAuth } from "@clerk/nextjs/server";
+import type { AnyRouter } from "@trpc/server";
+import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
+import { appRouter } from "@/server/routers/_app";
 
 const handler = (req: NextRequest) => {
   void fetchRequestHandler({
-    endpoint: '/api/trpc',
+    endpoint: "/api/trpc",
     req,
     router: appRouter as AnyRouter,
     createContext: () => ({

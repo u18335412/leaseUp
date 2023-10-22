@@ -1,10 +1,10 @@
 import type {
   SignedInAuthObject,
   SignedOutAuthObject,
-} from '@clerk/nextjs/server';
-import { getAuth } from '@clerk/nextjs/server';
-import type * as trpc from '@trpc/server';
-import type * as trpcNext from '@trpc/server/adapters/next';
+} from "@clerk/nextjs/server";
+import { getAuth } from "@clerk/nextjs/server";
+import type * as trpc from "@trpc/server";
+import type * as trpcNext from "@trpc/server/adapters/next";
 
 interface CreateContextOptions {
   auth: SignedInAuthObject | SignedOutAuthObject;

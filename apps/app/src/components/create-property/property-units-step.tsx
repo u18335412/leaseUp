@@ -1,7 +1,7 @@
-import type { FC } from 'react';
-import { PlusIcon, X } from 'lucide-react';
-import type { UseFormReturn } from 'react-hook-form';
-import { useFieldArray } from 'react-hook-form';
+import type { FC } from "react";
+import { PlusIcon, X } from "lucide-react";
+import type { UseFormReturn } from "react-hook-form";
+import { useFieldArray } from "react-hook-form";
 import {
   FormField,
   FormItem,
@@ -10,32 +10,31 @@ import {
   FormMessage,
   Input,
   Button,
-} from 'ui';
-import type * as z from 'zod';
-import { Step } from './step-wrapper';
-import type { createPropertyFormSchema } from './constants';
-
+} from "ui";
+import type * as z from "zod";
+import { Step } from "./step-wrapper";
+import type { createPropertyFormSchema } from "./constants";
 
 const unitFields = [
   {
-    name: 'name',
-    label: 'Name',
-    type: 'text',
+    name: "name",
+    label: "Name",
+    type: "text",
   },
   {
-    name: 'bedrooms',
-    label: 'Bedrooms',
-    type: 'number',
+    name: "bedrooms",
+    label: "Bedrooms",
+    type: "number",
   },
   {
-    name: 'bathrooms',
-    label: 'Bathrooms',
-    type: 'number',
+    name: "bathrooms",
+    label: "Bathrooms",
+    type: "number",
   },
   {
-    name: 'rent',
-    label: 'Rent',
-    type: 'number',
+    name: "rent",
+    label: "Rent",
+    type: "number",
   },
 ];
 
@@ -44,7 +43,7 @@ export const PropertyUnitsStep: FC<{
 }> = ({ form }) => {
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name: 'units',
+    name: "units",
   });
 
   return (
@@ -97,7 +96,7 @@ export const PropertyUnitsStep: FC<{
               className="flex w-full gap-x-2"
               onClick={() => {
                 append({
-                  name: '',
+                  name: "",
                   bedrooms: 0,
                   bathrooms: 0,
                   rent: 0,

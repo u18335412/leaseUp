@@ -1,4 +1,4 @@
-import type { FC } from 'react';
+import type { FC } from "react";
 import {
   FormField,
   FormItem,
@@ -6,12 +6,12 @@ import {
   FormControl,
   FormMessage,
   Input,
-} from 'ui';
-import type { UseFormReturn } from 'react-hook-form';
-import type * as z from 'zod';
-import type { createPropertyFormSchema } from './constants';
-import { formFields } from './constants';
-import { Step } from './step-wrapper';
+} from "ui";
+import type { UseFormReturn } from "react-hook-form";
+import type * as z from "zod";
+import type { createPropertyFormSchema } from "./constants";
+import { formFields } from "./constants";
+import { Step } from "./step-wrapper";
 
 export const PropertyDetailsStep: FC<{
   form: UseFormReturn<z.infer<typeof createPropertyFormSchema>>;
