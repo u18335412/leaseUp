@@ -13,30 +13,7 @@ import {
 } from "ui";
 import type * as z from "zod";
 import { Step } from "./step-wrapper";
-import type { createPropertyFormSchema } from "./constants";
-
-const unitFields = [
-  {
-    name: "name",
-    label: "Name",
-    type: "text",
-  },
-  {
-    name: "bedrooms",
-    label: "Bedrooms",
-    type: "number",
-  },
-  {
-    name: "bathrooms",
-    label: "Bathrooms",
-    type: "number",
-  },
-  {
-    name: "rent",
-    label: "Rent",
-    type: "number",
-  },
-];
+import { unitFields, type createPropertyFormSchema } from "./constants";
 
 export const PropertyUnitsStep: FC<{
   form: UseFormReturn<z.infer<typeof createPropertyFormSchema>>;
@@ -55,7 +32,7 @@ export const PropertyUnitsStep: FC<{
         <div className="mt-4">
           {fields.map((item, fieldsIndex) => (
             <div
-              className="flex items-end gap-x-2 animate-in fade-in"
+              className="flex items-end gap-x-2 animate-in fade-in slide-in-from-top-1"
               key={item.id}
             >
               <div className="grid grid-cols-4 gap-x-4">

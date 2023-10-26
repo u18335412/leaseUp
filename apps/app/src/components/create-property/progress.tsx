@@ -17,8 +17,8 @@ const steps = [
     description: "Add the units for this property.",
   },
   {
-    name: "Finalize",
-    description: "Finalize the property creation.",
+    name: "Ownership",
+    description: "Add the ownership details for this property.",
   },
 ];
 

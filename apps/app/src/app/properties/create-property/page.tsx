@@ -1,26 +1,27 @@
 "use client";
 
-/* eslint-disable @typescript-eslint/no-misused-promises -- Expected */
-
-import { useState } from "react";
-import type { NextPage } from "next";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { cn } from "lib";
+import { ArrowLeft, ArrowRight, Save } from "lucide-react";
+import type { NextPage } from "next";
+import { useState } from "react";
+import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { Button, Form } from "ui";
 import type * as z from "zod";
+import {
+  PageHeader,
+  PageHeaderDescription,
+  PageHeaderHeading,
+} from "@/components/page-heading";
+import { PropertyUnitsStep } from "@/components/create-property/property-units-step";
+import { PropertyOwnershipStep } from "@/components/create-property/property-ownership-step";
 import {
   PropertyTypeStep,
   PropertyDetailsStep,
   createPropertyFormSchema,
   Progress,
 } from "@/components/create-property";
-import { PropertyUnitsStep } from "@/components/create-property/property-units-step";
-import {
-  PageHeader,
-  PageHeaderDescription,
-  PageHeaderHeading,
-} from "@/components/page-heading";
 
 const CreateProperty: NextPage = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
@@ -30,11 +31,18 @@ const CreateProperty: NextPage = () => {
     defaultValues: {
       propertyType: "SINGLEFAMILY",
       propertyDescription: "COMMERCIAL",
+      propertyOwnership: {
+        ownershipType: "OWNED",
+        propertyOwners: [],
+      },
     },
   });
 
-  const onSubmit = (_data: z.infer<typeof createPropertyFormSchema>) => {
-    // const _data = data;
+  const onSubmit: SubmitHandler<z.infer<typeof createPropertyFormSchema>> = (
+    data
+  ) => {
+    // eslint-disable-next-line no-alert -- Expected.
+    alert(JSON.stringify(data, null, 2));
   };
 
   return (
@@ -50,10 +58,12 @@ const CreateProperty: NextPage = () => {
         <Progress currentStep={currentStep} setCurrentStep={setCurrentStep} />
         <div className="w-full max-w-xl">
           <Form {...form}>
+            {/* eslint-disable-next-line @typescript-eslint/no-misused-promises -- This is expected. */}
             <form onSubmit={form.handleSubmit(onSubmit)}>
               {currentStep === 0 && <PropertyTypeStep form={form} />}
               {currentStep === 1 && <PropertyDetailsStep form={form} />}
               {currentStep === 2 && <PropertyUnitsStep form={form} />}
+              {currentStep === 3 && <PropertyOwnershipStep form={form} />}
               <div className="mt-8 flex justify-between">
                 <Button
                   className="flex items-center gap-x-2"
@@ -65,19 +75,35 @@ const CreateProperty: NextPage = () => {
                   type="button"
                   variant="outline"
                 >
-                  <ArrowLeft className="h-4 w-4" />
+                  <ArrowLeft aria-hidden="true" className="h-4 w-4" />
                   Back
                 </Button>
                 <Button
-                  className="flex items-center gap-x-2"
+                  className={cn(
+                    "flex items-center gap-x-2",
+                    currentStep !== 3 && "hidden"
+                  )}
+                  size="sm"
+                  type="submit"
+                >
+                  Create Property
+                  <Save aria-hidden="true" className="h-4 w-4" />
+                </Button>
+                <Button
+                  className={cn(
+                  "flex items-center gap-x-2",
+                  currentStep === 3 && "hidden"
+                  )}
                   onClick={() => {
-                    setCurrentStep(currentStep + 1);
+                    if (currentStep < 3) {
+                      setCurrentStep(currentStep + 1);
+                    }
                   }}
                   size="sm"
                   type="button"
                 >
                   Next
-                  <ArrowRight className="h-4 w-4" />
+                  <ArrowRight aria-hidden="true" className="h-4 w-4" />
                 </Button>
               </div>
             </form>

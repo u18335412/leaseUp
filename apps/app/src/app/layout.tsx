@@ -1,8 +1,8 @@
+import "../styles/globals.css";
+import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
-import "../styles/globals.css";
 import Layout from "@/components/layout";
-import { ClerkProvider } from "@clerk/nextjs";
 
 const font = Outfit({ subsets: ["latin"] });
 
