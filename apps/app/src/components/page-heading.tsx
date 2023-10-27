@@ -7,7 +7,7 @@ function PageHeader({
 }: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <section
-      className={cn("flex flex-col items-start pt-8 md:pt-12", className)}
+      className={cn("flex flex-col items-start pt-2 md:pt-12", className)}
       {...props}
     >
       {children}

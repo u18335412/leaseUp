@@ -1,5 +1,6 @@
 export * from './alert';
 export * from './card';
+export * from './command';
 export * from './button';
 export * from './dialog';
 export * from './input';
@@ -10,3 +11,4 @@ export * from './radio';
 export * from './tabs';
 export * from './select';
 export * from './separator';
+export * from './scroll-area';

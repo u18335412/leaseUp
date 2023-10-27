@@ -32,7 +32,7 @@ export const PropertyTypeStep: FC<{
             <FormItem className="mt-3 space-y-3">
               <FormControl>
                 <RadioGroup
-                  className="grid grid-cols-3"
+                  className="grid grid-cols-2 md:grid-cols-3"
                   defaultValue={field.value}
                   onValueChange={field.onChange}
                 >
@@ -86,7 +86,7 @@ export const PropertyTypeStep: FC<{
             <FormItem className="mt-3 space-y-3">
               <FormControl>
                 <RadioGroup
-                  className="grid grid-cols-3"
+                  className="grid grid-cols-2 md:grid-cols-3"
                   defaultValue={field.value}
                   onValueChange={field.onChange}
                 >

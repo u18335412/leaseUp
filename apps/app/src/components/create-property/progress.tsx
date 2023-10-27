@@ -27,7 +27,7 @@ export const Progress: FC<{
   setCurrentStep: (step: number) => void;
 }> = ({ currentStep }) => {
   return (
-    <nav aria-label="Progress">
+    <nav aria-label="Progress" className="hidden md:flex">
       <ol className="overflow-hidden">
         {steps.map((step, stepIdx) => (
           <li

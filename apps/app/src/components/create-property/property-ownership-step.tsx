@@ -1,6 +1,3 @@
-import { ownerFields, propertyOwners } from "./constants";
-import type { createPropertyFormSchema } from "./constants";
-import { Step } from "./step-wrapper";
 import { cn } from "lib";
 import { CheckCircle2, Plus, X } from "lucide-react";
 import type { FC } from "react";
@@ -17,6 +14,9 @@ import {
   Input,
 } from "ui";
 import type * as z from "zod";
+import { Step } from "./step-wrapper";
+import type { createPropertyFormSchema } from "./constants";
+import { ownerFields, propertyOwners } from "./constants";
 
 export const PropertyOwnershipStep: FC<{
   form: UseFormReturn<z.infer<typeof createPropertyFormSchema>>;
@@ -39,7 +39,7 @@ export const PropertyOwnershipStep: FC<{
             <FormItem className="mt-3 space-y-3">
               <FormControl>
                 <RadioGroup
-                  className="grid grid-cols-3"
+                  className="grid grid-cols-2 md:grid-cols-3"
                   defaultValue={field.value}
                   onValueChange={field.onChange}
                 >
@@ -85,13 +85,13 @@ export const PropertyOwnershipStep: FC<{
 
       {watchedField === "SOMEONE_ELSE" && (
         <div className="mt-6 animate-in fade-in slide-in-from-top-1">
-          <div>
+          <div className="divide-y">
             {fields.map((item, fieldsIndex) => (
               <div
-                className="flex items-end gap-x-2 animate-in fade-in slide-in-from-top-1"
+                className="flex flex-col md:flex-row md:items-end gap-x-2 animate-in fade-in slide-in-from-top-1 pb-4 gap-y-2 pt-2"
                 key={item.id}
               >
-                <div className="grid grid-cols-4 gap-x-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4">
                   {ownerFields.map(({ name, label, type }) => (
                     <FormField
                       control={form.control}
@@ -110,16 +110,16 @@ export const PropertyOwnershipStep: FC<{
                   ))}
                 </div>
                 <Button
-                  className="group hover:bg-transparent"
+                  className="group text-destructive hover:bg-transparent h-9"
                   onClick={() => {
                     remove(fieldsIndex);
                   }}
                   size="sm"
                   type="button"
-                  variant="ghost"
+                  variant="outline"
                 >
-                  <span className="sr-only">Remove unit</span>
-                  <X className="h-4 w-4 transition-colors group-hover:text-primary" />
+                  <span className="not-sr-only md:sr-only mr-2">Remove unit</span>
+                  <X aria-hidden="true" className="h-4 w-4 transition-colors group-hover:text-primary" />
                 </Button>
               </div>
             ))}
