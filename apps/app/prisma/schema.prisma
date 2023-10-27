@@ -8,18 +8,20 @@ datasource db {
 }
 
 model Property {
-  id          String              @id @default(uuid())
-  name        String
-  address     String
-  city        String
-  province    String
-  zip         String
-  country     String
-  createdAt   DateTime            @default(now())
-  updatedAt   DateTime            @default(now()) @updatedAt
-  description PropertyDescription
-  type        PropertyType
-  Unit        Unit[]
+  id              String              @id @default(uuid())
+  name            String
+  address         String
+  city            String
+  province        String
+  zip             String
+  country         String
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @default(now()) @updatedAt
+  description     PropertyDescription
+  type            PropertyType
+  Unit            Unit[]
+  PropertyOwner   PropertyOwner?      @relation(fields: [propertyOwnerId], references: [id])
+  propertyOwnerId String?
 }
 
 model Unit {
@@ -36,6 +38,25 @@ model Unit {
   marketRent     Float
   property       Property @relation(fields: [propertyId], references: [id])
   Tenant         Tenant?  @relation(fields: [tenantId], references: [id])
+}
+
+model PropertyOwner {
+  id        String     @id @default(uuid())
+  firstName String
+  lastName  String
+  email     String
+  phone     String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now()) @updatedAt
+  Property  Property[]
+}
+
+model PropertyOwnerInvitation {
+  id        String   @id @default(uuid())
+  email     String
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model Tenant {

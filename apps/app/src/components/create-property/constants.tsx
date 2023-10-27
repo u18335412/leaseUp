@@ -131,10 +131,7 @@ const createPropertyFormSchema = z.object({
           email: z.string().email({
             message: "Please enter a valid email address.",
           }),
-          phone: z.string().min(2, {
-            message: "Phone must be at least 2 characters.",
-          }),
-          percentageOwned: z.number().min(1, {
+          percentageOwned: z.string().min(1, {
             message: "Percentage owned must be at least 1.",
           }),
         })
@@ -208,9 +205,9 @@ const ownerFields = [
     type: "email",
   },
   {
-    name: "phone",
+    name: "percentageOwned",
     label: "Phone",
-    type: "number",
+    type: "text",
   },
 ] as const;
 

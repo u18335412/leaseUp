@@ -1,7 +1,7 @@
 /**
  * Adds seed data to your db
  *
- * @link https://www.prisma.io/docs/guides/database/seed-database
+ * {@link https://www.prisma.io/docs/guides/database/seed-database}
  */
 import { PrismaClient } from '@prisma/client';
 

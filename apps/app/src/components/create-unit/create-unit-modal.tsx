@@ -1,8 +1,9 @@
-/* eslint-disable @typescript-eslint/no-misused-promises -- Expected */
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { cn } from "lib";
 import { Plus } from "lucide-react";
+import Link from "next/link";
 import type { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import {
@@ -30,11 +31,12 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  DialogDismiss,
 } from "ui";
 import type * as z from "zod";
-import { cn } from "lib";
-import Link from "next/link";
 import { createUnitSchema, createUnitFormFields } from "./constants";
+
+/* eslint-disable @typescript-eslint/no-misused-promises -- Expected */
 
 const dummyProperties = [
   "Property 1",
@@ -80,7 +82,7 @@ export function CreateUnit(): ReactNode {
                     buttonVariants({
                       size: "sm",
                     }),
-                    "mt-4 flex gap-x-2",
+                    "mt-4 flex gap-x-2"
                   )}
                   href="/properties/create-property"
                 >
@@ -149,9 +151,11 @@ export function CreateUnit(): ReactNode {
                     );
                   })}
                   <DialogFooter className="col-span-4">
-                    <Button size="sm" type="button" variant="outline">
-                      Cancel
-                    </Button>
+                    <DialogDismiss asChild>
+                      <Button size="sm" type="button" variant="outline">
+                        Cancel
+                      </Button>
+                    </DialogDismiss>
                     <Button size="sm" type="submit">
                       Create Unit
                     </Button>

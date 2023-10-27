@@ -7,6 +7,7 @@ import type { NextPage } from "next";
 import { useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
 import { Button, Form } from "ui";
 import type * as z from "zod";
 import {
@@ -33,16 +34,22 @@ const CreateProperty: NextPage = () => {
       propertyDescription: "COMMERCIAL",
       propertyOwnership: {
         ownershipType: "OWNED",
-        propertyOwners: [],
+        propertyOwners: [{
+          firstName: "John",
+          lastName: "Doe",
+          email: "Foo@hey.com",
+          percentageOwned: "100",
+        }],
       },
     },
   });
 
   const onSubmit: SubmitHandler<z.infer<typeof createPropertyFormSchema>> = (
-    data
+    _data
   ) => {
-    // eslint-disable-next-line no-alert -- Expected.
-    alert(JSON.stringify(data, null, 2));
+    toast.success("Property created successfully!", {
+      duration: 5000,
+    });
   };
 
   return (
@@ -91,8 +98,8 @@ const CreateProperty: NextPage = () => {
                 </Button>
                 <Button
                   className={cn(
-                  "flex items-center gap-x-2",
-                  currentStep === 3 && "hidden"
+                    "flex items-center gap-x-2",
+                    currentStep === 3 && "hidden"
                   )}
                   onClick={() => {
                     if (currentStep < 3) {

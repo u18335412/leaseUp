@@ -7,10 +7,10 @@
  * @see https://trpc.io/docs/v10/router
  * @see https://trpc.io/docs/v10/procedures
  */
-import { transformer } from "@/utils/transformer";
-import { initTRPC } from "@trpc/server";
+import { TRPCError, initTRPC } from "@trpc/server";
 import type { SuperJSON } from "superjson";
 import type { Context } from "./context";
+import { transformer } from "@/utils/transformer";
 
 const t = initTRPC.context<Context>().create({
   /**
@@ -34,8 +34,23 @@ export const router = t.router;
 /**
  * Create an unprotected procedure
  * @see https://trpc.io/docs/v10/procedures
+ * 
  **/
+const isAuthed = t.middleware(({ next, ctx }) => {
+  if (!ctx.auth.userId) {
+    throw new TRPCError({ code: 'UNAUTHORIZED' })
+  }
+  return next({
+    ctx: {
+      auth: ctx.auth,
+    },
+  })
+})
+
 export const publicProcedure = t.procedure;
+
+export const protectedProcedure = publicProcedure
+  .use(isAuthed);
 
 /**
  * @see https://trpc.io/docs/v10/middlewares

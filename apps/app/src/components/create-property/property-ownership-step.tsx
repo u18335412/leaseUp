@@ -1,3 +1,6 @@
+import { ownerFields, propertyOwners } from "./constants";
+import type { createPropertyFormSchema } from "./constants";
+import { Step } from "./step-wrapper";
 import { cn } from "lib";
 import { CheckCircle2, Plus, X } from "lucide-react";
 import type { FC } from "react";
@@ -14,10 +17,6 @@ import {
   Input,
 } from "ui";
 import type * as z from "zod";
-import { Step } from "./step-wrapper";
-import { ownerFields, propertyOwners } from "./constants";
-import type { createPropertyFormSchema } from "./constants";
-
 
 export const PropertyOwnershipStep: FC<{
   form: UseFormReturn<z.infer<typeof createPropertyFormSchema>>;
@@ -96,13 +95,13 @@ export const PropertyOwnershipStep: FC<{
                   {ownerFields.map(({ name, label, type }) => (
                     <FormField
                       control={form.control}
-                      key={name}
-                      name={`units.${fieldsIndex}.name`}
-                      render={() => (
+                      key={name + item.id}
+                      name={`propertyOwnership.propertyOwners.${fieldsIndex}.${name}`}
+                      render={({ field }) => (
                         <FormItem>
                           <FormLabel className="sr-only">{label}</FormLabel>
                           <FormControl>
-                            <Input placeholder={label} type={type} />
+                            <Input placeholder={label} type={type} {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -133,8 +132,7 @@ export const PropertyOwnershipStep: FC<{
                   firstName: "",
                   lastName: "",
                   email: "",
-                  phone: "",
-                  percentageOwned: 0,
+                  percentageOwned: "",
                 });
               }}
               type="button"
