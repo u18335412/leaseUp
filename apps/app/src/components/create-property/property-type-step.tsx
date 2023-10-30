@@ -1,4 +1,7 @@
 import type { FC } from "react";
+import type { createPropertyFormSchema } from "./constants";
+import { propertyDescription, propertyTypes } from "./constants";
+import { Step } from "./step-wrapper";
 import { cn } from "lib";
 import { CheckCircle2 } from "lucide-react";
 import type { UseFormReturn } from "react-hook-form";
@@ -12,9 +15,6 @@ import {
   RadioGroupItem,
 } from "ui";
 import type * as z from "zod";
-import { Step } from "./step-wrapper";
-import type { createPropertyFormSchema } from "./constants";
-import { propertyDescription, propertyTypes } from "./constants";
 
 export const PropertyTypeStep: FC<{
   form: UseFormReturn<z.infer<typeof createPropertyFormSchema>>;
@@ -22,7 +22,7 @@ export const PropertyTypeStep: FC<{
   return (
     <Step description="" title="Property type & description">
       <div className="mt-4">
-        <p className="text-sm text-muted-foreground">
+        <p className="text-muted-foreground text-sm">
           Please select a description that best describes your property.
         </p>
         <FormField
@@ -39,16 +39,17 @@ export const PropertyTypeStep: FC<{
                   {propertyDescription.map((propertyType) => (
                     <FormItem
                       className={cn(
-                        "relative flex h-10 flex-row items-center gap-x-2  space-y-0  rounded-md border border-border px-2 text-muted-foreground transition-colors",
+                        "border-border text-muted-foreground relative flex h-10 flex-row items-center gap-x-2 space-y-0 rounded-md border px-2 transition-colors",
                         propertyType.name === field.value &&
-                          "border-2 border-primary text-primary",
+                          "border-primary text-primary border-2",
                       )}
                       key={propertyType.name}
                     >
                       <propertyType.icon className="h-4 w-4 text-inherit" />
                       <FormControl>
                         <RadioGroupItem
-                          className="absolute left-0 top-2 h-full w-full cursor-pointer rounded-md opacity-0"
+                          disabled={propertyType.name === "COMMERCIAL"}
+                          className="absolute left-0 border-none top-0 h-full w-full cursor-pointer rounded-md opacity-0"
                           value={propertyType.name}
                         />
                       </FormControl>
@@ -76,7 +77,7 @@ export const PropertyTypeStep: FC<{
         />
       </div>
       <div className="mt-4">
-        <p className=" text-sm text-muted-foreground">
+        <p className=" text-muted-foreground text-sm">
           Please select your property type.
         </p>
         <FormField
@@ -93,9 +94,9 @@ export const PropertyTypeStep: FC<{
                   {propertyTypes.map((propertyType) => (
                     <FormItem
                       className={cn(
-                        "relative flex h-10 flex-row items-center gap-x-2 space-y-0 rounded-md border border-border px-2 text-muted-foreground transition-colors",
+                        "border-border text-muted-foreground relative flex h-10 flex-row items-center gap-x-2 space-y-0 rounded-md border px-2 transition-colors",
                         propertyType.name === field.value &&
-                          "border-2 border-primary text-primary",
+                          "border-primary text-primary border-2",
                       )}
                       key={propertyType.name}
                     >

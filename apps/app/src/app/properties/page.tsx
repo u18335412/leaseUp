@@ -1,6 +1,12 @@
 /* eslint-disable @typescript-eslint/require-await -- Expected this a a server component */
+
 import type { NextPage } from "next";
 import Link from "next/link";
+import {
+  PageHeader,
+  PageHeaderDescription,
+  PageHeaderHeading,
+} from "@/components/page-heading";
 import { cn } from "lib";
 import { Home, Plus } from "lucide-react";
 import {
@@ -10,11 +16,6 @@ import {
   EmptyStateTitle,
   buttonVariants,
 } from "ui";
-import {
-  PageHeader,
-  PageHeaderDescription,
-  PageHeaderHeading,
-} from "@/components/page-heading";
 
 const Properties: NextPage = async () => {
   return (

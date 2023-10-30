@@ -69,21 +69,24 @@ const createPropertyFormSchema = z.object({
     propertyDescription.map((prop) => prop.name) as [string, ...string[]],
     {
       required_error: "Please select a property description.",
-    }
+    },
   ),
 
   propertyType: z.enum(
     propertyTypes.map((prop) => prop.name) as [string, ...string[]],
     {
       required_error: "Please select a property type.",
-    }
+    },
   ),
   propertyDetails: z.object({
     name: z.string().min(2, {
       message: "Name must be at least 2 characters.",
     }),
-    street: z.string().min(2, {
+    streetName: z.string().min(2, {
       message: "Street must be at least 2 characters.",
+    }),
+    streetNumber: z.string().min(1, {
+      message: "Street number must be at least 1 characters.",
     }),
     city: z.string().min(2, {
       message: "City must be at least 2 characters.",
@@ -114,7 +117,7 @@ const createPropertyFormSchema = z.object({
         bathrooms: z.number().min(1, {
           message: "Bathrooms must be at least 1.",
         }),
-      })
+      }),
     )
     .optional(),
   propertyOwnership: z
@@ -134,7 +137,7 @@ const createPropertyFormSchema = z.object({
           percentageOwned: z.string().min(1, {
             message: "Percentage owned must be at least 1.",
           }),
-        })
+        }),
       ),
     })
     .refine(
@@ -145,7 +148,7 @@ const createPropertyFormSchema = z.object({
       },
       {
         message: "Please add at least one owner.",
-      }
+      },
     ),
 });
 
@@ -157,10 +160,16 @@ const formFields = [
     placeholder: "Property at somewhere",
   },
   {
-    label: "Street",
-    name: "propertyDetails.street",
+    label: "Street Number",
+    name: "propertyDetails.streetNumber",
     type: "text",
-    placeholder: "6692 Tranquility St",
+    placeholder: "6692",
+  },
+  {
+    label: "Street Name",
+    name: "propertyDetails.streetName",
+    type: "text",
+    placeholder: "Tranquility Street",
   },
   {
     label: "City",

@@ -1,4 +1,9 @@
 import type { FC } from "react";
+import type { createPropertyFormSchema } from "./constants";
+import { formFields } from "./constants";
+import { Step } from "./step-wrapper";
+import { cn } from "lib";
+import type { UseFormReturn } from "react-hook-form";
 import {
   FormField,
   FormItem,
@@ -7,11 +12,7 @@ import {
   FormMessage,
   Input,
 } from "ui";
-import type { UseFormReturn } from "react-hook-form";
 import type * as z from "zod";
-import type { createPropertyFormSchema } from "./constants";
-import { formFields } from "./constants";
-import { Step } from "./step-wrapper";
 
 export const PropertyDetailsStep: FC<{
   form: UseFormReturn<z.infer<typeof createPropertyFormSchema>>;
@@ -28,7 +29,11 @@ export const PropertyDetailsStep: FC<{
             key={name}
             name={name}
             render={({ field }) => (
-              <FormItem className=" col-span-2">
+              <FormItem
+                className={cn("col-span-2", {
+                  "col-span-4": name === "propertyDetails.name",
+                })}
+              >
                 <FormLabel>{label}</FormLabel>
                 <FormControl>
                   <Input placeholder={placeholder} {...field} />

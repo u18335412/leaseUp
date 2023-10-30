@@ -148,25 +148,35 @@ export default function Layout({
 
       <nav className="fixed bottom-0 left-0 right-0 md:hidden">
         <ul className="flex justify-between bg-white w-full py-2 px-4 text-primary">
-        {
-          navigation.map((item) => (<li key={item}>
-            <Link className="flex flex-col justify-center items-center" href={item.href}> 
-              <span className="rounded-full border border-primary p-2">
-                <item.icon aria-hidden="true" className="h-4 w-4 text-primary" />
-              </span>
-              <span className={cn("text-xs font-semibold", {
-                "sr-only": !isCurrentUrl(item.href, path!)
-              })}>{item.name}</span>
-            </Link>
-          </li>))
-        }
-     </ul>
+          {navigation.map((item) => (
+            <li key={item.name} className="transition-all">
+              <Link
+                className="flex flex-col justify-center items-center"
+                href={item.href}
+              >
+                <span className="rounded-full border p-2">
+                  <item.icon
+                    aria-hidden="true"
+                    className="h-4 w-4 text-primary"
+                  />
+                </span>
+                <span
+                  className={cn("text-xs font-semibold transition-all", {
+                    "sr-only": !isCurrentUrl(item.href, path!),
+                  })}
+                >
+                  {item.name}
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </nav>
 
       <div className="bg-gray-100 lg:pl-72">
         <div className="z-40 lg:mx-auto lg:max-w-7xl">
           <div className="flex h-16 items-center gap-x-4 sm:gap-x-6 sm:px-6 lg:px-0 lg:shadow-none ">
-            <div className="py-2 flex items-center gap-x-2 flex-1 self-stretch bg-white px-4">
+            <div className="py-2 flex items-center gap-x-2 flex-1 self-stretch bg-white px-4 sm:px-6 lg:px-8">
               <div className="relative flex flex-1">
                 <label className="sr-only" htmlFor="search-field">
                   Search
@@ -217,8 +227,8 @@ export default function Layout({
           </div>
         </div>
 
-        <main className="min-h-screen bg-gray-100">
-          <div className="mx-auto max-w-7xl rounded-b-lg bg-white px-4 pb-4 sm:px-6 lg:px-8 lg:pb-8">
+        <main className="min-h-screen h-full bg-gray-100">
+          <div className="mx-auto h-screen max-w-7xl rounded-b-lg bg-white px-4 pb-4 sm:px-6 lg:px-8 lg:pb-8">
             {children}
           </div>
         </main>

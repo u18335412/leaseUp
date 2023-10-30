@@ -1,56 +1,78 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { cn } from "lib";
-import { ArrowLeft, ArrowRight, Save } from "lucide-react";
-import type { NextPage } from "next";
 import { useState } from "react";
-import type { SubmitHandler } from "react-hook-form";
-import { useForm } from "react-hook-form";
-import { toast } from "react-hot-toast";
-import { Button, Form } from "ui";
-import type * as z from "zod";
-import {
-  PageHeader,
-  PageHeaderDescription,
-  PageHeaderHeading,
-} from "@/components/page-heading";
-import { PropertyUnitsStep } from "@/components/create-property/property-units-step";
-import { PropertyOwnershipStep } from "@/components/create-property/property-ownership-step";
+import type { NextPage } from "next";
 import {
   PropertyTypeStep,
   PropertyDetailsStep,
   createPropertyFormSchema,
   Progress,
 } from "@/components/create-property";
+import { PropertyOwnershipStep } from "@/components/create-property/property-ownership-step";
+import { PropertyUnitsStep } from "@/components/create-property/property-units-step";
+import {
+  PageHeader,
+  PageHeaderDescription,
+  PageHeaderHeading,
+} from "@/components/page-heading";
+import { api } from "@/trpc/react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { cn } from "lib";
+import { ArrowLeft, ArrowRight, Save } from "lucide-react";
+import type { SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { toast } from "react-hot-toast";
+import { Button, Form } from "ui";
+import type * as z from "zod";
 
 const CreateProperty: NextPage = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
+  const propertyMutation = api.property.post.useMutation();
 
   const form = useForm<z.infer<typeof createPropertyFormSchema>>({
     resolver: zodResolver(createPropertyFormSchema),
     defaultValues: {
       propertyType: "SINGLEFAMILY",
-      propertyDescription: "COMMERCIAL",
+      propertyDescription: "RESIDENTIAL",
       propertyOwnership: {
         ownershipType: "OWNED",
-        propertyOwners: [{
-          firstName: "John",
-          lastName: "Doe",
-          email: "Foo@hey.com",
-          percentageOwned: "100",
-        }],
+        propertyOwners: [
+          {
+            firstName: "John",
+            lastName: "Doe",
+            email: "Foo@hey.com",
+            percentageOwned: "100",
+          },
+        ],
       },
     },
   });
 
   const onSubmit: SubmitHandler<z.infer<typeof createPropertyFormSchema>> = (
-    _data
+    _data,
   ) => {
-    toast.success("Property created successfully!", {
-      duration: 5000,
-    });
+    alert(JSON.stringify(_data));
+
+    propertyMutation.mutate(
+      {
+        name: _data.propertyDetails.name,
+        streetNumber: _data.propertyDetails.streetNumber,
+        streetName: _data.propertyDetails.streetName,
+        zip: _data.propertyDetails.zip,
+        province: _data.propertyDetails.province,
+        city: _data.propertyDetails.city,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Property created successfully!", {
+            duration: 5000,
+          });
+        },
+      },
+    );
   };
+
+  const data = api.healthcheck.useQuery();
 
   return (
     <div>
@@ -61,7 +83,7 @@ const CreateProperty: NextPage = () => {
         </PageHeaderDescription>
       </PageHeader>
 
-      <div className="mt-10 flex items-start gap-x-10">
+      <div className="mt-10 flex items-start gap-x-10 ">
         <Progress currentStep={currentStep} setCurrentStep={setCurrentStep} />
         <div className="w-full max-w-xl">
           <Form {...form}>
@@ -88,7 +110,7 @@ const CreateProperty: NextPage = () => {
                 <Button
                   className={cn(
                     "flex items-center gap-x-2",
-                    currentStep !== 3 && "hidden"
+                    currentStep !== 3 && "hidden",
                   )}
                   size="sm"
                   type="submit"
@@ -99,7 +121,7 @@ const CreateProperty: NextPage = () => {
                 <Button
                   className={cn(
                     "flex items-center gap-x-2",
-                    currentStep === 3 && "hidden"
+                    currentStep === 3 && "hidden",
                   )}
                   onClick={() => {
                     if (currentStep < 3) {

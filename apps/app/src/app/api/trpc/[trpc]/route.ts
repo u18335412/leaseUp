@@ -1,18 +1,24 @@
-import type { NextRequest } from "next/server";
-import { getAuth } from "@clerk/nextjs/server";
-import type { AnyRouter } from "@trpc/server";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
-import { appRouter } from "@/server/routers/_app";
+import { type NextRequest } from "next/server";
 
-const handler = (req: NextRequest) => {
-  void fetchRequestHandler({
+import { env } from "@/env.mjs";
+import { appRouter } from "@/server/api/root";
+import { createTRPCContext } from "@/server/api/trpc";
+
+const handler = (req: NextRequest) =>
+  fetchRequestHandler({
     endpoint: "/api/trpc",
     req,
-    router: appRouter as AnyRouter,
-    createContext: () => ({
-      auth: getAuth(req),
-    }),
+    router: appRouter,
+    createContext: () => createTRPCContext({ req }),
+    onError:
+      env.NODE_ENV === "development"
+        ? ({ path, error }) => {
+            console.error(
+              `❌ tRPC failed on ${path ?? "<no-path>"}: ${error.message}`
+            );
+          }
+        : undefined,
   });
-};
 
 export { handler as GET, handler as POST };

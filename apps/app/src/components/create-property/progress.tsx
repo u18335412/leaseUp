@@ -33,7 +33,7 @@ export const Progress: FC<{
           <li
             className={cn(
               stepIdx !== steps.length - 1 ? "pb-10" : "",
-              "relative",
+              "relative"
             )}
             key={step.name}
           >

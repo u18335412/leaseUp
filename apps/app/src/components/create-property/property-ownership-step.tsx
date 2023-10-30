@@ -1,6 +1,9 @@
+import type { FC } from "react";
+import type { createPropertyFormSchema } from "./constants";
+import { ownerFields, propertyOwners } from "./constants";
+import { Step } from "./step-wrapper";
 import { cn } from "lib";
 import { CheckCircle2, Plus, X } from "lucide-react";
-import type { FC } from "react";
 import { useFieldArray, type UseFormReturn } from "react-hook-form";
 import {
   FormField,
@@ -14,9 +17,6 @@ import {
   Input,
 } from "ui";
 import type * as z from "zod";
-import { Step } from "./step-wrapper";
-import type { createPropertyFormSchema } from "./constants";
-import { ownerFields, propertyOwners } from "./constants";
 
 export const PropertyOwnershipStep: FC<{
   form: UseFormReturn<z.infer<typeof createPropertyFormSchema>>;
@@ -46,9 +46,9 @@ export const PropertyOwnershipStep: FC<{
                   {propertyOwners.map((propertyType) => (
                     <FormItem
                       className={cn(
-                        "relative flex h-10 flex-row items-center gap-x-2  space-y-0  rounded-md border border-border px-2 text-muted-foreground transition-colors",
+                        "border-border text-muted-foreground relative flex h-10 flex-row  items-center  gap-x-2 space-y-0 rounded-md border px-2 transition-colors",
                         propertyType.name === field.value &&
-                          "border-2 border-primary text-primary"
+                          "border-primary text-primary border-2",
                       )}
                       key={propertyType.name}
                     >
@@ -68,7 +68,7 @@ export const PropertyOwnershipStep: FC<{
                       <FormLabel
                         className={cn(
                           "ml-0 space-x-0 text-xs",
-                          propertyType.name === field.value && "font-bold"
+                          propertyType.name === field.value && "font-bold",
                         )}
                       >
                         {propertyType.label}
@@ -84,14 +84,14 @@ export const PropertyOwnershipStep: FC<{
       </div>
 
       {watchedField === "SOMEONE_ELSE" && (
-        <div className="mt-6 animate-in fade-in slide-in-from-top-1">
+        <div className="animate-in fade-in slide-in-from-top-1 mt-6">
           <div className="divide-y">
             {fields.map((item, fieldsIndex) => (
               <div
-                className="flex flex-col md:flex-row md:items-end gap-x-2 animate-in fade-in slide-in-from-top-1 pb-4 gap-y-2 pt-2"
+                className="animate-in fade-in slide-in-from-top-1 flex flex-col gap-x-2 gap-y-2 pb-4 pt-2 md:flex-row md:items-end"
                 key={item.id}
               >
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4">
+                <div className="grid grid-cols-2 gap-x-4 md:grid-cols-4">
                   {ownerFields.map(({ name, label, type }) => (
                     <FormField
                       control={form.control}
@@ -110,7 +110,7 @@ export const PropertyOwnershipStep: FC<{
                   ))}
                 </div>
                 <Button
-                  className="group text-destructive hover:bg-transparent h-9"
+                  className="text-destructive group h-9 hover:bg-transparent"
                   onClick={() => {
                     remove(fieldsIndex);
                   }}
@@ -118,15 +118,20 @@ export const PropertyOwnershipStep: FC<{
                   type="button"
                   variant="outline"
                 >
-                  <span className="not-sr-only md:sr-only mr-2">Remove unit</span>
-                  <X aria-hidden="true" className="h-4 w-4 transition-colors group-hover:text-primary" />
+                  <span className="not-sr-only mr-2 md:sr-only">
+                    Remove owner
+                  </span>
+                  <X
+                    aria-hidden="true"
+                    className="group-hover:text-primary h-4 w-4 transition-colors"
+                  />
                 </Button>
               </div>
             ))}
           </div>
           <div className="mt-4">
             <Button
-              className="w-full flex gap-x-2"
+              className="flex w-full gap-x-2"
               onClick={() => {
                 append({
                   firstName: "",

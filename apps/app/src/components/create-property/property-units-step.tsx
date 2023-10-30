@@ -32,10 +32,10 @@ export const PropertyUnitsStep: FC<{
         <div className="mt-4">
           {fields.map((item, fieldsIndex) => (
             <div
-              className="flex items-end gap-x-2 animate-in fade-in slide-in-from-top-1"
+              className="flex flex-col md:flex-row md:items-end gap-2 animate-in fade-in slide-in-from-top-1"
               key={item.id}
             >
-              <div className="grid grid-cols-4 gap-x-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4">
                 {unitFields.map(({ name, label, type }) => (
                   <FormField
                     control={form.control}
@@ -54,15 +54,15 @@ export const PropertyUnitsStep: FC<{
                 ))}
               </div>
               <Button
-                className="group hover:bg-transparent"
+                className="group text-destructive hover:bg-transparent h-9"
                 onClick={() => {
                   remove(fieldsIndex);
                 }}
                 size="sm"
                 type="button"
-                variant="ghost"
+                variant="outline"
               >
-                <span className="sr-only">Remove unit</span>
+                <span className="md:sr-only mr-2">Remove unit</span>
                 <X className="h-4 w-4 transition-colors group-hover:text-primary" />
               </Button>
             </div>
