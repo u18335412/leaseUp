@@ -33,7 +33,7 @@ export const PropertyUnitsStep: FC<{
           <div className="divide-y">
             {fields.map((item, fieldsIndex) => (
               <li
-                className="animate-in fade-in slide-in-from-top-1 flex flex-col gap-2 gap-y-2 pb-4 pt-2 md:flex-row md:items-end"
+                className="animate-in fade-in slide-in-from-top-1 flex flex-col gap-2 gap-y-2 pb-4 pt-2 md:flex-row md:items-end relative"
                 key={item.id}
               >
                 <div className="grid grid-cols-2 gap-x-4 md:grid-cols-4">
@@ -55,7 +55,7 @@ export const PropertyUnitsStep: FC<{
                   ))}
                 </div>
                 <Button
-                  className="text-destructive group mt-2 h-9 hover:bg-transparent md:mt-2"
+                  className="text-destructive group h-9 hover:bg-transparent  md:absolute md:-right-14 md:top-10"
                   onClick={() => {
                     remove(fieldsIndex);
                   }}
