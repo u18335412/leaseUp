@@ -88,7 +88,7 @@ export const PropertyOwnershipStep: FC<{
           <div className="divide-y">
             {fields.map((item, fieldsIndex) => (
               <div
-                className="animate-in fade-in slide-in-from-top-1 flex flex-col gap-x-2 gap-y-2 pb-4 pt-2 md:flex-row md:items-end"
+                className="animate-in fade-in slide-in-from-top-1 relative flex flex-col gap-x-2 gap-y-2 pb-4 pt-2 md:flex-row"
                 key={item.id}
               >
                 <div className="grid grid-cols-2 gap-x-4 md:grid-cols-4">
@@ -99,7 +99,7 @@ export const PropertyOwnershipStep: FC<{
                       name={`propertyOwnership.propertyOwners.${fieldsIndex}.${name}`}
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel className="sr-only">{label}</FormLabel>
+                          <FormLabel className="text-xs">{label}</FormLabel>
                           <FormControl>
                             <Input placeholder={label} type={type} {...field} />
                           </FormControl>
@@ -110,7 +110,7 @@ export const PropertyOwnershipStep: FC<{
                   ))}
                 </div>
                 <Button
-                  className="text-destructive group h-9 hover:bg-transparent"
+                  className="text-destructive group md:absolute md:top-10  md:-right-14 h-9 hover:bg-transparent"
                   onClick={() => {
                     remove(fieldsIndex);
                   }}

@@ -1,4 +1,6 @@
 import type { FC } from "react";
+import { unitFields, type createPropertyFormSchema } from "./constants";
+import { Step } from "./step-wrapper";
 import { PlusIcon, X } from "lucide-react";
 import type { UseFormReturn } from "react-hook-form";
 import { useFieldArray } from "react-hook-form";
@@ -12,8 +14,6 @@ import {
   Button,
 } from "ui";
 import type * as z from "zod";
-import { Step } from "./step-wrapper";
-import { unitFields, type createPropertyFormSchema } from "./constants";
 
 export const PropertyUnitsStep: FC<{
   form: UseFormReturn<z.infer<typeof createPropertyFormSchema>>;
@@ -29,65 +29,70 @@ export const PropertyUnitsStep: FC<{
         description="Please add the units for this property"
         title="Property Units"
       >
-        <div className="mt-4">
-          {fields.map((item, fieldsIndex) => (
-            <div
-              className="flex flex-col md:flex-row md:items-end gap-2 animate-in fade-in slide-in-from-top-1"
-              key={item.id}
-            >
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4">
-                {unitFields.map(({ name, label, type }) => (
-                  <FormField
-                    control={form.control}
-                    key={name}
-                    name={`units.${fieldsIndex}.name`}
-                    render={() => (
-                      <FormItem>
-                        <FormLabel className="sr-only">{label}</FormLabel>
-                        <FormControl>
-                          <Input placeholder={label} type={type} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                ))}
-              </div>
+        <ul className="mt-4">
+          <div className="divide-y">
+            {fields.map((item, fieldsIndex) => (
+              <li
+                className="animate-in fade-in slide-in-from-top-1 flex flex-col gap-2 gap-y-2 pb-4 pt-2 md:flex-row md:items-end"
+                key={item.id}
+              >
+                <div className="grid grid-cols-2 gap-x-4 md:grid-cols-4">
+                  {unitFields.map(({ name, label, type }) => (
+                    <FormField
+                      control={form.control}
+                      key={name}
+                      name={`units.${fieldsIndex}.${name}`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-xs">{label}</FormLabel>
+                          <FormControl>
+                            <Input placeholder={label} type={type} {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  ))}
+                </div>
+                <Button
+                  className="text-destructive group mt-2 h-9 hover:bg-transparent md:mt-2"
+                  onClick={() => {
+                    remove(fieldsIndex);
+                  }}
+                  size="sm"
+                  type="button"
+                  variant="outline"
+                >
+                  <span className="mr-2 md:sr-only">Remove unit</span>
+                  <X className="group-hover:text-primary h-4 w-4 transition-colors" />
+                </Button>
+              </li>
+            ))}
+
+            <div className="mt-4">
               <Button
-                className="group text-destructive hover:bg-transparent h-9"
+                className="flex w-full gap-x-2"
                 onClick={() => {
-                  remove(fieldsIndex);
+                  append({
+                    name: "",
+                    bedrooms: "",
+                    bathrooms: "",
+                    rent: "",
+                  });
                 }}
                 size="sm"
                 type="button"
-                variant="outline"
+                variant="secondary"
               >
-                <span className="md:sr-only mr-2">Remove unit</span>
-                <X className="h-4 w-4 transition-colors group-hover:text-primary" />
+                <PlusIcon
+                  className="h-4 w-4 flex-shrink-0"
+                  aria-hidden="true"
+                />
+                Add Unit
               </Button>
             </div>
-          ))}
-
-          <div className="mt-4">
-            <Button
-              className="flex w-full gap-x-2"
-              onClick={() => {
-                append({
-                  name: "",
-                  bedrooms: 0,
-                  bathrooms: 0,
-                  rent: 0,
-                });
-              }}
-              size="sm"
-              type="button"
-              variant="secondary"
-            >
-              <PlusIcon className="h-4 w-4 flex-shrink-0" />
-              Add Unit
-            </Button>
           </div>
-        </div>
+        </ul>
       </Step>
     </div>
   );

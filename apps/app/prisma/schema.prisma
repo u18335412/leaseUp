@@ -10,8 +10,7 @@ datasource db {
 model Property {
   id              String              @id @default(uuid())
   name            String
-  streetNumber    String
-  streetName      String
+  street          String
   city            String
   province        String
   zip             String

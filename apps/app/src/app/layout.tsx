@@ -5,6 +5,7 @@ import "../styles/globals.css";
 import Layout from "@/components/layout";
 import { TRPCReactProvider } from "@/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
+import { GeistSans } from "geist/font";
 import { Toaster } from "react-hot-toast";
 
 const font = Inter({ subsets: ["latin"] });
@@ -22,14 +23,14 @@ export default function RootLayout({
 }): JSX.Element {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <TRPCReactProvider headers={headers()}>
-          <body className={font.className}>
+      <TRPCReactProvider headers={headers()}>
+        <html lang="en">
+          <body className={GeistSans.className}>
             <Layout>{children}</Layout>
             <Toaster position="top-right" />
           </body>
-        </TRPCReactProvider>
-      </html>
+        </html>
+      </TRPCReactProvider>
     </ClerkProvider>
   );
 }

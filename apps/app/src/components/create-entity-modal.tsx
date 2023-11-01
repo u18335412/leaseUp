@@ -76,7 +76,7 @@ export const CreateEntityModal: FC = () => {
               type="button"
             >
               <Card className="h-full">
-                <CardHeader className="flex flex-row items-center">
+                <CardHeader className="flex flex-row gap-x-4 items-center">
                   <div>
                     <CardTitle>{entity.name}</CardTitle>
                     <CardDescription className="mt-1">

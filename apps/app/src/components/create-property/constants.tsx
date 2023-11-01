@@ -79,43 +79,40 @@ const createPropertyFormSchema = z.object({
     },
   ),
   propertyDetails: z.object({
-    name: z.string().min(2, {
-      message: "Name must be at least 2 characters.",
+    name: z.string().min(1, {
+      message: "Required.",
     }),
-    streetName: z.string().min(2, {
-      message: "Street must be at least 2 characters.",
+    street: z.string().min(1, {
+      message: "Required.",
     }),
-    streetNumber: z.string().min(1, {
-      message: "Street number must be at least 1 characters.",
+    city: z.string().min(1, {
+      message: "Required.",
     }),
-    city: z.string().min(2, {
-      message: "City must be at least 2 characters.",
+    province: z.string().min(1, {
+      message: "Required.",
     }),
-    province: z.string().min(2, {
-      message: "Province must be at least 2 characters.",
+    zip: z.string().min(1, {
+      message: "Required.",
     }),
-    zip: z.string().min(2, {
-      message: "Post code must be at least 2 characters.",
-    }),
-    country: z.string().min(2, {
-      message: "Country must be at least 2 characters.",
+    country: z.string().min(1, {
+      message: "Required.",
     }),
   }),
   units: z
     .array(
       z.object({
-        name: z.string().min(2, {
-          message: "Unit name must be at least 2 characters.",
+        name: z.string().min(1, {
+          message: "Required.",
         }),
-        rent: z.number().min(1, {
-          message: "Rent must be at least 1.",
+        rent: z.string().min(1, {
+          message: "Required.",
         }),
 
-        bedrooms: z.number().min(1, {
-          message: "Bedrooms must be at least 1.",
+        bedrooms: z.string().min(1, {
+          message: "Required.",
         }),
-        bathrooms: z.number().min(1, {
-          message: "Bathrooms must be at least 1.",
+        bathrooms: z.string().min(1, {
+          message: "Required.",
         }),
       }),
     )
@@ -125,17 +122,17 @@ const createPropertyFormSchema = z.object({
       ownershipType: z.enum(["OWNED", "SOMEONE_ELSE"]),
       propertyOwners: z.array(
         z.object({
-          firstName: z.string().min(2, {
-            message: "First name must be at least 2 characters.",
+          firstName: z.string().min(1, {
+            message: "Required.",
           }),
-          lastName: z.string().min(2, {
-            message: "Last name must be at least 2 characters.",
+          lastName: z.string().min(1, {
+            message: "Required.",
           }),
           email: z.string().email({
-            message: "Please enter a valid email address.",
+            message: "Required.",
           }),
           percentageOwned: z.string().min(1, {
-            message: "Percentage owned must be at least 1.",
+            message: "Required.",
           }),
         }),
       ),
@@ -160,14 +157,8 @@ const formFields = [
     placeholder: "Property at somewhere",
   },
   {
-    label: "Street Number",
-    name: "propertyDetails.streetNumber",
-    type: "text",
-    placeholder: "6692",
-  },
-  {
-    label: "Street Name",
-    name: "propertyDetails.streetName",
+    label: "Street",
+    name: "propertyDetails.street",
     type: "text",
     placeholder: "Tranquility Street",
   },
@@ -215,8 +206,8 @@ const ownerFields = [
   },
   {
     name: "percentageOwned",
-    label: "Phone",
-    type: "text",
+    label: "Percentage Owned",
+    type: "number",
   },
 ] as const;
 

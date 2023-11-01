@@ -55,12 +55,9 @@ const CreateProperty: NextPage = () => {
 
     propertyMutation.mutate(
       {
-        name: _data.propertyDetails.name,
-        streetNumber: _data.propertyDetails.streetNumber,
-        streetName: _data.propertyDetails.streetName,
-        zip: _data.propertyDetails.zip,
-        province: _data.propertyDetails.province,
-        city: _data.propertyDetails.city,
+        ..._data.propertyDetails,
+        units: _data.units,
+        ..._data.propertyOwnership.propertyOwners,
       },
       {
         onSuccess: () => {
