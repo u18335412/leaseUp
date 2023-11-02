@@ -51,13 +51,11 @@ const CreateProperty: NextPage = () => {
   const onSubmit: SubmitHandler<z.infer<typeof createPropertyFormSchema>> = (
     _data,
   ) => {
-    alert(JSON.stringify(_data));
-
     propertyMutation.mutate(
       {
         ..._data.propertyDetails,
         units: _data.units,
-        ..._data.propertyOwnership.propertyOwners,
+        owners: [..._data.propertyOwnership.propertyOwners],
       },
       {
         onSuccess: () => {

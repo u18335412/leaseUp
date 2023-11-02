@@ -6,7 +6,8 @@
     "sourceType": "module"
   },
   "rules": {
-    "react/function-component-definition": "off"
+    "react/function-component-definition": "off",
+    "react/jsx-sort-props": "error"
   },
   "settings": {
     "react": {

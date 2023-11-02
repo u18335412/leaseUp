@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Outfit } from "next/font/google";
 import { headers } from "next/headers";
 import "../styles/globals.css";
 import Layout from "@/components/layout";
@@ -8,7 +8,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { GeistSans } from "geist/font";
 import { Toaster } from "react-hot-toast";
 
-const font = Inter({ subsets: ["latin"] });
+const font = Outfit({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "LeaseUp",
@@ -25,7 +25,7 @@ export default function RootLayout({
     <ClerkProvider>
       <TRPCReactProvider headers={headers()}>
         <html lang="en">
-          <body className={GeistSans.className}>
+          <body className={font.className}>
             <Layout>{children}</Layout>
             <Toaster position="top-right" />
           </body>

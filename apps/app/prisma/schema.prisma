@@ -25,19 +25,21 @@ model Property {
 }
 
 model Unit {
-  id             String   @id @default(uuid())
+  id             String        @id @default(uuid())
   name           String
   propertyId     String
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @default(now()) @updatedAt
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @default(now()) @updatedAt
   tenantId       String?
-  furnished      Boolean  @default(false)
-  occupied       Boolean  @default(false)
-  petsAllowed    Boolean  @default(false)
-  smokingAllowed Boolean  @default(false)
+  furnished      Boolean       @default(false)
+  occupied       Boolean       @default(false)
+  petsAllowed    Boolean       @default(false)
+  smokingAllowed Boolean       @default(false)
   marketRent     Float
-  property       Property @relation(fields: [propertyId], references: [id])
-  Tenant         Tenant?  @relation(fields: [tenantId], references: [id])
+  property       Property      @relation(fields: [propertyId], references: [id])
+  Tenant         Tenant?       @relation(fields: [tenantId], references: [id])
+  UnitTenants    UnitTenants[]
+  Lease          Lease[]
 }
 
 model PropertyOwner {
@@ -60,21 +62,51 @@ model PropertyOwnerInvitation {
 }
 
 model Tenant {
+  id          String        @id @default(uuid())
+  firstName   String
+  lastName    String
+  email       String
+  phone       String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @default(now()) @updatedAt
+  Unit        Unit[]
+  UnitTenants UnitTenants[]
+}
+
+model UnitTenants {
   id        String   @id @default(uuid())
-  firstName String
-  lastName  String
-  email     String
-  phone     String
+  unitId    String
+  tenantId  String
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
-  Unit      Unit[]
+  Unit      Unit     @relation(fields: [unitId], references: [id])
+  Tenant    Tenant   @relation(fields: [tenantId], references: [id])
+}
+
+model Lease {
+  id        String   @id @default(uuid())
+  unitId    String
+  tenantId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  Unit      Unit     @relation(fields: [unitId], references: [id])
 }
 
 model User {
-  clerkId   String   @id
+  id        String   @id @default(uuid())
+  clerkId   String?
   type      Role     @default(OWNER)
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+}
+
+model Files {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  url         String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
 }
 
 enum Role {
@@ -95,4 +127,9 @@ enum PropertyDescription {
   HOUSE
   TOWNHOUSE
   OTHER
+}
+
+enum LeaseType {
+  FIXED
+  MONTH_TO_MONTH
 }

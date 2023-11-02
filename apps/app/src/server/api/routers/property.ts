@@ -49,9 +49,15 @@ export const propertyRouter = createTRPCRouter({
         input,
         ctx: ctx.auth,
       });
-      // return ctx.prisma.property.create({
-      //   data: {
-      //   },
-      // });
+      await ctx.prisma.property.create({
+        data: {
+          name: input.name,
+          street: input.street,
+          city: input.city,
+          province: input.province,
+          zip: input.zip,
+          country: input.country,
+        },
+      });
     }),
 });

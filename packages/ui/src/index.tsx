@@ -1,4 +1,5 @@
 export * from './alert';
+export * from './badge';
 export * from './card';
 export * from './command';
 export * from './button';
@@ -9,6 +10,7 @@ export * from './label';
 export * from './form';
 export * from './radio';
 export * from './tabs';
+export * from './table';
 export * from './select';
 export * from './separator';
 export * from './scroll-area';
