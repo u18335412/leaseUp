@@ -7,8 +7,14 @@ import {
   PageHeaderDescription,
   PageHeaderHeading,
 } from "@/components/page-heading";
-import { KanbanSquare, DoorOpen, User2, Users, File } from "lucide-react";
-import { Tabs, TabsList, TabsTrigger, buttonVariants } from "ui";
+import {
+  KanbanSquare,
+  DoorOpen,
+  User2,
+  Users,
+  File,
+} from "lucide-react";
+import { ScrollArea, Tabs, TabsList, TabsTrigger } from "ui";
 
 const tabs = [
   {
@@ -52,11 +58,15 @@ const Layout = ({ children }) => {
         </PageHeaderDescription>
       </PageHeader>
 
-      <div className="mt-6">
-        <Tabs defaultValue={currentTab ? currentTab : "overview"}>
+      <Tabs defaultValue={currentTab ? currentTab : "overview"}>
+        <ScrollArea className="mt-6 w-screen">
           <TabsList>
             {tabs.map((item) => (
-              <TabsTrigger value={item.name.toLowerCase()} asChild>
+              <TabsTrigger
+                key={item.name}
+                value={item.name.toLowerCase()}
+                asChild
+              >
                 <Link href={item.link}>
                   <item.icon
                     className="text-muted-foreground mr-2 h-4 w-4 shrink-0"
@@ -67,8 +77,8 @@ const Layout = ({ children }) => {
               </TabsTrigger>
             ))}
           </TabsList>
-        </Tabs>
-      </div>
+        </ScrollArea>
+      </Tabs>
 
       <div className="mt-6">{children}</div>
     </div>

@@ -57,6 +57,7 @@ export const propertyRouter = createTRPCRouter({
           province: input.province,
           zip: input.zip,
           country: input.country,
+          propertyOwnerId: ctx.auth.userId as string,
         },
       });
     }),

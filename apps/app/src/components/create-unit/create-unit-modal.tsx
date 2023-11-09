@@ -106,32 +106,6 @@ export function CreateUnit(): ReactNode {
                   className="grid grid-cols-4 gap-4"
                   onSubmit={form.handleSubmit(handleSubmit)}
                 >
-                  <FormField
-                    control={form.control}
-                    name="propertyId"
-                    render={({ field }) => (
-                      <FormItem className="col-span-4">
-                        <FormLabel>Property</FormLabel>
-                        <Select
-                          defaultValue={field.value}
-                          onValueChange={field.onChange}
-                        >
-                          <FormControl>
-                            <SelectTrigger>
-                              <SelectValue placeholder="Select the property the unit belongs to." />
-                            </SelectTrigger>
-                          </FormControl>
-                          <SelectContent>
-                            {dummyProperties.map((property) => (
-                              <SelectItem key={property} value={property}>
-                                {property}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </FormItem>
-                    )}
-                  />
                   {createUnitFormFields.map(({ name, label, type }) => {
                     return (
                       <FormField
@@ -150,7 +124,7 @@ export function CreateUnit(): ReactNode {
                       />
                     );
                   })}
-                  <DialogFooter className="col-span-4">
+                  <DialogFooter className="col-span-4 gap-2">
                     <DialogDismiss asChild>
                       <Button size="sm" type="button" variant="outline">
                         Cancel

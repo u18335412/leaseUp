@@ -55,8 +55,9 @@ export const PropertyOwnershipStep: FC<{
                       <propertyType.icon className="h-4 w-4 text-inherit" />
                       <FormControl>
                         <RadioGroupItem
-                          className="absolute left-0 top-2 h-full w-full cursor-pointer rounded-md opacity-0"
+                          className="absolute left-0 top-0 h-full w-full cursor-pointer rounded-md border-0 opacity-0"
                           value={propertyType.name}
+                          disabled={propertyType.name === "SOMEONE_ELSE"}
                         />
                       </FormControl>
                       {propertyType.name === field.value && (
@@ -110,7 +111,7 @@ export const PropertyOwnershipStep: FC<{
                   ))}
                 </div>
                 <Button
-                  className="text-destructive group md:absolute md:top-10  md:-right-14 h-9 hover:bg-transparent"
+                  className="text-destructive group h-9 hover:bg-transparent  md:absolute md:-right-14 md:top-10"
                   onClick={() => {
                     remove(fieldsIndex);
                   }}

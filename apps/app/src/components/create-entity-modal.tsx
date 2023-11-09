@@ -1,6 +1,6 @@
-import { Plus, DoorOpen, FileText, Home, User } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useRef, type FC } from "react";
+import { useRouter } from "next/navigation";
+import { Plus, DoorOpen, FileText, Home, User } from "lucide-react";
 import {
   Button,
   Card,
@@ -52,15 +52,15 @@ export const CreateEntityModal: FC = () => {
     <Dialog>
       <DialogTrigger asChild>
         <Button className="flex w-full gap-x-2">
-          <Plus className="h-4 w-4 shrink-0" />
-          Create Entity
+          <Plus aria-hidden="true" className="h-4 w-4 shrink-0" />
+          Create New
         </Button>
       </DialogTrigger>
       <DialogContent className=" max-w-xl">
         <DialogHeader>
           <DialogTitle>Create Something New</DialogTitle>
           <DialogDescription>
-            Please select the type of entity you would like to create.
+            Please select what you would like to create.
           </DialogDescription>
         </DialogHeader>
 
@@ -75,18 +75,18 @@ export const CreateEntityModal: FC = () => {
               }}
               type="button"
             >
-              <Card className="h-full">
-                <CardHeader className="flex flex-row gap-x-4 items-center">
+              <Card className="h-full border-none">
+                <CardHeader className="flex flex-row items-center gap-x-4">
                   <div>
                     <CardTitle>{entity.name}</CardTitle>
                     <CardDescription className="mt-1">
                       {entity.description}
                     </CardDescription>
                   </div>
-                  <span className="grid h-10 w-10 shrink-0 place-content-center rounded-full bg-primary/10 ">
+                  <span className="bg-primary/10 grid h-10 w-10 shrink-0 place-content-center rounded-full ">
                     <entity.icon
                       aria-hidden="true"
-                      className="h-5 w-5 shrink-0 text-primary"
+                      className="text-primary h-5 w-5 shrink-0"
                     />
                   </span>
                 </CardHeader>
@@ -97,7 +97,7 @@ export const CreateEntityModal: FC = () => {
 
         <DialogFooter>
           <DialogDismiss asChild ref={closeButtonRef}>
-            <Button variant="secondary">Cancel</Button>
+            <Button variant="secondary" size="sm">Cancel</Button>
           </DialogDismiss>
         </DialogFooter>
       </DialogContent>

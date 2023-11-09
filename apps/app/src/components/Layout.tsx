@@ -1,7 +1,11 @@
 "use client";
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion -- allow null assertion */
-
+import { useState, type ReactNode } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { CreateEntityModal } from "./create-entity-modal";
 import { UserButton } from "@clerk/nextjs";
 import { cn } from "lib";
 import {
@@ -15,11 +19,7 @@ import {
   MessageSquarePlus,
   Info,
 } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import logoImage from "public/logo.png";
-import { useState, type ReactNode } from "react";
 import {
   Button,
   CommandDialog,
@@ -31,7 +31,6 @@ import {
   CommandSeparator,
   Separator,
 } from "ui";
-import { CreateEntityModal } from "./create-entity-modal";
 
 const navigation = [
   {
@@ -100,13 +99,13 @@ export default function Layout({
                         className={cn(
                           "group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold leading-6",
                           {
-                            "bg-muted/50 font-bold text-primary": isCurrentUrl(
+                            "bg-muted/50 text-primary font-bold": isCurrentUrl(
                               item.href,
-                              path!
+                              path!,
                             ),
-                            "text-gray-700 transition-all hover:bg-gray-50 hover:text-primary":
+                            "hover:text-primary text-gray-700 transition-all hover:bg-gray-50":
                               !isCurrentUrl(item.href, path!),
-                          }
+                          },
                         )}
                         href={item.href}
                       >
@@ -131,14 +130,14 @@ export default function Layout({
             <span className="flex items-center gap-x-2">
               <Info
                 aria-hidden="true"
-                className="h-4 w-4 text-muted-foreground"
+                className="text-muted-foreground h-4 w-4"
               />
               Help Center
             </span>
             <span className="flex items-center gap-x-2">
               <MessageSquarePlus
                 aria-hidden="true"
-                className="h-4 w-4 text-muted-foreground"
+                className="text-muted-foreground h-4 w-4"
               />
               Provide Feedback
             </span>
@@ -146,18 +145,18 @@ export default function Layout({
         </div>
       </div>
 
-      <nav className="fixed bottom-0 left-0 right-0 md:hidden">
-        <ul className="flex justify-between bg-white w-full py-2 px-4 text-primary">
+      <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white md:hidden">
+        <ul className="text-primary flex w-full justify-between bg-white px-4 py-2">
           {navigation.map((item) => (
             <li key={item.name} className="transition-all">
               <Link
-                className="flex flex-col justify-center items-center"
+                className="flex flex-col items-center justify-center"
                 href={item.href}
               >
                 <span className="rounded-full border p-2">
                   <item.icon
                     aria-hidden="true"
-                    className="h-4 w-4 text-primary"
+                    className="text-primary h-4 w-4"
                   />
                 </span>
                 <span
@@ -176,7 +175,7 @@ export default function Layout({
       <div className="bg-gray-100 lg:pl-72">
         <div className="z-40 lg:mx-auto lg:max-w-7xl">
           <div className="flex h-16 items-center gap-x-4 sm:gap-x-6 sm:px-6 lg:px-0 lg:shadow-none ">
-            <div className="py-2 flex items-center gap-x-2 flex-1 self-stretch bg-white px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-1 items-center gap-x-2 self-stretch bg-white px-4 py-2 sm:px-6 lg:px-8">
               <div className="relative flex flex-1">
                 <label className="sr-only" htmlFor="search-field">
                   Search
@@ -187,10 +186,11 @@ export default function Layout({
                       setOpenCommand(true);
                     }}
                     variant="outline"
+                    className="flex items-center px-2 text-left"
                   >
                     <Search
                       aria-hidden="true"
-                      className="pointer-events-none mr-2 h-full w-4 text-gray-400"
+                      className="pointer-events-none mr-2 h-full w-4 shrink-0 text-gray-400"
                     />
                     <span className="line-clamp-1">
                       Search for property, lease, document etc
@@ -227,7 +227,7 @@ export default function Layout({
           </div>
         </div>
 
-        <main className="min-h-screen h-full bg-gray-100">
+        <main className="h-full min-h-screen bg-gray-100">
           <div className="mx-auto h-screen max-w-7xl rounded-b-lg bg-white px-4 pb-4 sm:px-6 lg:px-8 lg:pb-8">
             {children}
           </div>

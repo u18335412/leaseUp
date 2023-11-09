@@ -1,9 +1,6 @@
 import * as z from "zod";
 
 const createUnitSchema = z.object({
-  propertyId: z.string().min(1, {
-    message: "Please select a property",
-  }),
   name: z.string().min(1, {
     message: "Please enter a unit name",
   }),

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Outfit } from "next/font/google";
+import { Sora } from "next/font/google";
 import { headers } from "next/headers";
 import "../styles/globals.css";
 import Layout from "@/components/layout";
@@ -8,7 +8,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { GeistSans } from "geist/font";
 import { Toaster } from "react-hot-toast";
 
-const font = Outfit({ subsets: ["latin"] });
+const font = Sora({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "LeaseUp",

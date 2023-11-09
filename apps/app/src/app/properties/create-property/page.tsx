@@ -63,11 +63,14 @@ const CreateProperty: NextPage = () => {
             duration: 5000,
           });
         },
+        onError: () => {
+          toast.error("Something went wrong!\nPlease try again later", {
+            duration: 5000,
+          });
+        },
       },
     );
   };
-
-  const data = api.healthcheck.useQuery();
 
   return (
     <div>
@@ -109,6 +112,7 @@ const CreateProperty: NextPage = () => {
                   )}
                   size="sm"
                   type="submit"
+                  isLoading={propertyMutation.isLoading}
                 >
                   Create Property
                   <Save aria-hidden="true" className="h-4 w-4" />
