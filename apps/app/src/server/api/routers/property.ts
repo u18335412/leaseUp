@@ -2,16 +2,65 @@ import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { z } from "zod";
 
 export const propertyRouter = createTRPCRouter({
-  get: protectedProcedure.query(({ ctx }) => {
-    return ctx.prisma.property.findMany({
+  getById: protectedProcedure
+    .input(
+      z.object({
+        propertyId: z.string().min(1, {
+          message: "propertyId is required",
+        }),
+      }),
+    )
+    .query(({ ctx, input }) => {
+      return ctx.prisma.property.findFirstOrThrow({
+        where: {
+          id: input.propertyId,
+        },
+        select: {
+          name: true,
+          street: true,
+          city: true,
+          province: true,
+          zip: true,
+          country: true,
+          Unit: {
+            select: {
+              name: true,
+              rent: true,
+              bedrooms: true,
+              bathrooms: true,
+              deposit: true,
+              Lease: {
+                select: {
+                  id: true,
+                },
+              },
+            },
+          },
+        },
+      });
+    }),
+  getAll: protectedProcedure.query(async ({ ctx }) => {
+    const userProperties = await ctx.prisma.property.findMany({
+      where: {
+        propertyOwnerId: ctx.auth.userId as string,
+      },
       select: {
+        id: true,
         name: true,
         street: true,
         city: true,
         province: true,
         zip: true,
+        country: true,
+        createdAt: true,
+        Unit: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
+    return userProperties;
   }),
   post: protectedProcedure
     .input(
@@ -26,9 +75,9 @@ export const propertyRouter = createTRPCRouter({
           .array(
             z.object({
               name: z.string().min(1),
-              rent: z.string().min(0),
-              bedrooms: z.string().min(0),
-              bathrooms: z.string().min(0),
+              rent: z.number(),
+              bedrooms: z.number(),
+              bathrooms: z.number(),
             }),
           )
           .optional(),
@@ -58,6 +107,9 @@ export const propertyRouter = createTRPCRouter({
           zip: input.zip,
           country: input.country,
           propertyOwnerId: ctx.auth.userId as string,
+          Unit: {
+            create: input.units || [],
+          },
         },
       });
     }),

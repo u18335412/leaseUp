@@ -1,13 +1,11 @@
-"use client";
-
 import { CreateUnit } from "@/components/create-unit/create-unit-modal";
+import { api } from "@/trpc/server";
 import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu";
 import { cn } from "lib";
 import { Bath, Bed, ChevronDown, DoorOpen, Search } from "lucide-react";
 import {
   Badge,
   Button,
-  Card,
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
@@ -23,34 +21,11 @@ import {
   TableRow,
 } from "ui";
 
-const units = [
-  {
-    name: "Upstairs Unit 1",
-    status: "Vacant",
-    rent: "R3,200",
-    deposit: "R3,200",
-    bedrooms: 1,
-    bathrooms: 1,
-  },
-  {
-    name: "Upstairs Unit 2",
-    status: "Occupied",
-    rent: "R3,500",
-    deposit: "R3,200",
-    bedrooms: 1,
-    bathrooms: 1,
-  },
-  {
-    name: "Upstairs Unit 3",
-    status: "Vacant",
-    rent: "R3,200",
-    deposit: "R3,200",
-    bedrooms: 1,
-    bathrooms: 1,
-  },
-];
+export default async function Units({ params }: { params: { id: string } }) {
+  const property = await api.property.getById.query({
+    propertyId: params.id,
+  });
 
-export default function Units() {
   return (
     <div>
       <div className="mt-4 flex w-full flex-wrap items-center justify-between gap-2">
@@ -93,11 +68,11 @@ export default function Units() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {units.map((unit) => (
+            {property.Unit.map((unit) => (
               <TableRow key={unit.name}>
                 <TableCell className="w-1/3 py-4">
                   <div className="flex items-center gap-4">
-                    <span className="grid h-12 w-12 place-content-center rounded-md border p-2">
+                    <span className="grid place-content-center rounded-md border p-2 md:h-12 md:w-12">
                       <DoorOpen className="text-muted-foreground h-5 w-5 shrink-0" />
                     </span>
                     <div className="flex flex-col gap-2">
@@ -121,22 +96,22 @@ export default function Units() {
                 </TableCell>
                 <TableCell>
                   <Badge
-                    className={cn({
-                      "bg-lime-50 text-lime-700": unit.status === "Occupied",
-                      "bg-rose-50 text-rose-700": unit.status === "Vacant",
-                    })}
+                    variant={unit.Lease.length > 0 ? "default" : "destructive"}
+                    className="bg-opacity-10"
                   >
-                    {unit.status}
+                    {unit.Lease.length > 0 ? "Occupied" : "Vacant"}
                   </Badge>
                 </TableCell>
                 <TableCell>
-                  <span className="font-semibold">{unit.rent}</span>
+                  <span className="w-full text-right font-semibold">
+                    R {unit.rent}
+                  </span>
                 </TableCell>
                 <TableCell>
                   <span className="font-semibold">{unit.deposit}</span>
                 </TableCell>
                 <TableCell>
-                  <Button variant="outline" size="sm">
+                  <Button variant="secondary" size="sm">
                     Actions
                   </Button>
                 </TableCell>

@@ -14,4 +14,5 @@ export * from "./tabs";
 export * from "./table";
 export * from "./select";
 export * from "./separator";
+export * from "./skeleton";
 export * from "./scroll-area";

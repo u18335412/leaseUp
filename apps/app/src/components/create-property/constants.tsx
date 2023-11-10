@@ -104,14 +104,14 @@ const createPropertyFormSchema = z.object({
         name: z.string().min(1, {
           message: "Required.",
         }),
-        rent: z.string().min(1, {
+        rent: z.coerce.number().min(1, {
           message: "Required.",
         }),
 
-        bedrooms: z.string().min(1, {
+        bedrooms: z.coerce.number().min(1, {
           message: "Required.",
         }),
-        bathrooms: z.string().min(1, {
+        bathrooms: z.coerce.number().min(1, {
           message: "Required.",
         }),
       }),
