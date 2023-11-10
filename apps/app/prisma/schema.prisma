@@ -25,21 +25,21 @@ model Property {
 }
 
 model Unit {
-  id                String   @id @default(uuid())
-  name              String
-  propertyId        String
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @default(now()) @updatedAt
-  tenantId          String?
-  numberOfBedrooms  Int
-  numberOfBathrooms Int
-  furnished         Boolean  @default(false)
-  occupied          Boolean  @default(false)
-  petsAllowed       Boolean  @default(false)
-  smokingAllowed    Boolean  @default(false)
-  marketRent        Float
-  property          Property @relation(fields: [propertyId], references: [id])
-  leaseId           String?
+  id             String   @id @default(uuid())
+  name           String
+  propertyId     String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now()) @updatedAt
+  bathrooms      Int
+  bedrooms       Int
+  furnished      Boolean  @default(false)
+  petsAllowed    Boolean  @default(false)
+  smokingAllowed Boolean  @default(false)
+  rent           Float    @default(0)
+  deposit        Float    @default(0)
+  leaseId        String?
+  property       Property @relation(fields: [propertyId], references: [id])
+  Lease          Lease[]
 }
 
 model PropertyOwner {
@@ -64,8 +64,10 @@ model Tenant {
   id          String        @id @default(uuid())
   firstName   String
   lastName    String
-  email       String
+  email       String?
   phone       String
+  avatar      String?
+  idNumber    String?
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @default(now()) @updatedAt
   LeaseTenant LeaseTenant[]
@@ -85,9 +87,14 @@ model Lease {
   id          String        @id @default(uuid())
   unitId      String        @unique
   tenantId    String
+  type        LeaseType     @default(MONTH_TO_MONTH)
+  isActive    Boolean       @default(false)
+  startDate   DateTime      @default(now())
+  endDate     DateTime      @default(now())
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @default(now()) @updatedAt
   LeaseTenant LeaseTenant[]
+  Unit        Unit[]
 }
 
 model User {
