@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import type { NextPage } from "next";
+import { useRouter } from "next/navigation";
+import { Breadcrumb } from "@/components/breadcrumb";
 import {
   PropertyTypeStep,
   PropertyDetailsStep,
@@ -17,6 +19,7 @@ import {
 } from "@/components/page-heading";
 import { api } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { PropertyDescription, PropertyType } from "@prisma/client";
 import { cn } from "lib";
 import { ArrowLeft, ArrowRight, Save } from "lucide-react";
 import type { SubmitHandler } from "react-hook-form";
@@ -28,12 +31,13 @@ import type * as z from "zod";
 const CreateProperty: NextPage = () => {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const propertyMutation = api.property.post.useMutation();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof createPropertyFormSchema>>({
     resolver: zodResolver(createPropertyFormSchema),
     defaultValues: {
-      propertyType: "SINGLEFAMILY",
-      propertyDescription: "RESIDENTIAL",
+      propertyType: PropertyType.RESIDENTIAL,
+      propertyDescription: PropertyDescription.SINGLEFAMILY,
       propertyOwnership: {
         ownershipType: "OWNED",
         propertyOwners: [
@@ -53,12 +57,15 @@ const CreateProperty: NextPage = () => {
   ) => {
     propertyMutation.mutate(
       {
+        description: _data.propertyDescription,
         ..._data.propertyDetails,
         units: _data.units,
         owners: [..._data.propertyOwnership.propertyOwners],
       },
       {
         onSuccess: () => {
+          router.prefetch("/properties");
+          router.push("/properties");
           toast.success("Property created successfully!", {
             duration: 5000,
           });
@@ -74,12 +81,40 @@ const CreateProperty: NextPage = () => {
 
   return (
     <div>
-      <PageHeader>
-        <PageHeaderHeading>Create Property</PageHeaderHeading>
-        <PageHeaderDescription>
-          Please complete all the steps to create a new property.
-        </PageHeaderDescription>
-      </PageHeader>
+      <div>
+        <Breadcrumb
+          links={[
+            {
+              href: "/properties",
+              name: "Properties",
+              current: false,
+            },
+            {
+              href: "/properties/create-property",
+              name: "Create Property",
+              current: true,
+            },
+          ]}
+        />
+      </div>
+      <div className="flex items-baseline justify-between">
+        <PageHeader>
+          <PageHeaderHeading>Create Property</PageHeaderHeading>
+          <PageHeaderDescription>
+            Please complete all the steps to create a new property.
+          </PageHeaderDescription>
+        </PageHeader>
+        <div>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              router.back();
+            }}
+          >
+            Cancel
+          </Button>
+        </div>
+      </div>
 
       <div className="mt-10 flex items-start gap-x-10 ">
         <Progress currentStep={currentStep} setCurrentStep={setCurrentStep} />

@@ -70,6 +70,8 @@ model Tenant {
   idNumber    String?
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @default(now()) @updatedAt
+  landlordId  String
+  landlord    User          @relation(fields: [landlordId], references: [id])
   LeaseTenant LeaseTenant[]
 }
 
@@ -86,7 +88,6 @@ model LeaseTenant {
 model Lease {
   id          String        @id @default(uuid())
   unitId      String        @unique
-  tenantId    String
   type        LeaseType     @default(MONTH_TO_MONTH)
   isActive    Boolean       @default(false)
   startDate   DateTime      @default(now())
@@ -104,6 +105,7 @@ model User {
   updatedAt DateTime   @default(now()) @updatedAt
   Property  Property[]
   tenantId  String?
+  Tenant    Tenant[]
 }
 
 model Files {

@@ -1,4 +1,5 @@
 import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { PropertyDescription } from "@prisma/client";
 import { z } from "zod";
 
 export const propertyRouter = createTRPCRouter({
@@ -22,20 +23,6 @@ export const propertyRouter = createTRPCRouter({
           province: true,
           zip: true,
           country: true,
-          Unit: {
-            select: {
-              name: true,
-              rent: true,
-              bedrooms: true,
-              bathrooms: true,
-              deposit: true,
-              Lease: {
-                select: {
-                  id: true,
-                },
-              },
-            },
-          },
         },
       });
     }),
@@ -53,6 +40,7 @@ export const propertyRouter = createTRPCRouter({
         zip: true,
         country: true,
         createdAt: true,
+        type: true,
         Unit: {
           select: {
             id: true,
@@ -71,6 +59,14 @@ export const propertyRouter = createTRPCRouter({
         zip: z.string().min(1),
         province: z.string().min(1),
         country: z.string().min(1),
+        description: z.enum([
+          PropertyDescription.APARTMENT,
+          PropertyDescription.HOUSE,
+          PropertyDescription.MULTIFAMILY,
+          PropertyDescription.SINGLEFAMILY,
+          PropertyDescription.TOWNHOUSE,
+          PropertyDescription.OTHER,
+        ]),
         units: z
           .array(
             z.object({
@@ -109,6 +105,110 @@ export const propertyRouter = createTRPCRouter({
           propertyOwnerId: ctx.auth.userId as string,
           Unit: {
             create: input.units || [],
+          },
+        },
+      });
+    }),
+  getUnits: protectedProcedure
+    .input(
+      z.object({
+        propertyId: z.string().min(1, {
+          message: "property id is required",
+        }),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      return ctx.prisma.unit.findMany({
+        where: {
+          propertyId: input.propertyId,
+        },
+        select: {
+          id: true,
+          name: true,
+          rent: true,
+          bedrooms: true,
+          bathrooms: true,
+          deposit: true,
+          Lease: {
+            select: {
+              id: true,
+            },
+          },
+        },
+      });
+    }),
+  getTenants: protectedProcedure.input(z.object({})).query(async ({ ctx }) => {
+    const tenants = await ctx.prisma.tenant.findMany({
+      where: {},
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        phone: true,
+        LeaseTenant: {
+          select: {
+            Lease: {
+              select: {
+                id: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    return tenants;
+  }),
+  getLeases: protectedProcedure
+    .input(
+      z.object({
+        propertyId: z.string().min(1, {
+          message: "property id is required",
+        }),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      return await ctx.prisma.lease.findMany({
+        where: {
+          Unit: {
+            every: {
+              propertyId: input.propertyId,
+            },
+          },
+        },
+        select: {
+          id: true,
+          LeaseTenant: {
+            select: {
+              Lease: true,
+            },
+          },
+        },
+      });
+    }),
+  getDocuments: protectedProcedure
+    .input(
+      z.object({
+        propertyId: z.string().min(1, {
+          message: "property id is required",
+        }),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      return await ctx.prisma.lease.findMany({
+        where: {
+          Unit: {
+            every: {
+              propertyId: input.propertyId,
+            },
+          },
+        },
+        select: {
+          id: true,
+          LeaseTenant: {
+            select: {
+              Lease: true,
+            },
           },
         },
       });

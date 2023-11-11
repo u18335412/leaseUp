@@ -33,7 +33,7 @@ export const PropertyUnitsStep: FC<{
           <div className="divide-y">
             {fields.map((item, fieldsIndex) => (
               <li
-                className="animate-in fade-in slide-in-from-top-1 flex flex-col gap-2 gap-y-2 pb-4 pt-2 md:flex-row md:items-end relative"
+                className="animate-in fade-in slide-in-from-top-1 relative flex flex-col gap-2 gap-y-2 pb-4 pt-2 md:flex-row md:items-end"
                 key={item.id}
               >
                 <div className="grid grid-cols-2 gap-x-4 md:grid-cols-4">
@@ -75,9 +75,9 @@ export const PropertyUnitsStep: FC<{
                 onClick={() => {
                   append({
                     name: "",
-                    bedrooms: "",
-                    bathrooms: "",
-                    rent: "",
+                    bedrooms: 1,
+                    bathrooms: 1,
+                    rent: 0,
                   });
                 }}
                 size="sm"

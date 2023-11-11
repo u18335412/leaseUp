@@ -95,7 +95,7 @@ export default function Layout({
                 <ul className="-mx-2 space-y-1">
                   {navigation.map((item) => (
                     <li key={item.name}>
-                      <a
+                      <Link
                         className={cn(
                           "group flex items-center gap-x-3 rounded-md p-2 text-sm font-semibold leading-6",
                           {
@@ -118,7 +118,7 @@ export default function Layout({
                           })}
                         />
                         {item.name}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>

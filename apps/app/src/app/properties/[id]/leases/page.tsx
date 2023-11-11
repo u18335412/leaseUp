@@ -1,5 +1,5 @@
 import { api } from "@/trpc/server";
-import { Archive, ChevronDown, Plus, Search, User } from "lucide-react";
+import { ChevronDown, FileText, Plus, Search, User } from "lucide-react";
 import {
   Button,
   DropdownMenu,
@@ -15,25 +15,22 @@ import {
   Input,
 } from "ui";
 
-export default async function Documents({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const documents = {
-    length: 0,
-  };
+export default async function Leases({ params }: { params: { id: string } }) {
+  const tenants = await api.property.getLeases.query({
+    propertyId: params.id,
+  });
+
   return (
     <div>
       <div>
         <h2 className="text-lg font-bold tracking-tight">
-          Document({documents.length})
+          Leases({tenants.length})
         </h2>
         <p className="text-muted-foreground">
-          View and manage all the documents for this property.
+          View and manage all the tenants for this property.
         </p>
       </div>
-      {documents.length > 0 ? (
+      {tenants.length > 0 ? (
         <>
           <div className="mt-4 flex items-center justify-between">
             <div className="relative w-96">
@@ -42,7 +39,7 @@ export default async function Documents({
                 aria-hidden="true"
               />
               <Input
-                placeholder="Search for a document."
+                placeholder="Search for a tenant..."
                 className="w-full pl-8 pr-2"
                 type="search"
               />
@@ -51,7 +48,7 @@ export default async function Documents({
               <DropdownMenuCheckboxes />
               <Button>
                 <Plus aria-hidden="true" className="mr-2 h-4 w-4" />
-                Add Document
+                Add Tenant
               </Button>
             </div>
           </div>
@@ -62,19 +59,19 @@ export default async function Documents({
       ) : (
         <EmptyState>
           <div>
-            <Archive
+            <FileText
               aria-hidden="true"
               className="text-muted-foreground mx-auto h-10 w-10 rounded-full border p-2"
             />
           </div>
-          <EmptyStateTitle>No Documents</EmptyStateTitle>
+          <EmptyStateTitle>No Leases</EmptyStateTitle>
           <EmptyStateDescription>
-            There are no documents for this property.
+            There are no leases in this property.
           </EmptyStateDescription>
           <EmptyStateFooter>
             <Button>
               <Plus aria-hidden="true" className="mr-2 h-4 w-4" />
-              Create Document
+              Create Lease
             </Button>
           </EmptyStateFooter>
         </EmptyState>

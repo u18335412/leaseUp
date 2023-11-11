@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import type { createPropertyFormSchema } from "./constants";
-import { propertyDescription, propertyTypes } from "./constants";
+import { propertyDescriptions, propertyTypes } from "./constants";
 import { Step } from "./step-wrapper";
 import { cn } from "lib";
 import { CheckCircle2 } from "lucide-react";
@@ -23,11 +23,11 @@ export const PropertyTypeStep: FC<{
     <Step description="" title="Property type & description">
       <div className="mt-4">
         <p className="text-muted-foreground text-sm">
-          Please select a description that best describes your property.
+          Please select a type that best describes your property.
         </p>
         <FormField
           control={form.control}
-          name="propertyDescription"
+          name="propertyType"
           render={({ field }) => (
             <FormItem className="mt-3 space-y-3">
               <FormControl>
@@ -36,7 +36,7 @@ export const PropertyTypeStep: FC<{
                   defaultValue={field.value}
                   onValueChange={field.onChange}
                 >
-                  {propertyDescription.map((propertyType) => (
+                  {propertyTypes.map((propertyType) => (
                     <FormItem
                       className={cn(
                         "border-border text-muted-foreground relative flex h-10 flex-row items-center gap-x-2 space-y-0 rounded-md border px-2 transition-colors",
@@ -49,7 +49,7 @@ export const PropertyTypeStep: FC<{
                       <FormControl>
                         <RadioGroupItem
                           disabled={propertyType.name === "COMMERCIAL"}
-                          className="absolute left-0 border-none top-0 h-full w-full cursor-pointer rounded-md opacity-0"
+                          className="absolute left-0 top-0 h-full w-full cursor-pointer rounded-md border-none opacity-0"
                           value={propertyType.name}
                         />
                       </FormControl>
@@ -78,11 +78,11 @@ export const PropertyTypeStep: FC<{
       </div>
       <div className="mt-4">
         <p className=" text-muted-foreground text-sm">
-          Please select your property type.
+          Please select your property description.
         </p>
         <FormField
           control={form.control}
-          name="propertyType"
+          name="propertyDescription"
           render={({ field }) => (
             <FormItem className="mt-3 space-y-3">
               <FormControl>
@@ -91,7 +91,7 @@ export const PropertyTypeStep: FC<{
                   defaultValue={field.value}
                   onValueChange={field.onChange}
                 >
-                  {propertyTypes.map((propertyType) => (
+                  {propertyDescriptions.map((propertyType) => (
                     <FormItem
                       className={cn(
                         "border-border text-muted-foreground relative flex h-10 flex-row items-center gap-x-2 space-y-0 rounded-md border px-2 transition-colors",

@@ -1,3 +1,4 @@
+import { api } from "@/trpc/server";
 import { ChevronDown, Plus, Search, User } from "lucide-react";
 import {
   Button,
@@ -14,30 +15,48 @@ import {
   Input,
 } from "ui";
 
-export default async function Tenants() {
+export default async function Tenants({ params }: { params: { id: string } }) {
+  const tenants = await api.property.getTenants.query({
+    propertyId: params.id,
+  });
+
   return (
     <div>
-      <div className="flex items-center justify-between">
-        <div className="relative w-96">
-          <Search
-            className="text-muted-foreground pointer-events-none absolute left-2 top-2.5 h-4 w-4"
-            aria-hidden="true"
-          />
-          <Input
-            placeholder="Search for a tenant..."
-            className="w-full pl-8 pr-2"
-            type="search"
-          />
-        </div>
-        <div className="flex items-center gap-2">
-          <DropdownMenuCheckboxes />
-          <Button>
-            <Plus aria-hidden="true" className="mr-2 h-4 w-4" />
-            Add Tenant
-          </Button>
-        </div>
-      </div>
       <div>
+        <h2 className="text-lg font-bold tracking-tight">
+          Units({tenants.length})
+        </h2>
+        <p className="text-muted-foreground">
+          View and manage all the tenants for this property.
+        </p>
+      </div>
+      {tenants.length > 0 ? (
+        <>
+          <div className="mt-4 flex items-center justify-between">
+            <div className="relative w-96">
+              <Search
+                className="text-muted-foreground pointer-events-none absolute left-2 top-2.5 h-4 w-4"
+                aria-hidden="true"
+              />
+              <Input
+                placeholder="Search for a tenant..."
+                className="w-full pl-8 pr-2"
+                type="search"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <DropdownMenuCheckboxes />
+              <Button>
+                <Plus aria-hidden="true" className="mr-2 h-4 w-4" />
+                Add Tenant
+              </Button>
+            </div>
+          </div>
+          <div>
+            <div></div>
+          </div>
+        </>
+      ) : (
         <EmptyState>
           <div>
             <User
@@ -56,7 +75,7 @@ export default async function Tenants() {
             </Button>
           </EmptyStateFooter>
         </EmptyState>
-      </div>
+      )}
     </div>
   );
 }

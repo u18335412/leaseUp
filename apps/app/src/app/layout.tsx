@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
-import { Sora } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import { headers } from "next/headers";
 import "../styles/globals.css";
 import Layout from "@/components/layout";
 import { TRPCReactProvider } from "@/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
-import { GeistSans } from "geist/font";
 import { Toaster } from "react-hot-toast";
 
-const font = Sora({ subsets: ["latin"] });
+const font = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "LeaseUp",

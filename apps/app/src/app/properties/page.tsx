@@ -6,11 +6,13 @@ import {
   PageHeaderDescription,
   PageHeaderHeading,
 } from "@/components/page-heading";
+import { PropertyDropdown } from "@/components/properties/propertyDropdown";
 import { api } from "@/trpc/server";
 import { cn } from "lib";
 import {
   ChevronDown,
   Home,
+  ListFilter,
   MapPin,
   MoreVertical,
   Plus,
@@ -66,10 +68,13 @@ const Properties: NextPage = async () => {
         </div>
         <div className="flex items-center gap-4">
           <DropdownMenuCheckboxes />
-          <Button>
-            <Plus aria-hidden="true" className="mr-2 h-4 w-4" />
+          <Link
+            className={cn(buttonVariants(), "flex items-center gap-x-2")}
+            href="/properties/create-property"
+          >
+            <Plus aria-hidden="true" className="h-4 w-4" />
             Create Property
-          </Button>
+          </Link>
         </div>
       </div>
 
@@ -78,9 +83,11 @@ const Properties: NextPage = async () => {
           <Table>
             <TableHeader>
               <TableRow>
-                {["Name", "Units", "Created", "Actions"].map((header) => (
-                  <TableHead key={header}>{header}</TableHead>
-                ))}
+                {["Name", "Type", "Units", "Created", "Actions"].map(
+                  (header) => (
+                    <TableHead key={header}>{header}</TableHead>
+                  ),
+                )}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -90,7 +97,7 @@ const Properties: NextPage = async () => {
                     <div className="flex items-center gap-x-2">
                       <Home
                         aria-hidden="true"
-                        className="text-muted-foreground h-full w-10 rounded border p-2"
+                        className="text-muted-foreground h-full w-10 rounded border p-2.5"
                       />
                       <div className="flex flex-col gap-y-1">
                         <Link
@@ -99,7 +106,7 @@ const Properties: NextPage = async () => {
                         >
                           {property.name}
                         </Link>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 font-light">
                           <MapPin
                             aria-hidden="true"
                             className="text-muted-foreground h-4 w-4 shrink-0"
@@ -112,16 +119,15 @@ const Properties: NextPage = async () => {
                       </div>
                     </div>
                   </TableCell>
+                  <TableCell>
+                    <span className="capitalize">
+                      {property.type.toString().toLocaleLowerCase()}
+                    </span>
+                  </TableCell>
                   <TableCell>{property.Unit.length}</TableCell>
                   <TableCell>2 Months ago</TableCell>
                   <TableCell>
-                    <Button
-                      variant="outline"
-                      className="border-none shadow-none"
-                    >
-                      <MoreVertical aria-hidden="true" className="h-4 w-4" />
-                      <span className="sr-only">Actions</span>
-                    </Button>
+                    <PropertyDropdown propertyId={property.id} />
                   </TableCell>
                 </TableRow>
               ))}
@@ -163,11 +169,11 @@ function DropdownMenuCheckboxes() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline">
-          Filters
-          <ChevronDown
+          <ListFilter
             aria-hidden="true"
-            className="text-muted-foreground ml-2 h-4 w-4"
+            className="text-muted-foreground mr-2 h-4 w-4"
           />
+          Filters
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">

@@ -1,3 +1,4 @@
+import { PropertyDescription, PropertyType } from "@prisma/client";
 import {
   Home,
   School,
@@ -9,7 +10,7 @@ import {
 } from "lucide-react";
 import * as z from "zod";
 
-const propertyDescription = [
+const propertyTypes = [
   {
     name: "COMMERCIAL",
     label: "Commercial",
@@ -22,7 +23,7 @@ const propertyDescription = [
   },
 ] as const;
 
-const propertyTypes = [
+const propertyDescriptions = [
   {
     name: "SINGLEFAMILY",
     label: "Single Family",
@@ -66,18 +67,21 @@ const propertyOwners = [
 
 const createPropertyFormSchema = z.object({
   propertyDescription: z.enum(
-    propertyDescription.map((prop) => prop.name) as [string, ...string[]],
+    [
+      PropertyDescription.APARTMENT,
+      PropertyDescription.HOUSE,
+      PropertyDescription.MULTIFAMILY,
+      PropertyDescription.SINGLEFAMILY,
+      PropertyDescription.TOWNHOUSE,
+      PropertyDescription.OTHER,
+    ],
     {
       required_error: "Please select a property description.",
     },
   ),
-
-  propertyType: z.enum(
-    propertyTypes.map((prop) => prop.name) as [string, ...string[]],
-    {
-      required_error: "Please select a property type.",
-    },
-  ),
+  propertyType: z.enum([PropertyType.COMMERCIAL, PropertyType.RESIDENTIAL], {
+    required_error: "Please select a property type.",
+  }),
   propertyDetails: z.object({
     name: z.string().min(1, {
       message: "Required.",
@@ -235,7 +239,7 @@ const unitFields = [
 ] as const;
 
 export {
-  propertyDescription,
+  propertyDescriptions,
   propertyTypes,
   createPropertyFormSchema,
   formFields,

@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { DoorOpen, KanbanSquare, User2, Users, File } from "lucide-react";
+import { DoorOpen, KanbanSquare, User2, FileText, Archive } from "lucide-react";
 import { ScrollArea, Tabs, TabsList, TabsTrigger } from "ui";
 
 const tabs = [
   {
     name: "Overview",
     icon: KanbanSquare,
-    routeName: "",
+    routeName: "/",
   },
   {
     name: "Units",
@@ -22,13 +22,13 @@ const tabs = [
     routeName: "tenants",
   },
   {
-    name: "Owners",
-    icon: Users,
-    routeName: "owners",
+    name: "Leases",
+    icon: FileText,
+    routeName: "leases",
   },
   {
     name: "Documents",
-    icon: File,
+    icon: Archive,
     routeName: "documents",
   },
 ];

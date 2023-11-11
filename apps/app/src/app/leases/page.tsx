@@ -14,7 +14,7 @@ import {
 } from "@/components/page-heading";
 import { CreateUnit } from "@/components/create-unit/create-unit-modal";
 
-const Units: NextPage = async () => {
+const Leases: NextPage = async () => {
   return (
     <div>
       <PageHeader className="flex max-w-none flex-row items-center justify-between">
@@ -49,4 +49,4 @@ const Units: NextPage = async () => {
   );
 };
 
-export default Units;
+export default Leases;
