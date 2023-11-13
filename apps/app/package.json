@@ -57,7 +57,8 @@
     "superjson": "^1.12.4",
     "svix": "^1.13.0",
     "ui": "*",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zustand": "^4.4.6"
   },
   "devDependencies": {
     "@playwright/test": "^1.26.1",

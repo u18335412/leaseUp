@@ -107,10 +107,10 @@ const Properties: NextPage = async () => {
                           {property.name}
                         </Link>
                         <div className="flex items-center gap-2 font-light">
-                          <MapPin
+                          {/* <MapPin
                             aria-hidden="true"
                             className="text-muted-foreground h-4 w-4 shrink-0"
-                          />
+                          /> */}
                           <span>
                             {property.street}, {property.city},{" "}
                             {property.province}, {property.country}.

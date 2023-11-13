@@ -66,7 +66,7 @@ export default async function Leases({ params }: { params: { id: string } }) {
           </div>
           <EmptyStateTitle>No Leases</EmptyStateTitle>
           <EmptyStateDescription>
-            There are no leases in this property.
+            There are no leases for this this property.
           </EmptyStateDescription>
           <EmptyStateFooter>
             <Button>

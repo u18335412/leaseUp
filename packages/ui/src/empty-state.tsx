@@ -1,7 +1,7 @@
 /* eslint-disable react/function-component-definition -- This is expected */
 import type { FC } from "react";
-import { cn } from "lib";
 import { buttonVariants } from "./button";
+import { cn } from "lib";
 
 const EmptyState: FC<React.HTMLAttributes<HTMLDivElement>> = ({
   className,
@@ -66,6 +66,7 @@ const EmptyStateSecondaryAction: FC<
       }),
       className,
     )}
+    type="button"
     {...props}
   />
 );

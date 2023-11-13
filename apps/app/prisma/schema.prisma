@@ -96,6 +96,7 @@ model Lease {
   updatedAt   DateTime      @default(now()) @updatedAt
   LeaseTenant LeaseTenant[]
   Unit        Unit[]
+  Files       Files[]
 }
 
 model User {
@@ -113,6 +114,8 @@ model Files {
   name        String
   description String
   url         String
+  leaseId     String
+  Lease       Lease    @relation(fields: [leaseId], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now()) @updatedAt
 }

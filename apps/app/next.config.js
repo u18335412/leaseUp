@@ -1,6 +1,6 @@
 // @ts-check
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { env } = require('./src/server/env');
+const { env } = require("./src/server/env");
 
 /**
  * Don't be scared of the generics here.
@@ -28,5 +28,5 @@ module.exports = getConfig({
   },
   /** We run eslint as a separate task in CI */
   eslint: { ignoreDuringBuilds: !!process.env.CI },
-  transpilePackages: ['ui'],
+  transpilePackages: ["ui"],
 });
