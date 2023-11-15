@@ -44,7 +44,7 @@ export default async function Units({ params }: { params: { id: string } }) {
       {units.length > 0 ? (
         <>
           <div className="mt-4 flex w-full flex-wrap items-center justify-between gap-2">
-            <div className="mt-4 flex w-full items-center justify-between">
+            <div className="mt-4 flex w-full items-center gap-x-4 justify-between">
               <div className="relative w-96">
                 <Search
                   className="text-muted-foreground pointer-events-none absolute left-2 top-2.5 h-4 w-4"
@@ -89,11 +89,18 @@ export default async function Units({ params }: { params: { id: string } }) {
                   <TableRow key={unit.name}>
                     <TableCell className="w-1/3 py-4">
                       <div className="flex items-center gap-4">
-                        <span className="grid place-content-center rounded-md border p-2 md:h-12 md:w-12">
-                          <DoorOpen className="text-muted-foreground h-5 w-5 shrink-0" />
-                        </span>
+                        <Badge
+                          aria-hidden="true"
+                          variant="outline"
+                          className="hidden h-12 w-12 md:flex"
+                        >
+                          <DoorOpen
+                            aria-hidden="true"
+                            className="text-muted-foreground m-auto h-5 w-5"
+                          />
+                        </Badge>
                         <div className="flex flex-col gap-2">
-                          <div className="font-medium tracking-tight">
+                          <div className="line-clamp-1 font-medium tracking-tight">
                             {unit.name}
                           </div>
                           <div className="text-muted-foreground flex gap-4 text-sm">

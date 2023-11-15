@@ -1,10 +1,11 @@
 "use client";
 
+import type { ReactNode } from "react";
+import Link from "next/link";
+import { createUnitSchema, createUnitFormFields } from "./constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "lib";
 import { Plus } from "lucide-react";
-import Link from "next/link";
-import type { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import {
   Alert,
@@ -26,15 +27,9 @@ import {
   FormLabel,
   FormMessage,
   Input,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
   DialogDismiss,
 } from "ui";
 import type * as z from "zod";
-import { createUnitSchema, createUnitFormFields } from "./constants";
 
 /* eslint-disable @typescript-eslint/no-misused-promises -- Expected */
 
@@ -63,7 +58,7 @@ export function CreateUnit(): ReactNode {
       <DialogTrigger asChild>
         <Button className="flex gap-x-2">
           <Plus aria-hidden className="h-4 w-4" />
-          Create Unit
+          <span className="sr-only md:not-sr-only">Create Unit</span>
         </Button>
       </DialogTrigger>
       <DialogContent className=" max-w-sm">
@@ -82,7 +77,7 @@ export function CreateUnit(): ReactNode {
                     buttonVariants({
                       size: "sm",
                     }),
-                    "mt-4 flex gap-x-2"
+                    "mt-4 flex gap-x-2",
                   )}
                   href="/properties/create-property"
                 >

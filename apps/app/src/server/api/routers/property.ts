@@ -94,7 +94,7 @@ export const propertyRouter = createTRPCRouter({
         input,
         ctx: ctx.auth,
       });
-      await ctx.prisma.property.create({
+      return ctx.prisma.property.create({
         data: {
           name: input.name,
           street: input.street,

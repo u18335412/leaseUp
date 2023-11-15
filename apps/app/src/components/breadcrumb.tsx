@@ -6,7 +6,7 @@ export const Breadcrumb: FC<{
   links: { name: string; href: string; current: boolean }[];
 }> = ({ links }) => {
   return (
-    <nav className="flex pt-6" aria-label="Breadcrumb">
+    <nav className="flex pt-3 md:pt-6" aria-label="Breadcrumb">
       <ol role="list" className="flex items-center space-x-4">
         <li>
           <div>

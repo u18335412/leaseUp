@@ -1,7 +1,11 @@
 import type { FC } from "react";
+import {
+  MultiStepFormStep,
+  MultiStepFormStepDescription,
+  MultiStepFormStepTitle,
+} from "../multistep-form";
 import type { createPropertyFormSchema } from "./constants";
 import { ownerFields, propertyOwners } from "./constants";
-import { Step } from "./step-wrapper";
 import { cn } from "lib";
 import { CheckCircle2, Plus, X } from "lucide-react";
 import { useFieldArray, type UseFormReturn } from "react-hook-form";
@@ -27,10 +31,11 @@ export const PropertyOwnershipStep: FC<{
     name: "propertyOwnership.propertyOwners",
   });
   return (
-    <Step
-      description="Please fill in property ownership details."
-      title="Property Ownership"
-    >
+    <MultiStepFormStep stepIndex={4}>
+      <MultiStepFormStepTitle>Property Ownership</MultiStepFormStepTitle>
+      <MultiStepFormStepDescription>
+        Please fill in property ownership details.
+      </MultiStepFormStepDescription>
       <div className="mt-4">
         <FormField
           control={form.control}
@@ -39,7 +44,7 @@ export const PropertyOwnershipStep: FC<{
             <FormItem className="mt-3 space-y-3">
               <FormControl>
                 <RadioGroup
-                  className="grid grid-cols-2 md:grid-cols-3"
+                  className="grid grid-cols-2 gap-4 md:grid-cols-3"
                   defaultValue={field.value}
                   onValueChange={field.onChange}
                 >
@@ -150,6 +155,6 @@ export const PropertyOwnershipStep: FC<{
           </div>
         </div>
       )}
-    </Step>
+    </MultiStepFormStep>
   );
 };

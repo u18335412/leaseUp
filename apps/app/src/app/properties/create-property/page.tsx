@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { NextPage } from "next";
+import { revalidatePath } from "next/cache";
 import { useRouter } from "next/navigation";
 import { Breadcrumb } from "@/components/breadcrumb";
 import {
@@ -13,6 +14,11 @@ import {
 import { PropertyOwnershipStep } from "@/components/create-property/property-ownership-step";
 import { PropertyUnitsStep } from "@/components/create-property/property-units-step";
 import {
+  MultiStepForm,
+  MultiStepFormNextStep,
+  MultiStepFormPreviousStep,
+} from "@/components/multistep-form";
+import {
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
@@ -21,7 +27,7 @@ import { api } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PropertyDescription, PropertyType } from "@prisma/client";
 import { cn } from "lib";
-import { ArrowLeft, ArrowRight, Save } from "lucide-react";
+import { ArrowLeft, ArrowRight, Loader2, Save } from "lucide-react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -64,7 +70,7 @@ const CreateProperty: NextPage = () => {
       },
       {
         onSuccess: () => {
-          router.prefetch("/properties");
+          revalidatePath("/properties");
           router.push("/properties");
           toast.success("Property created successfully!", {
             duration: 5000,
@@ -97,78 +103,51 @@ const CreateProperty: NextPage = () => {
           ]}
         />
       </div>
-      <div className="flex items-baseline justify-between">
+      <div className="mt-2 flex items-baseline justify-between">
         <PageHeader>
           <PageHeaderHeading>Create Property</PageHeaderHeading>
-          <PageHeaderDescription>
+          <PageHeaderDescription className="hidden md:flex">
             Please complete all the steps to create a new property.
           </PageHeaderDescription>
         </PageHeader>
-        <div>
-          <Button
-            variant="secondary"
-            onClick={() => {
-              router.back();
-            }}
-          >
-            Cancel
-          </Button>
-        </div>
       </div>
 
-      <div className="mt-10 flex items-start gap-x-10 ">
+      <div className="mt-4 flex items-start gap-x-10 md:mt-10 ">
         <Progress currentStep={currentStep} setCurrentStep={setCurrentStep} />
         <div className="w-full max-w-xl">
           <Form {...form}>
-            {/* eslint-disable-next-line @typescript-eslint/no-misused-promises -- This is expected. */}
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              {currentStep === 0 && <PropertyTypeStep form={form} />}
-              {currentStep === 1 && <PropertyDetailsStep form={form} />}
-              {currentStep === 2 && <PropertyUnitsStep form={form} />}
-              {currentStep === 3 && <PropertyOwnershipStep form={form} />}
-              <div className="mt-8 flex justify-between">
-                <Button
-                  className="flex items-center gap-x-2"
-                  disabled={currentStep === 0}
-                  onClick={() => {
-                    setCurrentStep(currentStep - 1);
-                  }}
-                  size="sm"
-                  type="button"
-                  variant="outline"
-                >
-                  <ArrowLeft aria-hidden="true" className="h-4 w-4" />
-                  Back
-                </Button>
-                <Button
-                  className={cn(
-                    "flex items-center gap-x-2",
-                    currentStep !== 3 && "hidden",
+              <MultiStepForm
+                className="w-full"
+                onStepChange={(currentStep) => {
+                  setCurrentStep(currentStep);
+                }}
+              >
+                <PropertyTypeStep form={form} />
+                <PropertyDetailsStep form={form} />
+                <PropertyUnitsStep form={form} />
+                <PropertyOwnershipStep form={form} />
+                <div className="mt-8 flex w-full justify-between">
+                  <MultiStepFormPreviousStep className="flex gap-x-2">
+                    <ArrowLeft aria-hidden="true" className="h-4 w-4" />
+                    Back
+                  </MultiStepFormPreviousStep>
+                  {currentStep === 3 ? (
+                    <Button
+                      type="submit"
+                      isLoading={propertyMutation.isLoading}
+                    >
+                      Create Property
+                      <Save aria-hidden="true" className="ml-2 h-4 w-4" />
+                    </Button>
+                  ) : (
+                    <MultiStepFormNextStep className="flex gap-x-2">
+                      Next
+                      <ArrowRight aria-hidden="true" className="h-4 w-4" />
+                    </MultiStepFormNextStep>
                   )}
-                  size="sm"
-                  type="submit"
-                  isLoading={propertyMutation.isLoading}
-                >
-                  Create Property
-                  <Save aria-hidden="true" className="h-4 w-4" />
-                </Button>
-                <Button
-                  className={cn(
-                    "flex items-center gap-x-2",
-                    currentStep === 3 && "hidden",
-                  )}
-                  onClick={() => {
-                    if (currentStep < 3) {
-                      setCurrentStep(currentStep + 1);
-                    }
-                  }}
-                  size="sm"
-                  type="button"
-                >
-                  Next
-                  <ArrowRight aria-hidden="true" className="h-4 w-4" />
-                </Button>
-              </div>
+                </div>
+              </MultiStepForm>
             </form>
           </Form>
         </div>

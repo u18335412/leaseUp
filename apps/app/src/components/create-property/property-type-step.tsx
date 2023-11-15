@@ -1,4 +1,9 @@
 import type { FC } from "react";
+import {
+  MultiStepFormStep,
+  MultiStepFormStepDescription,
+  MultiStepFormStepTitle,
+} from "../multistep-form";
 import type { createPropertyFormSchema } from "./constants";
 import { propertyDescriptions, propertyTypes } from "./constants";
 import { Step } from "./step-wrapper";
@@ -20,7 +25,11 @@ export const PropertyTypeStep: FC<{
   form: UseFormReturn<z.infer<typeof createPropertyFormSchema>>;
 }> = ({ form }) => {
   return (
-    <Step description="" title="Property type & description">
+    <MultiStepFormStep stepIndex={1}>
+      <MultiStepFormStepTitle>
+        Property type & description
+      </MultiStepFormStepTitle>
+
       <div className="mt-4">
         <p className="text-muted-foreground text-sm">
           Please select a type that best describes your property.
@@ -32,7 +41,7 @@ export const PropertyTypeStep: FC<{
             <FormItem className="mt-3 space-y-3">
               <FormControl>
                 <RadioGroup
-                  className="grid grid-cols-2 md:grid-cols-3"
+                  className="grid grid-cols-2 md:grid-cols-3 gap-4"
                   defaultValue={field.value}
                   onValueChange={field.onChange}
                 >
@@ -87,7 +96,7 @@ export const PropertyTypeStep: FC<{
             <FormItem className="mt-3 space-y-3">
               <FormControl>
                 <RadioGroup
-                  className="grid grid-cols-2 md:grid-cols-3"
+                  className="grid grid-cols-2 md:grid-cols-3 gap-4"
                   defaultValue={field.value}
                   onValueChange={field.onChange}
                 >
@@ -133,6 +142,6 @@ export const PropertyTypeStep: FC<{
           )}
         />
       </div>
-    </Step>
+    </MultiStepFormStep>
   );
 };

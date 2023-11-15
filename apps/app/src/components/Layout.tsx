@@ -153,7 +153,7 @@ export default function Layout({
                 className="flex flex-col items-center justify-center"
                 href={item.href}
               >
-                <span className="rounded-full border p-2">
+                <span className="rounded-full bg-primary/10 border p-2">
                   <item.icon
                     aria-hidden="true"
                     className="text-primary h-4 w-4"

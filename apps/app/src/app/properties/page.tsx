@@ -19,6 +19,7 @@ import {
   Search,
 } from "lucide-react";
 import {
+  Badge,
   Button,
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -54,7 +55,7 @@ const Properties: NextPage = async () => {
         </div>
       </PageHeader>
 
-      <div className="mt-6 flex items-center justify-between">
+      <div className="mt-6 flex items-center justify-between gap-x-4">
         <div className="relative w-96">
           <Search
             className="text-muted-foreground pointer-events-none absolute left-2 top-2.5 h-4 w-4"
@@ -73,7 +74,7 @@ const Properties: NextPage = async () => {
             href="/properties/create-property"
           >
             <Plus aria-hidden="true" className="h-4 w-4" />
-            Create Property
+            <span className="sr-only md:not-sr-only">Create Property</span>
           </Link>
         </div>
       </div>
@@ -93,12 +94,17 @@ const Properties: NextPage = async () => {
             <TableBody>
               {properties.map((property) => (
                 <TableRow key={property.id}>
-                  <TableCell className="w-2/4 py-5">
+                  <TableCell className="w-3/4 py-5 md:w-2/4">
                     <div className="flex items-center gap-x-2">
-                      <Home
-                        aria-hidden="true"
-                        className="text-muted-foreground h-full w-10 rounded border p-2.5"
-                      />
+                      <Badge
+                        variant="outline"
+                        className="hidden h-12 w-12 md:flex"
+                      >
+                        <Home
+                          aria-hidden="true"
+                          className="text-muted-foreground m-auto h-5 w-5"
+                        />
+                      </Badge>
                       <div className="flex flex-col gap-y-1">
                         <Link
                           href={`/properties/${property.id}/`}
@@ -106,7 +112,7 @@ const Properties: NextPage = async () => {
                         >
                           {property.name}
                         </Link>
-                        <div className="flex items-center gap-2 font-light">
+                        <div className="flex items-center gap-2">
                           {/* <MapPin
                             aria-hidden="true"
                             className="text-muted-foreground h-4 w-4 shrink-0"

@@ -1,7 +1,11 @@
 import type { FC } from "react";
+import {
+  MultiStepFormStep,
+  MultiStepFormStepDescription,
+  MultiStepFormStepTitle,
+} from "../multistep-form";
 import type { createPropertyFormSchema } from "./constants";
 import { formFields } from "./constants";
-import { Step } from "./step-wrapper";
 import { cn } from "lib";
 import type { UseFormReturn } from "react-hook-form";
 import {
@@ -18,10 +22,11 @@ export const PropertyDetailsStep: FC<{
   form: UseFormReturn<z.infer<typeof createPropertyFormSchema>>;
 }> = ({ form }) => {
   return (
-    <Step
-      description="Lets fill in the property address."
-      title="Property Address"
-    >
+    <MultiStepFormStep stepIndex={2}>
+      <MultiStepFormStepTitle>Property Address</MultiStepFormStepTitle>
+      <MultiStepFormStepDescription>
+        Lets fill in the property address.
+      </MultiStepFormStepDescription>
       <div className="mt-4 grid grid-cols-4 gap-4">
         {formFields.map(({ name, label, placeholder }) => (
           <FormField
@@ -44,6 +49,6 @@ export const PropertyDetailsStep: FC<{
           />
         ))}
       </div>
-    </Step>
+    </MultiStepFormStep>
   );
 };

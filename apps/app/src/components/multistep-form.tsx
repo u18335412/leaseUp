@@ -7,7 +7,7 @@ import { buttonVariants } from "ui";
 import { StoreApi, createStore } from "zustand";
 import { useStoreWithEqualityFn } from "zustand/traditional";
 
-interface MultiStepFormState {
+interface MultiStepFormStore {
   totalSteps: number;
   currentStep: number;
   nextStep: () => void;
@@ -17,37 +17,45 @@ interface MultiStepFormState {
   setCurrentStep: (step: number) => void;
 }
 
-const StoreContext = createContext<StoreApi<MultiStepFormState> | null>(null);
+const StoreContext = createContext<StoreApi<MultiStepFormStore> | null>(null);
 
-const MultiStepForm: FC<React.HTMLAttributes<HTMLDivElement>> = ({
-  className,
-  children,
-  ...props
-}) => {
-  const storeRef = useRef<any>();
+const MultiStepForm: FC<
+  React.HTMLAttributes<HTMLDivElement> & {
+    onStepChange: (step: number) => void;
+  }
+> = ({ className, children, onStepChange, ...props }) => {
+  const storeRef = useRef<StoreApi<MultiStepFormStore>>();
   if (!storeRef.current) {
-    storeRef.current = createStore<MultiStepFormState>((set) => ({
+    storeRef.current = createStore<MultiStepFormStore>((set) => ({
       totalSteps: 0,
       currentStep: 0,
       nextStep: () =>
-        set((state) => ({
-          currentStep:
+        set((state) => {
+          const step =
             state.currentStep < state.totalSteps
               ? state.currentStep + 1
-              : state.currentStep,
-        })),
+              : state.currentStep;
+          onStepChange(step);
+          return {
+            currentStep: step,
+          };
+        }),
       previousStep: () =>
-        set((state) => ({
-          currentStep: state.currentStep === 0 ? 0 : state.currentStep - 1,
-        })),
+        set((state) => {
+          const step = state.currentStep === 0 ? 0 : state.currentStep - 1;
+          onStepChange(step);
+          return {
+            currentStep: step,
+          };
+        }),
       incrementTotalSteps: () =>
         set((state) => ({ totalSteps: state.totalSteps + 1 })),
       decrementTotalSteps: () =>
         set((state) => ({ totalSteps: state.totalSteps - 1 })),
-      setCurrentStep: (step) =>
-        set((state) => ({ currentStep: state.currentStep + step })),
+      setCurrentStep: (step) => set(() => ({ currentStep: step })),
     }));
   }
+
   return (
     <StoreContext.Provider value={storeRef.current || null}>
       <div className={cn("w-96", className)} {...props}>
@@ -84,20 +92,25 @@ const MultiStepFormStep: FC<
 
   if (stepIndex - 1 === currentStep)
     return (
-      <div className={cn("w-full", className)} {...props}>
+      <div
+        className={cn(
+          "animate-in md:fade-in slide-in-from-left-2 md:slide-in-from-left-0 w-full",
+          className,
+        )}
+        {...props}
+      >
         {children}
       </div>
     );
 };
 
-const MultiStepFormNextStep: FC<React.HTMLAttributes<HTMLButtonElement>> = ({
-  className,
-  children,
-  ...props
-}) => {
+const MultiStepFormNextStep: FC<
+  React.ButtonHTMLAttributes<HTMLButtonElement>
+> = ({ className, children, type = "button", ...props }) => {
   const { nextStep, currentStep, totalSteps } = useMultiStepForm();
   return (
     <button
+      type={type}
       disabled={currentStep === totalSteps || currentStep === totalSteps - 1}
       className={cn(buttonVariants(), className)}
       onClick={() => nextStep()}
@@ -109,11 +122,12 @@ const MultiStepFormNextStep: FC<React.HTMLAttributes<HTMLButtonElement>> = ({
 };
 
 const MultiStepFormPreviousStep: FC<
-  React.HTMLAttributes<HTMLButtonElement>
+  React.ButtonHTMLAttributes<HTMLButtonElement>
 > = ({ className, children, ...props }) => {
   const { previousStep, currentStep } = useMultiStepForm();
   return (
     <button
+      type="button"
       disabled={currentStep === 0 ? true : false}
       className={cn(
         buttonVariants({
@@ -136,7 +150,7 @@ const MultiStepFormStepTitle: FC<React.HTMLAttributes<HTMLHeadingElement>> = ({
 }) => (
   <h3
     className={cn(
-      "text-lg font-bold leading-10 tracking-tight text-black",
+      "font-bold leading-10 tracking-tight text-black md:text-lg",
       className,
     )}
     {...props}
@@ -146,7 +160,7 @@ const MultiStepFormStepTitle: FC<React.HTMLAttributes<HTMLHeadingElement>> = ({
 );
 
 const MultiStepFormStepDescription: FC<
-  React.HTMLAttributes<HTMLParagraphElement>
+  React.HtmlHTMLAttributes<HTMLParagraphElement>
 > = ({ className, ...props }) => (
   <p
     className={cn(
