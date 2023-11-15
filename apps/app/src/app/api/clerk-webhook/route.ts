@@ -80,7 +80,7 @@ export async function POST(req: Request) {
 const handleUserCreated = async (event: WebhookEvent) => {
   return await prisma.user.create({
     data: {
-      clerkId: event.data.id as string,
+      id: event.data.id as string,
     },
   });
 };
@@ -88,7 +88,7 @@ const handleUserCreated = async (event: WebhookEvent) => {
 const handleUserDeleted = async (event: WebhookEvent) => {
   return await prisma.user.delete({
     where: {
-      clerkId: event.data.id as string,
+      id: event.data.id as string,
     },
   });
 };
