@@ -70,11 +70,7 @@ const isCurrentUrl = (href: string, path: string) => {
   return path === href;
 };
 
-export default function Layout({
-  children,
-}: {
-  children: ReactNode;
-}): JSX.Element {
+export function Layout({ children }: { children: ReactNode }): JSX.Element {
   const path = usePathname();
   const [openCommand, setOpenCommand] = useState<boolean>(false);
   return (
@@ -153,7 +149,7 @@ export default function Layout({
                 className="flex flex-col items-center justify-center"
                 href={item.href}
               >
-                <span className="rounded-full bg-primary/10 border p-2">
+                <span className="bg-primary/10 rounded-full border p-2">
                   <item.icon
                     aria-hidden="true"
                     className="text-primary h-4 w-4"
