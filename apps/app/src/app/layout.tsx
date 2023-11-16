@@ -1,8 +1,10 @@
+"use clientD";
+
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import { headers } from "next/headers";
 import "../styles/globals.css";
-import { Layout } from "@/components/layout";
+import { Layout } from "@/components/default-layout";
 import { TRPCReactProvider } from "@/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "react-hot-toast";
