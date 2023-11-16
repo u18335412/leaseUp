@@ -128,7 +128,7 @@ const MultiStepFormPreviousStep: FC<
   return (
     <button
       type="button"
-      disabled={currentStep === 0 ? true : false}
+      disabled={currentStep === 0}
       className={cn(
         buttonVariants({
           variant: "outline",
