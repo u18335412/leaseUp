@@ -1,4 +1,5 @@
 import { ReactNode, Suspense } from "react";
+import { Breadcrumb } from "@/components/breadcrumb";
 import {
   PageHeader,
   PageHeaderDescription,

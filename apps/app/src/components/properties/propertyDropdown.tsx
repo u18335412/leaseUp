@@ -14,10 +14,10 @@ export const PropertyDropdown: FC<{
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="border-none shadow-none">
+        <button>
           <MoreVertical aria-hidden="true" className="h-4 w-4" />
           <span className="sr-only">Actions</span>
-        </Button>
+        </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuItem>View</DropdownMenuItem>

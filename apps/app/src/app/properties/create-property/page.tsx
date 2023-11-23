@@ -87,22 +87,7 @@ const CreateProperty: NextPage = () => {
 
   return (
     <div>
-      <div>
-        <Breadcrumb
-          links={[
-            {
-              href: "/properties",
-              name: "Properties",
-              current: false,
-            },
-            {
-              href: "/properties/create-property",
-              name: "Create Property",
-              current: true,
-            },
-          ]}
-        />
-      </div>
+      c
       <div className="mt-2 flex items-baseline justify-between">
         <PageHeader>
           <PageHeaderHeading>Create Property</PageHeaderHeading>
@@ -111,7 +96,6 @@ const CreateProperty: NextPage = () => {
           </PageHeaderDescription>
         </PageHeader>
       </div>
-
       <div className="mt-4 flex items-start gap-x-10 md:mt-10 ">
         <Progress currentStep={currentStep} setCurrentStep={setCurrentStep} />
         <div className="w-full max-w-xl">

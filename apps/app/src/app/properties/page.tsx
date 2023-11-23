@@ -9,15 +9,7 @@ import {
 import { PropertyDropdown } from "@/components/properties/propertyDropdown";
 import { api } from "@/trpc/server";
 import { cn } from "lib";
-import {
-  ChevronDown,
-  Home,
-  ListFilter,
-  MapPin,
-  MoreVertical,
-  Plus,
-  Search,
-} from "lucide-react";
+import { Home, ListFilter, Plus, Search } from "lucide-react";
 import {
   Badge,
   Button,
@@ -84,9 +76,20 @@ const Properties: NextPage = async () => {
           <Table>
             <TableHeader>
               <TableRow>
-                {["Name", "Type", "Units", "Created", "Actions"].map(
+                {(["Name", "Type", "Units", "Created", "Actions"] as const).map(
                   (header) => (
-                    <TableHead key={header}>{header}</TableHead>
+                    <TableHead
+                      key={header}
+                      className={cn({
+                        "[&>*]:sr-only": header === "Actions",
+                        "hidden md:[display:revert]":
+                          header === "Type" ||
+                          header === "Units" ||
+                          header === "Created",
+                      })}
+                    >
+                      <span>{header}</span>
+                    </TableHead>
                   ),
                 )}
               </TableRow>
@@ -108,7 +111,7 @@ const Properties: NextPage = async () => {
                       <div className="flex flex-col gap-y-1">
                         <Link
                           href={`/properties/${property.id}/`}
-                          className="font-medium"
+                          className="font-medium line-clamp-1 tracking-tight"
                         >
                           {property.name}
                         </Link>
@@ -117,7 +120,7 @@ const Properties: NextPage = async () => {
                             aria-hidden="true"
                             className="text-muted-foreground h-4 w-4 shrink-0"
                           /> */}
-                          <span>
+                          <span className="line-clamp-2 tracking-tight">
                             {property.street}, {property.city},{" "}
                             {property.province}, {property.country}.
                           </span>
@@ -125,15 +128,21 @@ const Properties: NextPage = async () => {
                       </div>
                     </div>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className="hidden md:[display:revert]">
                     <span className="capitalize">
                       {property.type.toString().toLocaleLowerCase()}
                     </span>
                   </TableCell>
-                  <TableCell>{property.Unit.length}</TableCell>
-                  <TableCell>2 Months ago</TableCell>
+                  <TableCell className="hidden md:[display:revert]">
+                    {property.Unit.length}
+                  </TableCell>
+                  <TableCell className="hidden md:[display:revert]">
+                    2 Months ago
+                  </TableCell>
                   <TableCell>
-                    <PropertyDropdown propertyId={property.id} />
+                    <div className="flex justify-end md:justify-start">
+                      <PropertyDropdown propertyId={property.id} />
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}

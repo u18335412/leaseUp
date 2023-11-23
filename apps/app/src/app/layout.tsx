@@ -1,7 +1,7 @@
 "use clientD";
 
 import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import { headers } from "next/headers";
 import "../styles/globals.css";
 import { Layout } from "@/components/default-layout";
@@ -9,7 +9,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "react-hot-toast";
 
-const font = DM_Sans({ subsets: ["latin"] });
+const font = Montserrat({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "LeaseUp",

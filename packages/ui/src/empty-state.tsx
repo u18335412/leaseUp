@@ -8,7 +8,7 @@ const EmptyState: FC<React.HTMLAttributes<HTMLDivElement>> = ({
   ...props
 }) => (
   <div
-    className={cn("grid h-96 place-content-center text-center", className)}
+    className={cn("grid md:h-96 h-52 place-content-center text-center", className)}
     {...props}
   />
 );
@@ -20,7 +20,7 @@ const EmptyStateTitle: FC<React.HTMLAttributes<HTMLHeadingElement>> = ({
 }) => (
   <h2
     className={cn(
-      "text-lg font-medium leading-10 tracking-tight text-black",
+      "text-base md:text-lg font-medium leading-10 tracking-tight text-black",
       className,
     )}
     {...props}
@@ -35,7 +35,7 @@ const EmptyStateDescription: FC<React.HTMLAttributes<HTMLParagraphElement>> = ({
 }) => (
   <p
     className={cn(
-      "text-muted-foreground max-w-xs text-base font-light leading-6",
+      "text-muted-foreground max-w-xs text-sm md:text-base font-light leading-6",
       className,
     )}
     {...props}

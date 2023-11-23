@@ -1,3 +1,4 @@
+import { Breadcrumb } from "../breadcrumb";
 import {
   PageHeaderHeading,
   PageHeaderDescription,
@@ -23,17 +24,34 @@ export const LayoutHeader = async ({ id }: { id: string }) => {
     propertyId: id,
   });
   return (
-    <PageHeader>
-      <PageHeaderHeading>{property?.name}</PageHeaderHeading>
-      <PageHeaderDescription>
-        {propertyAddress({
-          street: property?.street as string,
-          city: property?.city as string,
-          province: property?.province as string,
-          country: property?.country as string,
-        })}
-      </PageHeaderDescription>
-
-    </PageHeader>
+    <div>
+      <div>
+        <Breadcrumb
+          links={[
+            {
+              href: "/properties",
+              name: "Properties",
+              current: false,
+            },
+            {
+              href: `/properties/${id}`,
+              name: property.name,
+              current: true,
+            },
+          ]}
+        />
+      </div>
+      <PageHeader>
+        <PageHeaderHeading>{property?.name}</PageHeaderHeading>
+        <PageHeaderDescription>
+          {propertyAddress({
+            street: property?.street as string,
+            city: property?.city as string,
+            province: property?.province as string,
+            country: property?.country as string,
+          })}
+        </PageHeaderDescription>
+      </PageHeader>
+    </div>
   );
 };

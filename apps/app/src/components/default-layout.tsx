@@ -168,7 +168,7 @@ export function Layout({ children }: { children: ReactNode }): JSX.Element {
         </ul>
       </nav>
 
-      <div className="bg-gray-100 lg:pl-72">
+      <div className="bg-gray-100 h-full lg:pl-72">
         <div className="z-40 lg:mx-auto lg:max-w-7xl">
           <div className="flex h-16 items-center gap-x-4 sm:gap-x-6 sm:px-6 lg:px-0 lg:shadow-none ">
             <div className="flex flex-1 items-center gap-x-2 self-stretch bg-white px-4 py-2 sm:px-6 lg:px-8">
@@ -223,8 +223,8 @@ export function Layout({ children }: { children: ReactNode }): JSX.Element {
           </div>
         </div>
 
-        <main className="h-full min-h-screen bg-gray-100">
-          <div className="mx-auto h-screen max-w-7xl rounded-b-lg bg-white px-4 pb-4 sm:px-6 lg:px-8 lg:pb-8">
+        <main className="h-full bg-gray-100">
+          <div className="mx-auto min-h-screen h-full max-w-7xl rounded-b-lg bg-white px-4 pb-20 sm:px-6 lg:px-8 lg:pb-8">
             {children}
           </div>
         </main>

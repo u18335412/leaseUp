@@ -2,7 +2,14 @@ import { CreateUnit } from "@/components/create-unit/create-unit-modal";
 import { api } from "@/trpc/server";
 import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu";
 import { cn } from "lib";
-import { Bath, Bed, ChevronDown, DoorOpen, Search } from "lucide-react";
+import {
+  Bath,
+  Bed,
+  ChevronDown,
+  DoorOpen,
+  MoreVertical,
+  Search,
+} from "lucide-react";
 import {
   Badge,
   Button,
@@ -44,7 +51,7 @@ export default async function Units({ params }: { params: { id: string } }) {
       {units.length > 0 ? (
         <>
           <div className="mt-4 flex w-full flex-wrap items-center justify-between gap-2">
-            <div className="mt-4 flex w-full items-center gap-x-4 justify-between">
+            <div className="mt-4 flex w-full items-center justify-between gap-x-4">
               <div className="relative w-96">
                 <Search
                   className="text-muted-foreground pointer-events-none absolute left-2 top-2.5 h-4 w-4"
@@ -75,6 +82,10 @@ export default async function Units({ params }: { params: { id: string } }) {
                         {
                           "w-1/3": header === "Unit",
                           "[&>*]:sr-only": header === "Actions",
+                          "hidden md:[display:revert]":
+                            header === "Status" ||
+                            header === "Rent" ||
+                            header === "Deposit",
                         },
                         "",
                       )}
@@ -118,7 +129,7 @@ export default async function Units({ params }: { params: { id: string } }) {
                         </div>
                       </div>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="hidden md:[display:revert]">
                       <Badge
                         variant={
                           unit.Lease.length > 0 ? "default" : "destructive"
@@ -128,18 +139,24 @@ export default async function Units({ params }: { params: { id: string } }) {
                         {unit.Lease.length > 0 ? "Occupied" : "Vacant"}
                       </Badge>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="hidden md:[display:revert]">
                       <span className="w-full text-right font-semibold">
                         R {unit.rent}
                       </span>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="hidden md:[display:revert]">
                       <span className="font-semibold">{unit.deposit}</span>
                     </TableCell>
                     <TableCell>
-                      <Button variant="secondary" size="sm">
-                        Actions
-                      </Button>
+                      <div className="flex items-center justify-end md:justify-start">
+                        <button>
+                          <span className="sr-only">Actions</span>
+                          <MoreVertical
+                            aria-hidden="true"
+                            className="text-muted-foreground h-5 w-5"
+                          />
+                        </button>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))}

@@ -24,7 +24,7 @@ export default async function Tenants({ params }: { params: { id: string } }) {
     <div>
       <div>
         <h2 className="text-lg font-bold tracking-tight">
-          Units({tenants.length})
+          Tenants({tenants.length})
         </h2>
         <p className="text-muted-foreground">
           View and manage all the tenants for this property.
