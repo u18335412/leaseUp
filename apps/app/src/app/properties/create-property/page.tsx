@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import type { NextPage } from "next";
-import { revalidatePath } from "next/cache";
 import { useRouter } from "next/navigation";
 import { Breadcrumb } from "@/components/breadcrumb";
 import {
@@ -14,9 +13,9 @@ import {
 import { PropertyOwnershipStep } from "@/components/create-property/property-ownership-step";
 import { PropertyUnitsStep } from "@/components/create-property/property-units-step";
 import {
-  MultiStepForm,
-  MultiStepFormNextStep,
-  MultiStepFormPreviousStep,
+  MultiStep,
+  MultiStepNext,
+  MultiStepPrevious,
 } from "@/components/multistep-form";
 import {
   PageHeader,
@@ -26,8 +25,7 @@ import {
 import { api } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PropertyDescription, PropertyType } from "@prisma/client";
-import { cn } from "lib";
-import { ArrowLeft, ArrowRight, Loader2, Save } from "lucide-react";
+import { ArrowLeft, ArrowRight, Save } from "lucide-react";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
@@ -70,13 +68,13 @@ const CreateProperty: NextPage = () => {
       },
       {
         onSuccess: () => {
-          revalidatePath("/properties");
           router.push("/properties");
           toast.success("Property created successfully!", {
             duration: 5000,
           });
         },
-        onError: () => {
+        onError: (e) => {
+          console.log("Error, What the fuck", e);
           toast.error("Something went wrong!\nPlease try again later", {
             duration: 5000,
           });
@@ -117,7 +115,7 @@ const CreateProperty: NextPage = () => {
         <div className="w-full max-w-xl">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <MultiStepForm
+              <MultiStep
                 className="w-full"
                 onStepChange={(currentStep) => {
                   setCurrentStep(currentStep);
@@ -128,10 +126,10 @@ const CreateProperty: NextPage = () => {
                 <PropertyUnitsStep form={form} />
                 <PropertyOwnershipStep form={form} />
                 <div className="mt-8 flex w-full justify-between">
-                  <MultiStepFormPreviousStep className="flex gap-x-2">
+                  <MultiStepPrevious className="flex gap-x-2">
                     <ArrowLeft aria-hidden="true" className="h-4 w-4" />
                     Back
-                  </MultiStepFormPreviousStep>
+                  </MultiStepPrevious>
                   {currentStep === 3 ? (
                     <Button
                       type="submit"
@@ -141,13 +139,13 @@ const CreateProperty: NextPage = () => {
                       <Save aria-hidden="true" className="ml-2 h-4 w-4" />
                     </Button>
                   ) : (
-                    <MultiStepFormNextStep className="flex gap-x-2">
+                    <MultiStepNext className="flex gap-x-2">
                       Next
                       <ArrowRight aria-hidden="true" className="h-4 w-4" />
-                    </MultiStepFormNextStep>
+                    </MultiStepNext>
                   )}
                 </div>
-              </MultiStepForm>
+              </MultiStep>
             </form>
           </Form>
         </div>

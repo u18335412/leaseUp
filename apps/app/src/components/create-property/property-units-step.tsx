@@ -1,11 +1,10 @@
 import type { FC } from "react";
 import {
-  MultiStepFormStep,
-  MultiStepFormStepDescription,
-  MultiStepFormStepTitle,
+  MultiStepStep,
+  MultiStepStepDescription,
+  MultiStepStepTitle,
 } from "../multistep-form";
 import { unitFields, type createPropertyFormSchema } from "./constants";
-import { Step } from "./step-wrapper";
 import { PlusIcon, X } from "lucide-react";
 import type { UseFormReturn } from "react-hook-form";
 import { useFieldArray } from "react-hook-form";
@@ -29,11 +28,11 @@ export const PropertyUnitsStep: FC<{
   });
 
   return (
-    <MultiStepFormStep stepIndex={3}>
-      <MultiStepFormStepTitle>Property Units</MultiStepFormStepTitle>
-      <MultiStepFormStepDescription>
+    <MultiStepStep stepIndex={3}>
+      <MultiStepStepTitle>Property Units</MultiStepStepTitle>
+      <MultiStepStepDescription>
         Lets fill in the property units.
-      </MultiStepFormStepDescription>
+      </MultiStepStepDescription>
       <ul className="mt-4">
         <div className="divide-y">
           {fields.map((item, fieldsIndex) => (
@@ -95,6 +94,6 @@ export const PropertyUnitsStep: FC<{
           </div>
         </div>
       </ul>
-    </MultiStepFormStep>
+    </MultiStepStep>
   );
 };

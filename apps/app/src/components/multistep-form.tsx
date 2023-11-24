@@ -19,7 +19,7 @@ interface MultiStepFormStore {
 
 const StoreContext = createContext<StoreApi<MultiStepFormStore> | null>(null);
 
-const MultiStepForm: FC<
+const MultiStep: FC<
   React.HTMLAttributes<HTMLDivElement> & {
     onStepChange: (step: number) => void;
   }
@@ -75,7 +75,7 @@ const useMultiStepForm = () => {
   return useStoreWithEqualityFn(store);
 };
 
-const MultiStepFormStep: FC<
+const MultiStepStep: FC<
   React.HTMLAttributes<HTMLDivElement> & {
     stepIndex: number;
   }
@@ -104,7 +104,7 @@ const MultiStepFormStep: FC<
     );
 };
 
-const MultiStepFormNextStep: FC<
+const MultiStepNext: FC<
   React.ButtonHTMLAttributes<HTMLButtonElement>
 > = ({ className, children, type = "button", ...props }) => {
   const { nextStep, currentStep, totalSteps } = useMultiStepForm();
@@ -121,7 +121,7 @@ const MultiStepFormNextStep: FC<
   );
 };
 
-const MultiStepFormPreviousStep: FC<
+const MultiStepPrevious: FC<
   React.ButtonHTMLAttributes<HTMLButtonElement>
 > = ({ className, children, ...props }) => {
   const { previousStep, currentStep } = useMultiStepForm();
@@ -143,7 +143,7 @@ const MultiStepFormPreviousStep: FC<
   );
 };
 
-const MultiStepFormStepTitle: FC<React.HTMLAttributes<HTMLHeadingElement>> = ({
+const MultiStepStepTitle: FC<React.HTMLAttributes<HTMLHeadingElement>> = ({
   className,
   children,
   ...props
@@ -159,7 +159,7 @@ const MultiStepFormStepTitle: FC<React.HTMLAttributes<HTMLHeadingElement>> = ({
   </h3>
 );
 
-const MultiStepFormStepDescription: FC<
+const MultiStepStepDescription: FC<
   React.HtmlHTMLAttributes<HTMLParagraphElement>
 > = ({ className, ...props }) => (
   <p
@@ -172,10 +172,10 @@ const MultiStepFormStepDescription: FC<
 );
 
 export {
-  MultiStepForm,
-  MultiStepFormStep,
-  MultiStepFormNextStep,
-  MultiStepFormPreviousStep,
-  MultiStepFormStepTitle,
-  MultiStepFormStepDescription,
+  MultiStep,
+  MultiStepStep,
+  MultiStepNext,
+  MultiStepPrevious,
+  MultiStepStepTitle,
+  MultiStepStepDescription,
 };

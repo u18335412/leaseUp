@@ -1,12 +1,7 @@
 import type { FC } from "react";
-import {
-  MultiStepFormStep,
-  MultiStepFormStepDescription,
-  MultiStepFormStepTitle,
-} from "../multistep-form";
+import { MultiStepStep, MultiStepStepTitle } from "../multistep-form";
 import type { createPropertyFormSchema } from "./constants";
 import { propertyDescriptions, propertyTypes } from "./constants";
-import { Step } from "./step-wrapper";
 import { cn } from "lib";
 import { CheckCircle2 } from "lucide-react";
 import type { UseFormReturn } from "react-hook-form";
@@ -25,10 +20,8 @@ export const PropertyTypeStep: FC<{
   form: UseFormReturn<z.infer<typeof createPropertyFormSchema>>;
 }> = ({ form }) => {
   return (
-    <MultiStepFormStep stepIndex={1}>
-      <MultiStepFormStepTitle>
-        Property type & description
-      </MultiStepFormStepTitle>
+    <MultiStepStep stepIndex={1}>
+      <MultiStepStepTitle>Property type & description</MultiStepStepTitle>
 
       <div className="mt-4">
         <p className="text-muted-foreground text-sm">
@@ -41,7 +34,7 @@ export const PropertyTypeStep: FC<{
             <FormItem className="mt-3 space-y-3">
               <FormControl>
                 <RadioGroup
-                  className="grid grid-cols-2 md:grid-cols-3 gap-4"
+                  className="grid grid-cols-2 gap-4 md:grid-cols-3"
                   defaultValue={field.value}
                   onValueChange={field.onChange}
                 >
@@ -96,7 +89,7 @@ export const PropertyTypeStep: FC<{
             <FormItem className="mt-3 space-y-3">
               <FormControl>
                 <RadioGroup
-                  className="grid grid-cols-2 md:grid-cols-3 gap-4"
+                  className="grid grid-cols-2 gap-4 md:grid-cols-3"
                   defaultValue={field.value}
                   onValueChange={field.onChange}
                 >
@@ -142,6 +135,6 @@ export const PropertyTypeStep: FC<{
           )}
         />
       </div>
-    </MultiStepFormStep>
+    </MultiStepStep>
   );
 };

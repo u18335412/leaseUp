@@ -1,8 +1,8 @@
 import type { FC } from "react";
 import {
-  MultiStepFormStep,
-  MultiStepFormStepDescription,
-  MultiStepFormStepTitle,
+  MultiStepStep,
+  MultiStepStepDescription,
+  MultiStepStepTitle,
 } from "../multistep-form";
 import type { createPropertyFormSchema } from "./constants";
 import { formFields } from "./constants";
@@ -22,11 +22,11 @@ export const PropertyDetailsStep: FC<{
   form: UseFormReturn<z.infer<typeof createPropertyFormSchema>>;
 }> = ({ form }) => {
   return (
-    <MultiStepFormStep stepIndex={2}>
-      <MultiStepFormStepTitle>Property Address</MultiStepFormStepTitle>
-      <MultiStepFormStepDescription>
+    <MultiStepStep stepIndex={2}>
+      <MultiStepStepTitle>Property Address</MultiStepStepTitle>
+      <MultiStepStepDescription>
         Lets fill in the property address.
-      </MultiStepFormStepDescription>
+      </MultiStepStepDescription>
       <div className="mt-4 grid grid-cols-4 gap-4">
         {formFields.map(({ name, label, placeholder }) => (
           <FormField
@@ -49,6 +49,6 @@ export const PropertyDetailsStep: FC<{
           />
         ))}
       </div>
-    </MultiStepFormStep>
+    </MultiStepStep>
   );
 };

@@ -1,8 +1,8 @@
 import type { FC } from "react";
 import {
-  MultiStepFormStep,
-  MultiStepFormStepDescription,
-  MultiStepFormStepTitle,
+  MultiStepStep,
+  MultiStepStepDescription,
+  MultiStepStepTitle,
 } from "../multistep-form";
 import type { createPropertyFormSchema } from "./constants";
 import { ownerFields, propertyOwners } from "./constants";
@@ -31,11 +31,11 @@ export const PropertyOwnershipStep: FC<{
     name: "propertyOwnership.propertyOwners",
   });
   return (
-    <MultiStepFormStep stepIndex={4}>
-      <MultiStepFormStepTitle>Property Ownership</MultiStepFormStepTitle>
-      <MultiStepFormStepDescription>
+    <MultiStepStep stepIndex={4}>
+      <MultiStepStepTitle>Property Ownership</MultiStepStepTitle>
+      <MultiStepStepDescription>
         Please fill in property ownership details.
-      </MultiStepFormStepDescription>
+      </MultiStepStepDescription>
       <div className="mt-4">
         <FormField
           control={form.control}
@@ -155,6 +155,6 @@ export const PropertyOwnershipStep: FC<{
           </div>
         </div>
       )}
-    </MultiStepFormStep>
+    </MultiStepStep>
   );
 };

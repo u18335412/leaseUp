@@ -111,7 +111,7 @@ const Properties: NextPage = async () => {
                       <div className="flex flex-col gap-y-1">
                         <Link
                           href={`/properties/${property.id}/`}
-                          className="font-medium line-clamp-1 tracking-tight"
+                          className="line-clamp-1 font-medium tracking-tight"
                         >
                           {property.name}
                         </Link>
@@ -130,7 +130,7 @@ const Properties: NextPage = async () => {
                   </TableCell>
                   <TableCell className="hidden md:[display:revert]">
                     <span className="capitalize">
-                      {property.type.toString().toLocaleLowerCase()}
+                      {property.description.toString().toLocaleLowerCase()}
                     </span>
                   </TableCell>
                   <TableCell className="hidden md:[display:revert]">
