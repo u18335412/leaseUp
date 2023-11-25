@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import { Tenants } from "./tenants";
 import {
   PageHeader,
   PageHeaderDescription,
@@ -23,7 +24,7 @@ const People: NextPage = () => {
             <TabsTrigger value="owners">Owners</TabsTrigger>
           </TabsList>
           <TabsContent value="tenants">
-            <div>Tenants</div>
+            <Tenants />
           </TabsContent>
           <TabsContent value="owners">
             <div>Owners</div>

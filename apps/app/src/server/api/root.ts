@@ -1,5 +1,7 @@
-import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
+import { leaseRouter } from "./routers/lease";
 import { propertyRouter } from "./routers/property";
+import { tenantRouter } from "./routers/tenant";
+import { createTRPCRouter, publicProcedure } from "@/server/api/trpc";
 
 /**
  * This is the primary router for your server.
@@ -11,6 +13,8 @@ export const appRouter = createTRPCRouter({
     return "yay";
   }),
   property: propertyRouter,
+  tenant: tenantRouter,
+  lease: leaseRouter,
 });
 
 // export type definition of API

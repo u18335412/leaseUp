@@ -45,4 +45,31 @@ export const tenantRouter = createTRPCRouter({
     });
     return tenants;
   }),
+  post: protectedProcedure
+    .input(
+      z.object({
+        firstName: z.string().min(1, {
+          message: "First name is required",
+        }),
+        lastName: z.string().min(1, {
+          message: "Last name is required",
+        }),
+        email: z.string().optional(),
+        phone: z.string().min(1, {
+          message: "Phone is required",
+        }),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { firstName, lastName, email, phone } = input;
+      return await ctx.prisma.tenant.create({
+        data: {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          phone: phone,
+          landlordId: ctx.auth.userId as string,
+        },
+      });
+    }),
 });
