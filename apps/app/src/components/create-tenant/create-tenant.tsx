@@ -1,6 +1,6 @@
 "use client";
 
-import { FC } from "react";
+import { FC, useRef } from "react";
 import { api } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
@@ -11,6 +11,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogDismiss,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -45,12 +46,17 @@ export const CreateNewTenant: FC = () => {
     resolver: zodResolver(NewTenantFormSchema),
     defaultValues: {},
   });
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
   const onSubmit = (data: z.infer<typeof NewTenantFormSchema>) => {
     newTenantMutation.mutate(data, {
       onSuccess: () => {
         toast.success("Tenant created successfully.");
         form.reset();
+        closeButtonRef.current?.click();
+      },
+      onError: () => {
+        toast.error("Something went wrong. Please try again.");
       },
     });
   };
@@ -59,8 +65,8 @@ export const CreateNewTenant: FC = () => {
     <Dialog>
       <DialogTrigger asChild>
         <Button>
-          <Plus className="mr-2" aria-hidden="true" />
-          Create Tenant
+          <Plus className="mr-2 h-4 w-4" aria-hidden="true" />
+          <span className="sr-only">Create</span> Tenant
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -74,9 +80,7 @@ export const CreateNewTenant: FC = () => {
         <div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div>
-                
-              </div>
+              <div></div>
               <div className="grid grid-cols-2 gap-4">
                 <FormField
                   control={form.control}
@@ -134,7 +138,9 @@ export const CreateNewTenant: FC = () => {
               </div>
 
               <DialogFooter className="mt-4">
-                <Button variant="outline">Cancel</Button>
+                <DialogDismiss ref={closeButtonRef}>
+                  <Button variant="outline">Cancel</Button>
+                </DialogDismiss>
                 <Button type="submit" isLoading={newTenantMutation.isLoading}>
                   Save
                 </Button>

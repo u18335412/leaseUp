@@ -69,13 +69,13 @@ const CreateProperty: NextPage = () => {
       {
         onSuccess: () => {
           router.push("/properties");
+          router.refresh();
           toast.success("Property created successfully!", {
             duration: 5000,
           });
         },
         onError: (e) => {
-          console.log("Error, What the fuck", e);
-          toast.error("Something went wrong!\nPlease try again later", {
+          toast.error("Something went wrong. Please try again later", {
             duration: 5000,
           });
         },

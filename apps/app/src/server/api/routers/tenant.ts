@@ -36,6 +36,8 @@ export const tenantRouter = createTRPCRouter({
         firstName: true,
         lastName: true,
         email: true,
+        createdAt: true,
+        phone: true,
         LeaseTenant: {
           select: {
             Lease: true,
