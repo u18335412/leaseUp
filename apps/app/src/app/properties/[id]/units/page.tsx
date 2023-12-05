@@ -24,6 +24,7 @@ import {
   EmptyStateFooter,
   EmptyStateTitle,
   Input,
+  Separator,
   Table,
   TableBody,
   TableCell,
@@ -114,16 +115,24 @@ export default async function Units({ params }: { params: { id: string } }) {
                           <div className="line-clamp-1 font-medium tracking-tight">
                             {unit.name}
                           </div>
-                          <div className="text-muted-foreground flex gap-4 text-sm">
-                            <span className="flex items-center gap-2 font-medium">
+                          <div className="text-muted-foreground flex divide-x text-sm">
+                            <span className="flex items-center gap-2 font-medium pr-3.5">
+                              <Bed
+                                aria-hidden="true"
+                                className="bg-primary/10 text-primary h-6 w-6 shrink-0 rounded-full p-1.5"
+                              />
                               {unit.bedrooms}
-                              <Bed className="h-4 w-4 shrink-0" />
-                              <span className="">Bedrooms</span>
+                              <span className=" text-indigo-900">Bedrooms</span>
                             </span>
-                            <span className="flex items-center gap-2 font-medium">
+                            <span className="flex items-center gap-2 font-medium pl-3.5">
+                              <Bath
+                                aria-hidden="true"
+                                className="bg-primary/10 text-primary h-6 w-6 shrink-0 rounded-full p-1.5"
+                              />
                               {unit.bathrooms}
-                              <Bath className="h-4 w-4 shrink-0" />
-                              <span className="">Bathrooms</span>
+                              <span className=" text-indigo-900">
+                                Bathrooms
+                              </span>
                             </span>
                           </div>
                         </div>

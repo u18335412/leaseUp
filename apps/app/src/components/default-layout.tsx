@@ -72,11 +72,7 @@ const isCurrentUrl = (href: string, path: string) => {
   return path === href;
 };
 
-export function Layout({
-  children,
-}: {
-  children: ReactNode;
-}): Promise<JSX.Element> {
+export function Layout({ children }: { children: ReactNode }): JSX.Element {
   const path = usePathname();
   const [openCommand, setOpenCommand] = useState<boolean>(false);
 
@@ -136,13 +132,19 @@ export function Layout({
                 className="text-muted-foreground h-4 w-4"
               />
               Help Center
+              <span className=" bg-primary/10 text-primary px-1 py-0.5 text-xs font-medium">
+                Coming Soon !
+              </span>
             </span>
             <span className="flex items-center gap-x-2">
               <MessageSquarePlus
                 aria-hidden="true"
                 className="text-muted-foreground h-4 w-4"
               />
-              Provide Feedback
+              Give Feedback
+              <span className="bg-primary/10 text-primary px-1 py-0.5 text-xs font-medium">
+                Coming Soon !
+              </span>
             </span>
           </div>
         </div>

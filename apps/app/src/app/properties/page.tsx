@@ -9,7 +9,7 @@ import {
 import { PropertyDropdown } from "@/components/properties/propertyDropdown";
 import { api } from "@/trpc/server";
 import { cn } from "lib";
-import { Home, ListFilter, Plus, Search } from "lucide-react";
+import { Home, ListFilter, MapPin, Plus, Search } from "lucide-react";
 import {
   Badge,
   Button,
@@ -115,11 +115,11 @@ const Properties: NextPage = async () => {
                         >
                           {property.name}
                         </Link>
-                        <div className="flex items-center gap-2">
-                          {/* <MapPin
+                        <div className="flex items-center gap-1">
+                          <MapPin
                             aria-hidden="true"
-                            className="text-muted-foreground h-4 w-4 shrink-0"
-                          /> */}
+                            className="text-primary/70 h-4 w-4 shrink-0"
+                          />
                           <span className="line-clamp-2 tracking-tight">
                             {property.street}, {property.city},{" "}
                             {property.province}, {property.country}.

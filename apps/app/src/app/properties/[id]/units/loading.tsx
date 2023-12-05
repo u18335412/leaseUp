@@ -1,16 +1,13 @@
+import { Loader2 } from "lucide-react";
 import { Skeleton } from "ui";
 
 export default function Loading() {
   return (
-    <div>
-      {new Array(5).fill(0).map((_, i) => (
-        <div key={_} aria-hidden="true" className="flex justify-between gap-4">
-          <Skeleton className="mt-4 h-10 flex-1" />
-          <Skeleton className="mt-4 h-10 flex-1" />
-          <Skeleton className="mt-4 hidden h-10 flex-1 md:flex" />
-          <Skeleton className="mt-4 hidden h-10 flex-1 md:flex" />
-        </div>
-      ))}
+    <div className="grid h-96 place-content-center">
+      <Loader2
+        className="text-black h-5 w-5 animate-spin"
+        aria-hidden="true"
+      />
       <p className="sr-only">Loading</p>
     </div>
   );
