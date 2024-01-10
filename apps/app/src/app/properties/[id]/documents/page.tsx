@@ -72,7 +72,7 @@ export default async function Documents({
             There are no documents for this property.
           </EmptyStateDescription>
           <EmptyStateFooter>
-            <Button>
+            <Button size="sm">
               <Plus aria-hidden="true" className="mr-2 h-4 w-4" />
               Create Document
             </Button>

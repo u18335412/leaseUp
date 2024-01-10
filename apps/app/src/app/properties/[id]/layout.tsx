@@ -30,9 +30,11 @@ const Layout = async ({
   return (
     <div>
       <Suspense fallback={<LayoutHeaderSkeleton />}>
-        <LayoutHeader id={params.id} />
+        <div className="flex items-end justify-between">
+          <LayoutHeader id={params.id} />
+          <ClientTabs id={params.id} />
+        </div>
       </Suspense>
-      <ClientTabs id={params.id} />
 
       <div className="mt-6">{children}</div>
     </div>

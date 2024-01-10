@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { CreateEntityModal } from "./create-entity-modal";
-import { UserButton } from "@clerk/nextjs";
+import { SignOutButton, UserButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs";
 import { cn } from "lib";
 import {
@@ -20,6 +20,8 @@ import {
   MessageSquarePlus,
   Info,
   Bell,
+  LogOut,
+  Menu,
 } from "lucide-react";
 import logoImage from "public/logo.png";
 import {
@@ -31,6 +33,11 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
   Separator,
 } from "ui";
 
@@ -225,7 +232,7 @@ export function Layout({ children }: { children: ReactNode }): JSX.Element {
                   </CommandList>
                 </CommandDialog>
               </div>
-              <div className="flex items-center divide-x-2">
+              <div className="hidden items-center divide-x-2 md:flex">
                 <div className="flex items-center pr-4">
                   <button>
                     <Bell
@@ -237,6 +244,44 @@ export function Layout({ children }: { children: ReactNode }): JSX.Element {
                 <div className="pl-4">
                   <UserButton />
                 </div>
+              </div>
+              <div className="md:hidden">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline">
+                      <Menu
+                        aria-hidden="true"
+                        className="text-muted-foreground h-5 w-5"
+                      />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-52">
+                    <DropdownMenuItem>
+                      <div className="flex w-full justify-end">
+                        <UserButton />
+                      </div>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                      <div className="flex items-center">
+                        <Bell
+                          aria-hidden="true"
+                          className="text-primary/70 mr-2 h-4 w-4"
+                        />
+                        Notifications
+                      </div>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <div className="flex items-center">
+                        <LogOut
+                          aria-hidden="true"
+                          className="text-primary/70 mr-2 h-4 w-4"
+                        />
+                        <SignOutButton />
+                      </div>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
             </div>
           </div>

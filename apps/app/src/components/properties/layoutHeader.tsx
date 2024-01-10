@@ -4,7 +4,6 @@ import {
   PageHeaderDescription,
   PageHeader,
 } from "../page-heading";
-import { ClientTabs } from "./clientLayoutTabs";
 import { api } from "@/trpc/server";
 
 const propertyAddress = ({
@@ -42,7 +41,9 @@ export const LayoutHeader = async ({ id }: { id: string }) => {
         />
       </div>
       <PageHeader>
-        <PageHeaderHeading>{property?.name}</PageHeaderHeading>
+        <PageHeaderHeading className="md:text-lg">
+          {property?.name}
+        </PageHeaderHeading>
         <PageHeaderDescription>
           {propertyAddress({
             street: property?.street as string,

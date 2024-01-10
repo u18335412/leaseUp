@@ -69,7 +69,7 @@ export default async function Leases({ params }: { params: { id: string } }) {
             There are no leases for this this property.
           </EmptyStateDescription>
           <EmptyStateFooter>
-            <Button>
+            <Button size="sm">
               <Plus aria-hidden="true" className="mr-2 h-4 w-4" />
               Create Lease
             </Button>
