@@ -18,7 +18,7 @@ import {
   TableRow,
 } from "ui";
 
-export const Tenants: FC = async () => {
+export const Owners: FC = async () => {
   const tenants = await api.tenant.getAll.query();
   return (
     <div className="mt-6">

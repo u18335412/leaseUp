@@ -1,7 +1,7 @@
 "use clientD";
 
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import { Rubik } from "next/font/google";
 import { headers } from "next/headers";
 import "../styles/globals.css";
 import { Layout } from "@/components/default-layout";
@@ -9,7 +9,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "react-hot-toast";
 
-const font = Montserrat({ subsets: ["latin"] });
+const font = Rubik({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "LeaseUp",
@@ -28,7 +28,7 @@ export default function RootLayout({
         <html lang="en">
           <body className={font.className}>
             <Layout>{children}</Layout>
-            <Toaster position="top-right" />
+              <Toaster position="top-right" />
           </body>
         </html>
       </TRPCReactProvider>

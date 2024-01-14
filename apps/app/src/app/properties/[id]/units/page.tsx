@@ -1,15 +1,11 @@
 import { CreateUnit } from "@/components/create-unit/create-unit-modal";
+import { PageSubheading } from "@/components/page-heading";
+import { DeleteUnitModal } from "@/components/properties/delete-unit-modal ";
+import { UnitDropDown } from "@/components/properties/unit-dropdown";
 import { api } from "@/trpc/server";
 import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu";
 import { cn } from "lib";
-import {
-  Bath,
-  Bed,
-  ChevronDown,
-  DoorOpen,
-  MoreVertical,
-  Search,
-} from "lucide-react";
+import { Bath, Bed, ChevronDown, DoorOpen, Search } from "lucide-react";
 import {
   Badge,
   Button,
@@ -24,7 +20,6 @@ import {
   EmptyStateFooter,
   EmptyStateTitle,
   Input,
-  Separator,
   Table,
   TableBody,
   TableCell,
@@ -41,10 +36,8 @@ export default async function Units({ params }: { params: { id: string } }) {
   return (
     <div>
       <div>
-        <h2 className="text-lg font-bold tracking-tight">
-          Units({units.length})
-        </h2>
-        <p className="text-muted-foreground">
+        <PageSubheading>Units({units.length})</PageSubheading>
+        <p>
           View and manage all the units for this property. You can also add new
           units.
         </p>
@@ -98,77 +91,69 @@ export default async function Units({ params }: { params: { id: string } }) {
               </TableHeader>
               <TableBody>
                 {units.map((unit) => (
-                  <TableRow key={unit.name}>
-                    <TableCell className="w-1/3 py-4">
-                      <div className="flex items-center gap-4">
-                        <Badge
-                          aria-hidden="true"
-                          variant="outline"
-                          className="hidden h-12 w-12 md:flex"
-                        >
+                  <>
+                    <TableRow key={unit.name}>
+                      <TableCell className="w-1/3 py-4">
+                        <div className="flex items-center gap-4">
                           <DoorOpen
                             aria-hidden="true"
-                            className="text-muted-foreground m-auto h-5 w-5"
+                            className="text-muted-foreground h-9 w-9 rounded border p-2"
                           />
-                        </Badge>
-                        <div className="flex flex-col gap-2">
-                          <div className="line-clamp-1 font-medium tracking-tight">
-                            {unit.name}
-                          </div>
-                          <div className="text-muted-foreground flex divide-x text-sm">
-                            <span className="flex items-center gap-2 font-medium pr-3.5">
-                              <Bed
-                                aria-hidden="true"
-                                className="bg-primary/10 text-primary h-6 w-6 shrink-0 rounded-full p-1.5"
-                              />
-                              {unit.bedrooms}
-                              <span className=" text-indigo-900">Bedrooms</span>
-                            </span>
-                            <span className="flex items-center gap-2 font-medium pl-3.5">
-                              <Bath
-                                aria-hidden="true"
-                                className="bg-primary/10 text-primary h-6 w-6 shrink-0 rounded-full p-1.5"
-                              />
-                              {unit.bathrooms}
-                              <span className=" text-indigo-900">
-                                Bathrooms
+                          <div className="flex flex-col gap-1">
+                            <div className="line-clamp-1 font-medium tracking-tight">
+                              {unit.name}
+                            </div>
+                            <div className="text-muted-foreground flex divide-x text-sm">
+                              <span className="flex items-center gap-2 pr-3.5">
+                                <Bed
+                                  aria-hidden="true"
+                                  className="bg-primary/10 text-primary h-6 w-6 shrink-0 rounded-full p-1.5"
+                                />
+                                {unit.bedrooms}
+                                <span className=" text-indigo-900">
+                                  Bedrooms
+                                </span>
                               </span>
-                            </span>
+                              <span className="flex items-center gap-2 pl-3.5 font-medium">
+                                <Bath
+                                  aria-hidden="true"
+                                  className="bg-primary/10 text-primary h-6 w-6 shrink-0 rounded-full p-1.5"
+                                />
+                                {unit.bathrooms}
+                                <span className=" font-normal  text-indigo-900">
+                                  Bathrooms
+                                </span>
+                              </span>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </TableCell>
-                    <TableCell className="hidden md:[display:revert]">
-                      <Badge
-                        variant={
-                          unit.Lease.length > 0 ? "default" : "destructive"
-                        }
-                        className="bg-opacity-10"
-                      >
-                        {unit.Lease.length > 0 ? "Occupied" : "Vacant"}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="hidden md:[display:revert]">
-                      <span className="w-full text-right font-semibold">
-                        R {unit.rent}
-                      </span>
-                    </TableCell>
-                    <TableCell className="hidden md:[display:revert]">
-                      <span className="font-semibold">{unit.deposit}</span>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center justify-end md:justify-start">
-                        <button>
-                          <span className="sr-only">Actions</span>
-                          <MoreVertical
-                            aria-hidden="true"
-                            className="text-muted-foreground h-5 w-5"
-                          />
-                        </button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
+                      </TableCell>
+                      <TableCell className="hidden md:[display:revert]">
+                        <Badge
+                          variant={
+                            unit.Lease.length > 0 ? "default" : "outline"
+                          }
+                        >
+                          {unit.Lease.length > 0 ? "Occupied" : "Vacant"}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="hidden md:[display:revert]">
+                        <span className="w-full text-right font-semibold">
+                          R {unit.rent}
+                        </span>
+                      </TableCell>
+                      <TableCell className="hidden md:[display:revert]">
+                        <span className="font-semibold">{unit.deposit}</span>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center justify-end md:justify-start">
+                          <UnitDropDown unit={unit} />
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  </>
                 ))}
+                <DeleteUnitModal />
               </TableBody>
             </Table>
           </div>

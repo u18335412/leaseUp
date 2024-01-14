@@ -1,6 +1,8 @@
+import { PageSubheading } from "@/components/page-heading";
 import { api } from "@/trpc/server";
-import { ChevronDown, Plus, Search, User } from "lucide-react";
+import { ChevronDown, MoreVertical, Plus, Search, User } from "lucide-react";
 import {
+  Badge,
   Button,
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -13,6 +15,12 @@ import {
   EmptyStateFooter,
   EmptyStateTitle,
   Input,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "ui";
 
 export default async function Tenants({ params }: { params: { id: string } }) {
@@ -23,12 +31,8 @@ export default async function Tenants({ params }: { params: { id: string } }) {
   return (
     <div>
       <div>
-        <h2 className="text-lg font-bold tracking-tight">
-          Tenants({tenants.length})
-        </h2>
-        <p className="text-muted-foreground">
-          View and manage all the tenants for this property.
-        </p>
+        <PageSubheading>Tenants({tenants.length})</PageSubheading>
+        <p>View and manage all the tenants for this property.</p>
       </div>
       {tenants.length > 0 ? (
         <>
@@ -53,7 +57,72 @@ export default async function Tenants({ params }: { params: { id: string } }) {
             </div>
           </div>
           <div>
-            <div></div>
+            <div className="mt-4">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    {(
+                      [
+                        "Name",
+                        "Phone number",
+                        "Lease Status",
+                        "Created At",
+                        "Actions",
+                      ] as const
+                    ).map((header) => (
+                      <TableHead key={header}>
+                        <span>{header}</span>
+                      </TableHead>
+                    ))}
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {tenants.map((tenant) => (
+                    <>
+                      <TableRow key={tenant.id}>
+                        <TableCell className="w-1/3 py-4">
+                          <div className="flex items-center gap-4">
+                            <User
+                              aria-hidden="true"
+                              className="text-muted-foreground h-9 w-9 rounded-full border p-2"
+                            />
+                            <div className="flex flex-col gap-1">
+                              <div className="line-clamp-1 font-medium tracking-tight">
+                                {tenant.firstName} {tenant.lastName}
+                              </div>
+                              <div className="text-muted-foreground flex divide-x text-sm">
+                                {tenant.email}
+                              </div>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell className="hidden md:[display:revert]">
+                          {tenant.phone}
+                        </TableCell>
+                        <TableCell className="hidden md:[display:revert]">
+                          <Badge variant="outline">No Active Lease(s)</Badge>
+                        </TableCell>
+                        <TableCell className="hidden md:[display:revert]">
+                          <span className="font-medium">
+                            {tenant.createdAt.toLocaleDateString()}
+                          </span>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center justify-end md:justify-start">
+                            <button>
+                              <MoreVertical
+                                className="text-muted-foreground h-5 w-5"
+                                aria-hidden="true"
+                              />
+                            </button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    </>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           </div>
         </>
       ) : (

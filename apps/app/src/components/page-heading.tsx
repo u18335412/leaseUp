@@ -40,7 +40,7 @@ function PageHeaderDescription({
   return (
     <p
       className={cn(
-        "mt-2 max-w-lg text-sm text-muted-foreground sm:text-base",
+        "text-muted-foreground mt-2 max-w-lg text-sm sm:text-base",
         className,
       )}
       {...props}
@@ -48,4 +48,19 @@ function PageHeaderDescription({
   );
 }
 
-export { PageHeader, PageHeaderHeading, PageHeaderDescription };
+function PageSubheading({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLParagraphElement>) {
+  return (
+    <h2
+      className={cn(
+        "text-sm font-medium tracking-tight md:text-base",
+        className,
+      )}
+      {...props}
+    />
+  );
+}
+
+export { PageHeader, PageHeaderHeading, PageHeaderDescription, PageSubheading };

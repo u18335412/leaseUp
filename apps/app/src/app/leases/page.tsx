@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/require-await -- Expected Server component */
 import type { NextPage } from "next";
-import { FileText } from "lucide-react";
-import {
-  EmptyState,
-  EmptyStateDescription,
-  EmptyStateFooter,
-  EmptyStateTitle,
-} from "ui";
 import {
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
 } from "@/components/page-heading";
-import { CreateUnit } from "@/components/create-unit/create-unit-modal";
+import { FileText, Plus } from "lucide-react";
+import {
+  Button,
+  EmptyState,
+  EmptyStateDescription,
+  EmptyStateFooter,
+  EmptyStateTitle,
+} from "ui";
 
 const Leases: NextPage = async () => {
   return (
@@ -25,7 +25,10 @@ const Leases: NextPage = async () => {
           </PageHeaderDescription>
         </div>
         <div>
-          <CreateUnit />
+          <Button>
+            <Plus aria-hidden="true" className="mr-2 h-4 w-4" />
+            Create Lease
+          </Button>
         </div>
       </PageHeader>
 
@@ -41,7 +44,10 @@ const Leases: NextPage = async () => {
             Create a lease to get started.
           </EmptyStateDescription>
           <EmptyStateFooter>
-            <CreateUnit />
+            <Button>
+              <Plus aria-hidden="true" className="mr-2 h-4 w-4" />
+              Create Lease
+            </Button>
           </EmptyStateFooter>
         </EmptyState>
       </div>

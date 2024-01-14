@@ -1,5 +1,5 @@
 import { api } from "@/trpc/server";
-import { ChevronDown, FileText, Plus, Search, User } from "lucide-react";
+import { ChevronDown, FileText, Plus, Search } from "lucide-react";
 import {
   Button,
   DropdownMenu,

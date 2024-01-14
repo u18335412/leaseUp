@@ -127,6 +127,7 @@ export const propertyRouter = createTRPCRouter({
           propertyId: input.propertyId,
         },
         select: {
+          propertyId: true,
           id: true,
           name: true,
           rent: true,
@@ -159,6 +160,7 @@ export const propertyRouter = createTRPCRouter({
             },
           },
         },
+        createdAt: true,
       },
     });
     return tenants;
@@ -214,6 +216,61 @@ export const propertyRouter = createTRPCRouter({
               Lease: true,
             },
           },
+        },
+      });
+    }),
+  createUnit: protectedProcedure
+    .input(
+      z.object({
+        propertyId: z.string().min(1, {
+          message: "property id is required",
+        }),
+        name: z.string().min(1, {
+          message: "unit name is required",
+        }),
+        rent: z.coerce.number().min(1, {
+          message: "rent is required",
+        }),
+        deposit: z.coerce.number().min(1, {
+          message: "deposit is required",
+        }),
+        bedrooms: z.coerce.number().min(1, {
+          message: "bedrooms is required",
+        }),
+        bathrooms: z.coerce.number().min(1, {
+          message: "bathrooms is required",
+        }),
+      }),
+    )
+    .mutation(
+      ({
+        ctx,
+        input: { name, bathrooms, bedrooms, propertyId, rent, deposit },
+      }) => {
+        return ctx.prisma.unit.create({
+          data: {
+            name,
+            bathrooms,
+            bedrooms,
+            propertyId,
+            rent,
+            deposit,
+          },
+        });
+      },
+    ),
+  deleteUnit: protectedProcedure
+    .input(
+      z.object({
+        unitId: z.string().min(1, {
+          message: "unit id is required.",
+        }),
+      }),
+    )
+    .mutation(({ ctx, input: { unitId } }) => {
+      return ctx.prisma.unit.delete({
+        where: {
+          id: unitId,
         },
       });
     }),

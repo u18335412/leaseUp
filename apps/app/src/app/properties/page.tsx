@@ -9,7 +9,7 @@ import {
 import { PropertyDropdown } from "@/components/properties/propertyDropdown";
 import { api } from "@/trpc/server";
 import { cn } from "lib";
-import { Home, ListFilter, MapPin, Plus, Search } from "lucide-react";
+import { Home, ListFilter, Plus, Search } from "lucide-react";
 import {
   Badge,
   Button,
@@ -97,15 +97,15 @@ const Properties: NextPage = async () => {
             <TableBody>
               {properties.map((property) => (
                 <TableRow key={property.id}>
-                  <TableCell className="w-3/4 py-5 md:w-2/4">
+                  <TableCell className="w-3/4 py-5 md:w-[45%]">
                     <div className="flex items-center gap-x-2">
                       <Badge
                         variant="outline"
-                        className="hidden h-12 w-12 md:flex"
+                        className="hidden h-9 w-9 md:flex"
                       >
                         <Home
                           aria-hidden="true"
-                          className="text-muted-foreground m-auto h-5 w-5"
+                          className="text-muted-foreground m-auto h-4 w-4"
                         />
                       </Badge>
                       <div className="flex flex-col gap-y-1">
@@ -116,10 +116,6 @@ const Properties: NextPage = async () => {
                           {property.name}
                         </Link>
                         <div className="flex items-center gap-1">
-                          <MapPin
-                            aria-hidden="true"
-                            className="text-primary/70 h-4 w-4 shrink-0"
-                          />
                           <span className="line-clamp-2 tracking-tight">
                             {property.street}, {property.city},{" "}
                             {property.province}, {property.country}.

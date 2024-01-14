@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { CreateNewTenant } from "@/components/create-tenant/create-tenant";
 import { PageSubheading } from "@/components/page-heading";
 import { api } from "@/trpc/server";
@@ -17,8 +16,9 @@ import {
   TableHeader,
   TableRow,
 } from "ui";
+import { NextPage } from "next";
 
-export const Tenants: FC = async () => {
+export const Tenants: NextPage = async () => {
   const tenants = await api.tenant.getAll.query();
   return (
     <div className="mt-6">

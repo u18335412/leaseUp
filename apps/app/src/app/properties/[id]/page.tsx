@@ -1,10 +1,10 @@
 "use client";
 
 import type { NextPage } from "next";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Archive, ArrowRight, DoorOpen, FileText, User2 } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "ui";
+import { PageSubheading } from "@/components/page-heading";
+import { Archive, DoorOpen, FileText, User2 } from "lucide-react";
+import { Card, CardDescription, CardHeader, CardTitle } from "ui";
 
 const mockData = [
   {
@@ -34,12 +34,11 @@ const mockData = [
 ] as const;
 
 const ViewProperty: NextPage = () => {
-  const path = usePathname();
   return (
     <div className="mt-6">
       <div>
-        <h2 className="text-lg font-bold tracking-tight">Overview</h2>
-        <p>View important number and details for this property.</p>
+        <PageSubheading>Overview</PageSubheading>
+        <p>View important numbers and details for this property.</p>
       </div>
 
       <div className="mt-8 flex max-w-5xl items-center gap-8">
@@ -47,24 +46,13 @@ const ViewProperty: NextPage = () => {
           <Card className="w-fit flex-1 border-none">
             <CardHeader className="items-center justify-between gap-4 space-y-0 md:flex-row">
               <div className="flex flex-col gap-2">
-                <CardTitle className="text-xl font-extrabold">
-                  {item.value}
-                </CardTitle>
+                <CardTitle className="text-xl">{item.value}</CardTitle>
                 <CardDescription>{item.label}</CardDescription>
               </div>
               <span className="border-primary/20 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border shadow">
                 <item.icon className="text-primary h-4 w-4" />
               </span>
             </CardHeader>
-            <CardContent className="-mt-2">
-              <Link
-                href={path + item.link}
-                className="group flex items-center text-sm underline"
-              >
-                View {item.label.split(" ")[1]}
-                <ArrowRight className="text-muted-foreground group ml-2 h-4 w-4 shrink-0 transition-all group-hover:translate-x-1" />
-              </Link>
-            </CardContent>
           </Card>
         ))}
       </div>

@@ -112,7 +112,7 @@ export const CreateNewTenant: FC = () => {
                   control={form.control}
                   name="email"
                   render={({ field }) => (
-                    <FormItem>
+                    <FormItem className=" col-span-4">
                       <FormLabel>Email</FormLabel>
                       <FormControl>
                         <Input placeholder="John@Hey.com" {...field} />
@@ -131,7 +131,7 @@ export const CreateNewTenant: FC = () => {
                         <Input placeholder="712356789" {...field} />
                       </FormControl>
                       <FormMessage />
-                      <FormDescription>9 digit phone number.</FormDescription>
+                      <FormDescription>10 digit phone number.</FormDescription>
                     </FormItem>
                   )}
                 />

@@ -51,7 +51,7 @@ export const ClientTabs = ({ id }: { id: string }) => {
                   className="text-muted-foreground mr-2 h-4 w-4 shrink-0"
                   aria-hidden="true"
                 />
-                <span className="text-xs">{item.name}</span>
+                <span className="">{item.name}</span>
               </Link>
             </TabsTrigger>
           ))}
