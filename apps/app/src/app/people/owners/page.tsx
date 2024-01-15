@@ -18,7 +18,7 @@ import {
   TableRow,
 } from "ui";
 
-export const Owners: NextPage = async () => {
+const Owners: NextPage = async () => {
   const tenants = await api.tenant.getAll.query();
   return (
     <div className="mt-6">
@@ -131,3 +131,5 @@ export const Owners: NextPage = async () => {
     </div>
   );
 };
+
+export default Owners;
