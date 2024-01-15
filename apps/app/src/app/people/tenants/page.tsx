@@ -18,7 +18,7 @@ import {
 } from "ui";
 import { NextPage } from "next";
 
-export const Tenants: NextPage = async () => {
+const Tenants: NextPage = async () => {
   const tenants = await api.tenant.getAll.query();
   return (
     <div className="mt-6">
@@ -131,3 +131,5 @@ export const Tenants: NextPage = async () => {
     </div>
   );
 };
+
+export default Tenants;
