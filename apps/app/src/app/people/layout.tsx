@@ -1,13 +1,11 @@
 import { FC } from "react";
-import type { NextPage } from "next";
-import { Tenants } from "./tenants";
 import {
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
 } from "@/components/page-heading";
 import { UserCheck, Users } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "ui";
+import { Tabs, TabsList, TabsTrigger } from "ui";
 
 const People: FC<{
   children: JSX.Element;

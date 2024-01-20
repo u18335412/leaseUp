@@ -5,10 +5,12 @@ import { UnitDropDown } from "@/components/properties/unit-dropdown";
 import { api } from "@/trpc/server";
 import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu";
 import { cn } from "lib";
-import { Bath, Bed, ChevronDown, DoorOpen, Search } from "lucide-react";
+import { Bath, Bed, ChevronDown, DoorOpen, Search, UserX } from "lucide-react";
 import {
   Badge,
   Button,
+  Card,
+  CardContent,
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
@@ -63,100 +65,112 @@ export default async function Units({ params }: { params: { id: string } }) {
               </div>
             </div>
           </div>
-          <div className="mt-4">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  {(
-                    ["Unit", "Status", "Rent", "Deposit", "Actions"] as const
-                  ).map((header) => (
-                    <TableHead
-                      key={header}
-                      className={cn(
-                        {
-                          "w-1/3": header === "Unit",
-                          "[&>*]:sr-only": header === "Actions",
-                          "hidden md:[display:revert]":
-                            header === "Status" ||
-                            header === "Rent" ||
-                            header === "Deposit",
-                        },
-                        "",
-                      )}
-                    >
-                      <span>{header}</span>
-                    </TableHead>
-                  ))}
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {units.map((unit) => (
-                  <>
-                    <TableRow key={unit.name}>
-                      <TableCell className="w-1/3 py-4">
-                        <div className="flex items-center gap-4">
-                          <DoorOpen
-                            aria-hidden="true"
-                            className="text-muted-foreground h-9 w-9 rounded border p-2"
-                          />
-                          <div className="flex flex-col gap-1">
-                            <div className="line-clamp-1 font-medium tracking-tight">
-                              {unit.name}
-                            </div>
-                            <div className="text-muted-foreground flex divide-x text-sm">
-                              <span className="flex items-center gap-2 pr-3.5">
-                                <Bed
-                                  aria-hidden="true"
-                                  className="bg-primary/10 text-primary h-6 w-6 shrink-0 rounded-full p-1.5"
-                                />
-                                {unit.bedrooms}
-                                <span className=" text-indigo-900">
-                                  Bedrooms
+          <Card className="mt-4">
+            <CardContent className="px-0 pb-0">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    {(
+                      ["Unit", "Status", "Rent", "Deposit", "Actions"] as const
+                    ).map((header) => (
+                      <TableHead
+                        key={header}
+                        className={cn(
+                          {
+                            "w-1/3": header === "Unit",
+                            "[&>*]:sr-only": header === "Actions",
+                            "hidden md:[display:revert]":
+                              header === "Status" ||
+                              header === "Rent" ||
+                              header === "Deposit",
+                          },
+                          "px-4 uppercase",
+                        )}
+                      >
+                        <span>{header}</span>
+                      </TableHead>
+                    ))}
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {units.map((unit) => (
+                    <>
+                      <TableRow key={unit.name}>
+                        <TableCell className="w-1/3 py-4 pl-4">
+                          <div className="flex items-center gap-4">
+                            <DoorOpen
+                              aria-hidden="true"
+                              className="text-muted-foreground h-9 w-9 rounded border p-2"
+                            />
+                            <div className="flex flex-col gap-1">
+                              <div className="line-clamp-1 font-medium tracking-tight">
+                                {unit.name}
+                              </div>
+                              <div className="text-muted-foreground flex divide-x text-sm">
+                                <span className="flex items-center gap-2 pr-3.5">
+                                  <Bed
+                                    aria-hidden="true"
+                                    className="bg-primary/10 text-primary h-6 w-6 shrink-0 rounded-full p-1.5"
+                                  />
+                                  {unit.bedrooms}
+                                  <span className=" text-indigo-900">
+                                    Bedrooms
+                                  </span>
                                 </span>
-                              </span>
-                              <span className="flex items-center gap-2 pl-3.5 font-medium">
-                                <Bath
-                                  aria-hidden="true"
-                                  className="bg-primary/10 text-primary h-6 w-6 shrink-0 rounded-full p-1.5"
-                                />
-                                {unit.bathrooms}
-                                <span className=" font-normal  text-indigo-900">
-                                  Bathrooms
+                                <span className="flex items-center gap-2 pl-3.5 font-medium">
+                                  <Bath
+                                    aria-hidden="true"
+                                    className="bg-primary/10 text-primary h-6 w-6 shrink-0 rounded-full p-1.5"
+                                  />
+                                  {unit.bathrooms}
+                                  <span className=" font-normal  text-indigo-900">
+                                    Bathrooms
+                                  </span>
                                 </span>
-                              </span>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden md:[display:revert]">
-                        <Badge
-                          variant={
-                            unit.Lease.length > 0 ? "default" : "outline"
-                          }
-                        >
-                          {unit.Lease.length > 0 ? "Occupied" : "Vacant"}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="hidden md:[display:revert]">
-                        <span className="w-full text-right font-semibold">
-                          R {unit.rent}
-                        </span>
-                      </TableCell>
-                      <TableCell className="hidden md:[display:revert]">
-                        <span className="font-semibold">{unit.deposit}</span>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center justify-end md:justify-start">
-                          <UnitDropDown unit={unit} />
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  </>
-                ))}
-                <DeleteUnitModal />
-              </TableBody>
-            </Table>
-          </div>
+                        </TableCell>
+                        <TableCell className="hidden md:[display:revert]">
+                          <Badge
+                            variant={
+                              unit.Lease.length > 0 ? "default" : "outline"
+                            }
+                          >
+                            {unit.Lease.length > 0 ? (
+                              "Occupied"
+                            ) : (
+                              <span className="flex items-center gap-2">
+                                <UserX
+                                  aria-hidden="true"
+                                  className="text-muted-foreground h-4 w-4"
+                                />
+                                Vacant
+                              </span>
+                            )}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="hidden md:[display:revert]">
+                          <span className="w-full text-right font-semibold">
+                            R {unit.rent}
+                          </span>
+                        </TableCell>
+                        <TableCell className="hidden md:[display:revert]">
+                          <span className="font-semibold">{unit.deposit}</span>
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center justify-end md:justify-start">
+                            <UnitDropDown unit={unit} />
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    </>
+                  ))}
+                  <DeleteUnitModal />
+                </TableBody>
+              </Table>
+            </CardContent>
+          </Card>
         </>
       ) : (
         <EmptyState>

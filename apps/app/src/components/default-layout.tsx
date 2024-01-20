@@ -60,7 +60,7 @@ const navigation = [
   {
     name: "People",
     icon: Users2,
-    href: "/people",
+    href: "/people/tenants",
   },
   {
     name: "Documents",

@@ -34,7 +34,7 @@ const entities = [
     name: "Person",
     icon: User,
     description: "A person is a tenant, owner, or a potential tenant or owner.",
-    href: "/people",
+    href: "/people/tenants",
   },
   {
     name: "Lease",

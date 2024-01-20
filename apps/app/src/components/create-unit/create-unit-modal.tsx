@@ -46,7 +46,7 @@ export function CreateUnit(): ReactNode {
     defaultValues: {},
   });
 
-  const propertyId: string = path.split("/")[2];
+  const propertyId: string = path?.split("/")[2] as string;
 
   const handleSubmit = (_data: z.infer<typeof createUnitSchema>) => {
     const data = _data;

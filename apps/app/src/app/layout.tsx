@@ -1,5 +1,3 @@
-"use clientD";
-
 import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
 import { headers } from "next/headers";
@@ -28,7 +26,7 @@ export default function RootLayout({
         <html lang="en">
           <body className={font.className}>
             <Layout>{children}</Layout>
-              <Toaster position="top-right" />
+            <Toaster position="top-right" />
           </body>
         </html>
       </TRPCReactProvider>
