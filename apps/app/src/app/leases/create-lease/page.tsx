@@ -3,13 +3,15 @@
 import { useState } from "react";
 import { NextPage } from "next";
 import { Breadcrumb } from "@/components/breadcrumb";
-import { createLeaseFormSchema } from "@/components/create-lease/constants";
-import { DepositStep } from "@/components/create-lease/deposit-step";
-import { FinalisStep } from "@/components/create-lease/finalize-step";
-import { OverviewStep } from "@/components/create-lease/overview-step";
-import { Progress } from "@/components/create-lease/progress";
-import { RentalStep } from "@/components/create-lease/rental-step";
-import { TenantsStep } from "@/components/create-lease/tenants-step";
+import {
+  DepositStep,
+  FinalisStep,
+  OverviewStep,
+  Progress,
+  RentalStep,
+  TenantsStep,
+  createLeaseFormSchema,
+} from "@/components/create-lease";
 import {
   Stepper,
   StepperNextStep,
