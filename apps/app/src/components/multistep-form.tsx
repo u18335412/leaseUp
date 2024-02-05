@@ -7,7 +7,7 @@ import { buttonVariants } from "ui";
 import { StoreApi, createStore } from "zustand";
 import { useStoreWithEqualityFn } from "zustand/traditional";
 
-interface MultiStepFormStore {
+interface StepperStore {
   totalSteps: number;
   currentStep: number;
   nextStep: () => void;
@@ -17,16 +17,16 @@ interface MultiStepFormStore {
   setCurrentStep: (step: number) => void;
 }
 
-const StoreContext = createContext<StoreApi<MultiStepFormStore> | null>(null);
+const StoreContext = createContext<StoreApi<StepperStore> | null>(null);
 
-const MultiStep: FC<
+const Stepper: FC<
   React.HTMLAttributes<HTMLDivElement> & {
     onStepChange: (step: number) => void;
   }
 > = ({ className, children, onStepChange, ...props }) => {
-  const storeRef = useRef<StoreApi<MultiStepFormStore>>();
+  const storeRef = useRef<StoreApi<StepperStore>>();
   if (!storeRef.current) {
-    storeRef.current = createStore<MultiStepFormStore>((set) => ({
+    storeRef.current = createStore<StepperStore>((set) => ({
       totalSteps: 0,
       currentStep: 0,
       nextStep: () =>
@@ -75,7 +75,7 @@ const useMultiStepForm = () => {
   return useStoreWithEqualityFn(store);
 };
 
-const MultiStepStep: FC<
+const StepperStep: FC<
   React.HTMLAttributes<HTMLDivElement> & {
     stepIndex: number;
   }
@@ -104,9 +104,12 @@ const MultiStepStep: FC<
     );
 };
 
-const MultiStepNext: FC<
-  React.ButtonHTMLAttributes<HTMLButtonElement>
-> = ({ className, children, type = "button", ...props }) => {
+const StepperNextStep: FC<React.ButtonHTMLAttributes<HTMLButtonElement>> = ({
+  className,
+  children,
+  type = "button",
+  ...props
+}) => {
   const { nextStep, currentStep, totalSteps } = useMultiStepForm();
   return (
     <button
@@ -121,7 +124,7 @@ const MultiStepNext: FC<
   );
 };
 
-const MultiStepPrevious: FC<
+const StepperPreviousStep: FC<
   React.ButtonHTMLAttributes<HTMLButtonElement>
 > = ({ className, children, ...props }) => {
   const { previousStep, currentStep } = useMultiStepForm();
@@ -143,7 +146,7 @@ const MultiStepPrevious: FC<
   );
 };
 
-const MultiStepStepTitle: FC<React.HTMLAttributes<HTMLHeadingElement>> = ({
+const StepperStepTitle: FC<React.HTMLAttributes<HTMLHeadingElement>> = ({
   className,
   children,
   ...props
@@ -159,7 +162,7 @@ const MultiStepStepTitle: FC<React.HTMLAttributes<HTMLHeadingElement>> = ({
   </h3>
 );
 
-const MultiStepStepDescription: FC<
+const StepperStepDescription: FC<
   React.HtmlHTMLAttributes<HTMLParagraphElement>
 > = ({ className, ...props }) => (
   <p
@@ -171,11 +174,18 @@ const MultiStepStepDescription: FC<
   />
 );
 
+const StepperStepContent: FC<
+  React.HtmlHTMLAttributes<HTMLParagraphElement>
+> = ({ className, ...props }) => (
+  <div className={cn("mt-4", className)} {...props} />
+);
+
 export {
-  MultiStep,
-  MultiStepStep,
-  MultiStepNext,
-  MultiStepPrevious,
-  MultiStepStepTitle,
-  MultiStepStepDescription,
+  Stepper,
+  StepperStep,
+  StepperNextStep,
+  StepperPreviousStep,
+  StepperStepTitle,
+  StepperStepDescription,
+  StepperStepContent,
 };

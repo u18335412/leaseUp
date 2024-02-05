@@ -1,5 +1,5 @@
-import { api } from "@/trpc/server";
-import { Archive, ChevronDown, Plus, Search, User } from "lucide-react";
+import { PageSubheading } from "@/components/page-heading";
+import { Archive, ChevronDown, Plus, Search } from "lucide-react";
 import {
   Button,
   DropdownMenu,
@@ -26,12 +26,10 @@ export default async function Documents({
   return (
     <div>
       <div>
-        <h2 className="text-lg font-bold tracking-tight">
+        <PageSubheading className="text-lg font-bold tracking-tight">
           Document({documents.length})
-        </h2>
-        <p className="text-muted-foreground">
-          View and manage all the documents for this property.
-        </p>
+        </PageSubheading>
+        <p>View and manage all the documents for this property.</p>
       </div>
       {documents.length > 0 ? (
         <>

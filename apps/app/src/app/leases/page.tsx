@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/require-await -- Expected Server component */
 import type { NextPage } from "next";
+import Link from "next/link";
 import {
   PageHeader,
   PageHeaderDescription,
@@ -12,6 +13,7 @@ import {
   EmptyStateDescription,
   EmptyStateFooter,
   EmptyStateTitle,
+  buttonVariants,
 } from "ui";
 
 const Leases: NextPage = async () => {
@@ -25,10 +27,10 @@ const Leases: NextPage = async () => {
           </PageHeaderDescription>
         </div>
         <div>
-          <Button>
+          <Link href="/leases/create-lease" className={buttonVariants({})}>
             <Plus aria-hidden="true" className="mr-2 h-4 w-4" />
             Create Lease
-          </Button>
+          </Link>
         </div>
       </PageHeader>
 
@@ -44,10 +46,10 @@ const Leases: NextPage = async () => {
             Create a lease to get started.
           </EmptyStateDescription>
           <EmptyStateFooter>
-            <Button>
+            <Link href="/leases/create-lease" className={buttonVariants({})}>
               <Plus aria-hidden="true" className="mr-2 h-4 w-4" />
               Create Lease
-            </Button>
+            </Link>
           </EmptyStateFooter>
         </EmptyState>
       </div>

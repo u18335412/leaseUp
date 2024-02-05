@@ -23,7 +23,7 @@ export const global = plugin(
         '--border': '220 13% 91%',
         '--input': '220 13% 91%',
         '--ring': '262.1 83.3% 57.8%',
-        '--radius': '0.5rem',
+        '--radius': '0.4rem',
       },
     });
 

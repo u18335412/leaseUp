@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { MultiStepStep, MultiStepStepTitle } from "../multistep-form";
+import { StepperStep, StepperStepTitle } from "../multistep-form";
 import type { createPropertyFormSchema } from "./constants";
 import { propertyDescriptions, propertyTypes } from "./constants";
 import { cn } from "lib";
@@ -20,8 +20,8 @@ export const PropertyTypeStep: FC<{
   form: UseFormReturn<z.infer<typeof createPropertyFormSchema>>;
 }> = ({ form }) => {
   return (
-    <MultiStepStep stepIndex={1}>
-      <MultiStepStepTitle>Property type & description</MultiStepStepTitle>
+    <StepperStep stepIndex={1}>
+      <StepperStepTitle>Property type & description</StepperStepTitle>
 
       <div className="mt-4">
         <p className="text-muted-foreground text-sm">
@@ -135,6 +135,6 @@ export const PropertyTypeStep: FC<{
           )}
         />
       </div>
-    </MultiStepStep>
+    </StepperStep>
   );
 };

@@ -26,31 +26,59 @@ export const propertyRouter = createTRPCRouter({
         },
       });
     }),
-  getAll: protectedProcedure.query(async ({ ctx }) => {
-    const userProperties = await ctx.prisma.property.findMany({
-      where: {
-        propertyOwnerId: ctx.auth.userId as string,
-      },
-      select: {
-        id: true,
-        name: true,
-        street: true,
-        city: true,
-        province: true,
-        zip: true,
-        country: true,
-        createdAt: true,
-        type: true,
-        description: true,
-        Unit: {
-          select: {
-            id: true,
+  getAll: protectedProcedure
+    .input(
+      z.object({
+        sort: z
+          .enum(["name", "type", "createdAt", "units", "created", "id"])
+          .optional()
+          .default("id"),
+        orderBy: z.enum(["asc", "desc"]).optional().default("asc"),
+        take: z.number().optional().default(10),
+        skip: z.number().optional().default(0),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const { orderBy, sort, take, skip } = input;
+
+      const userProperties = await ctx.prisma.property.findMany({
+        where: {
+          propertyOwnerId: ctx.auth.userId as string,
+        },
+        skip: skip,
+        take: take,
+        orderBy: {
+          [sort]: orderBy,
+        },
+        select: {
+          id: true,
+          name: true,
+          street: true,
+          city: true,
+          province: true,
+          zip: true,
+          country: true,
+          createdAt: true,
+          type: true,
+          description: true,
+          Unit: {
+            select: {
+              id: true,
+            },
           },
         },
-      },
-    });
-    return userProperties;
-  }),
+      });
+      return {
+        data: userProperties,
+        count: (
+          await ctx.prisma.property.findMany({
+            where: {
+              propertyOwnerId: ctx.auth.userId as string,
+            },
+          })
+        ).length,
+      };
+    }),
   post: protectedProcedure
     .input(
       z.object({

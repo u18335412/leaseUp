@@ -50,11 +50,17 @@ export const tenantRouter = createTRPCRouter({
   post: protectedProcedure
     .input(
       z.object({
+        avatar: z.any().optional().default(null),
+        title: z.enum(["Mr", "Ms", "Dr", "Mrs", "Other"]),
         firstName: z.string().min(1, {
           message: "First name is required",
         }),
         lastName: z.string().min(1, {
           message: "Last name is required",
+        }),
+        dob: z.date(),
+        occupation: z.string().min(1, {
+          message: "Occupation is required",
         }),
         email: z.string().optional(),
         phone: z.string().min(1, {
@@ -63,9 +69,11 @@ export const tenantRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const { firstName, lastName, email, phone } = input;
+      const { firstName, lastName, email, phone, avatar } = input;
+      console.log("user avatar", avatar);
       return await ctx.prisma.tenant.create({
         data: {
+          // avatar: avatar,
           firstName: firstName,
           lastName: lastName,
           email: email,

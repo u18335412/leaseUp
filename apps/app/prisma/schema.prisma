@@ -68,6 +68,8 @@ model Tenant {
   phone       String
   avatar      String?
   idNumber    String?
+  occupation  String?
+  dob         DateTime?
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @default(now()) @updatedAt
   landlordId  String

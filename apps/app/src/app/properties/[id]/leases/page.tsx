@@ -1,3 +1,4 @@
+import { PageSubheading } from "@/components/page-heading";
 import { api } from "@/trpc/server";
 import { ChevronDown, FileText, Plus, Search } from "lucide-react";
 import {
@@ -23,12 +24,10 @@ export default async function Leases({ params }: { params: { id: string } }) {
   return (
     <div>
       <div>
-        <h2 className="text-lg font-bold tracking-tight">
+        <PageSubheading className="text-lg font-bold tracking-tight">
           Leases({tenants.length})
-        </h2>
-        <p className="text-muted-foreground">
-          View and manage all the tenants for this property.
-        </p>
+        </PageSubheading>
+        <p>View and manage all the tenants for this property.</p>
       </div>
       {tenants.length > 0 ? (
         <>

@@ -1,3 +1,4 @@
+import dynamic from "next/dynamic";
 import { CreateUnit } from "@/components/create-unit/create-unit-modal";
 import { PageSubheading } from "@/components/page-heading";
 import { DeleteUnitModal } from "@/components/properties/delete-unit-modal ";
@@ -5,7 +6,15 @@ import { UnitDropDown } from "@/components/properties/unit-dropdown";
 import { api } from "@/trpc/server";
 import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu";
 import { cn } from "lib";
-import { Bath, Bed, ChevronDown, DoorOpen, Search, UserX } from "lucide-react";
+import {
+  ArrowUpDown,
+  Bath,
+  Bed,
+  DoorOpen,
+  Filter,
+  Search,
+  UserX,
+} from "lucide-react";
 import {
   Badge,
   Button,
@@ -22,6 +31,20 @@ import {
   EmptyStateFooter,
   EmptyStateTitle,
   Input,
+  Label,
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
   Table,
   TableBody,
   TableCell,
@@ -29,6 +52,23 @@ import {
   TableHeader,
   TableRow,
 } from "ui";
+
+// const DynamicCreateUnit = dynamic(() =>
+//   import("@/components/create-unit/create-unit-modal").then(
+//     (mod) => mod.CreateUnit,
+//   ),
+// );
+
+const sortOptions = [
+  "Unit Name Asc",
+  "Unit Name Desc",
+  "Status Asc",
+  "Status Desc",
+  "Rent Asc",
+  "Rent Desc",
+  "Deposit Asc",
+  "Deposit Desc",
+] as const;
 
 export default async function Units({ params }: { params: { id: string } }) {
   const units = await api.property.getUnits.query({
@@ -61,14 +101,39 @@ export default async function Units({ params }: { params: { id: string } }) {
               </div>
               <div className="flex w-full items-center justify-between gap-x-4 md:w-fit md:justify-start">
                 <DropdownMenuCheckboxes />
+                <div>
+                  <Label htmlFor="sort-by" className="sr-only">
+                    Sort by
+                  </Label>
+                  <Select>
+                    <SelectTrigger className="w-[180px]">
+                      <div className="flex items-center">
+                        <ArrowUpDown
+                          aria-hidden="true"
+                          className="text-muted-foreground mr-2 h-4 w-4"
+                        />
+                        <SelectValue placeholder="Sort by" />
+                      </div>
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {sortOptions.map((item) => (
+                          <SelectItem value={item} key={item}>
+                            {item}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </div>
                 <CreateUnit />
               </div>
             </div>
           </div>
-          <Card className="mt-4">
+          <Card className="mt-6 rounded-md">
             <CardContent className="px-0 pb-0">
               <Table>
-                <TableHeader>
+                <TableHeader className="bg-secondary text-secondary-foreground">
                   <TableRow>
                     {(
                       ["Unit", "Status", "Rent", "Deposit", "Actions"] as const
@@ -84,7 +149,7 @@ export default async function Units({ params }: { params: { id: string } }) {
                               header === "Rent" ||
                               header === "Deposit",
                           },
-                          "px-4 uppercase",
+                          "h-fit py-1 tracking-tight first:pl-4 last:pr-4",
                         )}
                       >
                         <span>{header}</span>
@@ -94,83 +159,107 @@ export default async function Units({ params }: { params: { id: string } }) {
                 </TableHeader>
                 <TableBody>
                   {units.map((unit) => (
-                    <>
-                      <TableRow key={unit.name}>
-                        <TableCell className="w-1/3 py-4 pl-4">
-                          <div className="flex items-center gap-4">
-                            <DoorOpen
-                              aria-hidden="true"
-                              className="text-muted-foreground h-9 w-9 rounded border p-2"
-                            />
-                            <div className="flex flex-col gap-1">
-                              <div className="line-clamp-1 font-medium tracking-tight">
-                                {unit.name}
-                              </div>
-                              <div className="text-muted-foreground flex divide-x text-sm">
-                                <span className="flex items-center gap-2 pr-3.5">
-                                  <Bed
-                                    aria-hidden="true"
-                                    className="bg-primary/10 text-primary h-6 w-6 shrink-0 rounded-full p-1.5"
-                                  />
-                                  {unit.bedrooms}
-                                  <span className=" text-indigo-900">
-                                    Bedrooms
-                                  </span>
+                    <TableRow key={unit.name}>
+                      <TableCell className="w-1/3 py-5 pl-4">
+                        <div className="flex items-center gap-4">
+                          <DoorOpen
+                            aria-hidden="true"
+                            className="text-muted-foreground h-9 w-9 rounded border p-2"
+                          />
+                          <div className="flex flex-col gap-1">
+                            <div className="line-clamp-1 font-medium tracking-tight">
+                              {unit.name}
+                            </div>
+                            <div className="text-muted-foreground flex divide-x text-sm">
+                              <span className="flex items-center gap-2 pr-3.5">
+                                <Bed
+                                  aria-hidden="true"
+                                  className="bg-primary/10 text-primary h-6 w-6 shrink-0 rounded-full p-1.5"
+                                />
+                                {unit.bedrooms}
+                                <span className=" text-indigo-900">
+                                  Bedrooms
                                 </span>
-                                <span className="flex items-center gap-2 pl-3.5 font-medium">
-                                  <Bath
-                                    aria-hidden="true"
-                                    className="bg-primary/10 text-primary h-6 w-6 shrink-0 rounded-full p-1.5"
-                                  />
-                                  {unit.bathrooms}
-                                  <span className=" font-normal  text-indigo-900">
-                                    Bathrooms
-                                  </span>
+                              </span>
+                              <span className="flex items-center gap-2 pl-3.5 font-medium">
+                                <Bath
+                                  aria-hidden="true"
+                                  className="bg-primary/10 text-primary h-6 w-6 shrink-0 rounded-full p-1.5"
+                                />
+                                {unit.bathrooms}
+                                <span className=" font-normal  text-indigo-900">
+                                  Bathrooms
                                 </span>
-                              </div>
+                              </span>
                             </div>
                           </div>
-                        </TableCell>
-                        <TableCell className="hidden md:[display:revert]">
-                          <Badge
-                            variant={
-                              unit.Lease.length > 0 ? "default" : "outline"
-                            }
-                          >
-                            {unit.Lease.length > 0 ? (
-                              "Occupied"
-                            ) : (
-                              <span className="flex items-center gap-2">
-                                <UserX
-                                  aria-hidden="true"
-                                  className="text-muted-foreground h-4 w-4"
-                                />
-                                Vacant
-                              </span>
-                            )}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="hidden md:[display:revert]">
-                          <span className="w-full text-right font-semibold">
-                            R {unit.rent}
-                          </span>
-                        </TableCell>
-                        <TableCell className="hidden md:[display:revert]">
-                          <span className="font-semibold">{unit.deposit}</span>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center justify-end md:justify-start">
-                            <UnitDropDown unit={unit} />
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    </>
+                        </div>
+                      </TableCell>
+                      <TableCell className="hidden md:[display:revert]">
+                        <Badge
+                          variant={
+                            unit.Lease.length > 0 ? "default" : "outline"
+                          }
+                        >
+                          {unit.Lease.length > 0 ? (
+                            "Occupied"
+                          ) : (
+                            <span className="flex items-center gap-2">
+                              <UserX
+                                aria-hidden="true"
+                                className="text-muted-foreground h-4 w-4"
+                              />
+                              Vacant
+                            </span>
+                          )}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="hidden md:[display:revert]">
+                        <span className="w-full text-right font-semibold">
+                          R {unit.rent}
+                        </span>
+                      </TableCell>
+                      <TableCell className="hidden md:[display:revert]">
+                        <span className="font-semibold">{unit.deposit}</span>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center justify-end md:justify-start">
+                          <UnitDropDown unit={unit} />
+                        </div>
+                      </TableCell>
+                    </TableRow>
                   ))}
                   <DeleteUnitModal />
                 </TableBody>
               </Table>
             </CardContent>
           </Card>
+          <div className="mt-4 flex justify-end">
+            <Pagination className="mx-0 w-fit">
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious href="#" />
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationLink href="#">1</PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationLink href="#" isActive>
+                    2
+                  </PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationLink href="#">3</PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationEllipsis />
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationNext href="#" />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
         </>
       ) : (
         <EmptyState>
@@ -200,11 +289,11 @@ function DropdownMenuCheckboxes() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline">
-          Filters
-          <ChevronDown
+          <Filter
             aria-hidden="true"
-            className="text-muted-foreground ml-2 h-4 w-4"
+            className="text-muted-foreground mr-2 h-4 w-4"
           />
+          Filters
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">

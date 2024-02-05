@@ -1,8 +1,8 @@
 import type { FC } from "react";
 import {
-  MultiStepStep,
-  MultiStepStepDescription,
-  MultiStepStepTitle,
+  StepperStep,
+  StepperStepDescription,
+  StepperStepTitle,
 } from "../multistep-form";
 import { unitFields, type createPropertyFormSchema } from "./constants";
 import { PlusIcon, X } from "lucide-react";
@@ -28,11 +28,11 @@ export const PropertyUnitsStep: FC<{
   });
 
   return (
-    <MultiStepStep stepIndex={3}>
-      <MultiStepStepTitle>Property Units</MultiStepStepTitle>
-      <MultiStepStepDescription>
+    <StepperStep stepIndex={3}>
+      <StepperStepTitle>Property Units</StepperStepTitle>
+      <StepperStepDescription>
         Lets fill in the property units.
-      </MultiStepStepDescription>
+      </StepperStepDescription>
       <ul className="mt-4">
         <div className="divide-y">
           {fields.map((item, fieldsIndex) => (
@@ -94,6 +94,6 @@ export const PropertyUnitsStep: FC<{
           </div>
         </div>
       </ul>
-    </MultiStepStep>
+    </StepperStep>
   );
 };

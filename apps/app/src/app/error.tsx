@@ -10,7 +10,6 @@ import {
   EmptyStateDescription,
   EmptyStateFooter,
   EmptyStatePrimaryAction,
-  EmptyStateSecondaryAction,
   EmptyStateTitle,
   buttonVariants,
 } from "ui";

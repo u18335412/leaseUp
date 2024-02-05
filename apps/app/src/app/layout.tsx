@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Rubik } from "next/font/google";
+import { Jost } from "next/font/google";
 import { headers } from "next/headers";
 import "../styles/globals.css";
 import { Layout } from "@/components/default-layout";
@@ -7,7 +7,7 @@ import { TRPCReactProvider } from "@/trpc/react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "react-hot-toast";
 
-const font = Rubik({ subsets: ["latin"] });
+const font = Jost({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "LeaseUp",

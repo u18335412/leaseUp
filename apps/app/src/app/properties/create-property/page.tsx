@@ -13,9 +13,9 @@ import {
 import { PropertyOwnershipStep } from "@/components/create-property/property-ownership-step";
 import { PropertyUnitsStep } from "@/components/create-property/property-units-step";
 import {
-  MultiStep,
-  MultiStepNext,
-  MultiStepPrevious,
+  Stepper,
+  StepperNextStep,
+  StepperPreviousStep,
 } from "@/components/multistep-form";
 import {
   PageHeader,
@@ -115,7 +115,7 @@ const CreateProperty: NextPage = () => {
         <div className="w-full max-w-xl">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <MultiStep
+              <Stepper
                 className="w-full"
                 onStepChange={(currentStep) => {
                   setCurrentStep(currentStep);
@@ -126,10 +126,10 @@ const CreateProperty: NextPage = () => {
                 <PropertyUnitsStep form={form} />
                 <PropertyOwnershipStep form={form} />
                 <div className="mt-8 flex w-full justify-between">
-                  <MultiStepPrevious className="flex gap-x-2">
+                  <StepperPreviousStep className="flex gap-x-2">
                     <ArrowLeft aria-hidden="true" className="h-4 w-4" />
                     Back
-                  </MultiStepPrevious>
+                  </StepperPreviousStep>
                   {currentStep === 3 ? (
                     <Button
                       type="submit"
@@ -139,13 +139,13 @@ const CreateProperty: NextPage = () => {
                       <Save aria-hidden="true" className="ml-2 h-4 w-4" />
                     </Button>
                   ) : (
-                    <MultiStepNext className="flex gap-x-2">
+                    <StepperNextStep className="flex gap-x-2">
                       Next
                       <ArrowRight aria-hidden="true" className="h-4 w-4" />
-                    </MultiStepNext>
+                    </StepperNextStep>
                   )}
                 </div>
-              </MultiStep>
+              </Stepper>
             </form>
           </Form>
         </div>
