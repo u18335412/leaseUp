@@ -70,7 +70,10 @@ export default async function Tenants({ params }: { params: { id: string } }) {
                         "Actions",
                       ] as const
                     ).map((header) => (
-                      <TableHead key={header}>
+                      <TableHead
+                        key={header}
+                        className="bg-secondary text-secondary-foreground h-fit px-1 py-2 tracking-tight first:pl-4 last:pr-4"
+                      >
                         <span>{header}</span>
                       </TableHead>
                     ))}

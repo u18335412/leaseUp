@@ -80,6 +80,29 @@ export const tenantRouter = createTRPCRouter({
           phone: phone,
           landlordId: ctx.auth.userId as string,
         },
+        select: {
+          id: true,
+        },
+      });
+    }),
+  deleteTenant: protectedProcedure
+    .input(
+      z.object({
+        tenantId: z.string().min(1, {
+          message: "tenant id is required",
+        }),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { tenantId } = input;
+      return await ctx.prisma.tenant.delete({
+        where: {
+          id: tenantId,
+          landlordId: ctx.auth.userId as string,
+        },
+        select: {
+          id: true,
+        },
       });
     }),
 });

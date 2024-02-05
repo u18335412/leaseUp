@@ -1,8 +1,11 @@
 import { NextPage } from "next";
 import { CreateNewTenant } from "@/components/create-tenant/create-tenant";
 import { PageSubheading } from "@/components/page-heading";
+import { DeleteTenant } from "@/components/people/tenants/delete-tenant";
+import { TenantDropdown } from "@/components/people/tenants/tenant-dropdown";
 import { api } from "@/trpc/server";
-import { MoreVertical, Search, User, User2 } from "lucide-react";
+import { cn } from "lib";
+import { Search, User, User2 } from "lucide-react";
 import {
   Badge,
   EmptyState,
@@ -22,6 +25,7 @@ const Tenants: NextPage = async () => {
   const tenants = await api.tenant.getAll.query();
   return (
     <div className="mt-6">
+      <DeleteTenant />
       <div>
         <PageSubheading>Tenants({tenants.length})</PageSubheading>
         <p>View and manage all the tenants in your business.</p>
@@ -60,7 +64,13 @@ const Tenants: NextPage = async () => {
                     "Actions",
                   ] as const
                 ).map((header) => (
-                  <TableHead key={header}>
+                  <TableHead
+                    key={header}
+                    className={cn(
+                      "bg-secondary text-secondary-foreground h-fit px-1 py-2 tracking-tight first:pl-4 last:pr-4",
+                      header === "Actions" && "[&>*]:sr-only",
+                    )}
+                  >
                     <span>{header}</span>
                   </TableHead>
                 ))}
@@ -95,14 +105,12 @@ const Tenants: NextPage = async () => {
                     {tenant.createdAt.toLocaleDateString()}
                   </TableCell>
                   <TableCell>
-                    <div className="flex items-center md:justify-center">
-                      <button>
-                        <MoreVertical
-                          className="text-muted-foreground h-5 w-5"
-                          aria-hidden="true"
-                        />
-                      </button>
-                    </div>
+                    <TenantDropdown
+                      tenant={{
+                        tenantId: tenant.id,
+                        fullName: `${tenant.firstName} ${tenant.lastName}`,
+                      }}
+                    />
                   </TableCell>
                 </TableRow>
               ))}

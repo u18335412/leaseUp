@@ -34,7 +34,7 @@ export const propertyRouter = createTRPCRouter({
           .optional()
           .default("id"),
         orderBy: z.enum(["asc", "desc"]).optional().default("asc"),
-        take: z.number().optional().default(10),
+        take: z.number().optional().default(5),
         skip: z.number().optional().default(0),
       }),
     )

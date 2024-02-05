@@ -82,84 +82,80 @@ const Properties: NextPage = async () => {
 
       {properties.data.length > 0 ? (
         <>
-          <Card className="mt-6">
-            <CardContent className="px-0 pb-0">
-              <Table>
-                <TableHeader className="bg-secondary text-secondary-foreground">
-                  <TableRow>
-                    {(
-                      ["Name", "Type", "Units", "Created", "Actions"] as const
-                    ).map((header) => (
-                      <TableHead
-                        key={header}
-                        className={cn(
-                          {
-                            "[&>*]:sr-only": header === "Actions",
-                            "hidden md:[display:revert]":
-                              header === "Type" ||
-                              header === "Units" ||
-                              header === "Created",
-                          },
-                          "h-fit px-0 py-1 tracking-tight first:pl-4 last:pr-4",
-                        )}
+          <Table className="mt-4">
+            <TableHeader className="bg-secondary text-secondary-foreground">
+              <TableRow>
+                {(["Name", "Type", "Units", "Created", "Actions"] as const).map(
+                  (header) => (
+                    <TableHead
+                      key={header}
+                      className={cn(
+                        {
+                          "[&>*]:sr-only": header === "Actions",
+                          "hidden md:[display:revert]":
+                            header === "Type" ||
+                            header === "Units" ||
+                            header === "Created",
+                        },
+                        "h-fit px-1 py-2 tracking-tight first:pl-4 last:pr-4",
+                      )}
+                    >
+                      <span>{header}</span>
+                    </TableHead>
+                  ),
+                )}
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {properties.data.map((property) => (
+                <TableRow key={property.id}>
+                  <TableCell className="w-3/4 py-5 pl-4 md:w-[45%]">
+                    <div className="flex items-center gap-x-2">
+                      <Badge
+                        variant="outline"
+                        className="hidden h-9 w-9 md:flex"
                       >
-                        <span>{header}</span>
-                      </TableHead>
-                    ))}
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {properties.data.map((property) => (
-                    <TableRow key={property.id}>
-                      <TableCell className="w-3/4 py-5 pl-4 md:w-[45%]">
-                        <div className="flex items-center gap-x-2">
-                          <Badge
-                            variant="outline"
-                            className="hidden h-9 w-9 md:flex"
-                          >
-                            <Home
-                              aria-hidden="true"
-                              className="text-muted-foreground m-auto h-4 w-4"
-                            />
-                          </Badge>
-                          <div className="flex flex-col gap-y-1">
-                            <Link
-                              href={`/properties/${property.id}/`}
-                              className="line-clamp-1 font-medium tracking-tight"
-                            >
-                              {property.name}
-                            </Link>
-                            <div className="flex items-center gap-1">
-                              <span className="line-clamp-2 tracking-tight">
-                                {property.street}, {property.city},{" "}
-                                {property.province}, {property.country}.
-                              </span>
-                            </div>
-                          </div>
+                        <Home
+                          aria-hidden="true"
+                          className="text-muted-foreground m-auto h-4 w-4"
+                        />
+                      </Badge>
+                      <div className="flex flex-col gap-y-1">
+                        <Link
+                          href={`/properties/${property.id}/`}
+                          className="line-clamp-1 font-medium tracking-tight"
+                        >
+                          {property.name}
+                        </Link>
+                        <div className="flex items-center gap-1">
+                          <span className="line-clamp-2 tracking-tight">
+                            {property.street}, {property.city},{" "}
+                            {property.province}, {property.country}.
+                          </span>
                         </div>
-                      </TableCell>
-                      <TableCell className="hidden md:[display:revert]">
-                        <span className="capitalize">
-                          {property.description.toString().toLocaleLowerCase()}
-                        </span>
-                      </TableCell>
-                      <TableCell className="hidden md:[display:revert]">
-                        {property.Unit.length}
-                      </TableCell>
-                      <TableCell className="hidden md:[display:revert]">
-                        2 Months ago
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex justify-end md:justify-start">
-                          <PropertyDropdown propertyId={property.id} />
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell className="hidden md:[display:revert]">
+                    <span className="capitalize">
+                      {property.description.toString().toLocaleLowerCase()}
+                    </span>
+                  </TableCell>
+                  <TableCell className="hidden md:[display:revert]">
+                    {property.Unit.length}
+                  </TableCell>
+                  <TableCell className="hidden md:[display:revert]">
+                    2 Months ago
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex justify-end md:justify-start">
+                      <PropertyDropdown propertyId={property.id} />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
           <div className="mt-4 flex items-baseline justify-between">
             <p className="text-muted-foreground text-sm">
               Showing 1 to 10 of {properties.count} results
