@@ -4,10 +4,9 @@ import {
   StepperStepDescription,
   StepperStepTitle,
 } from "../multistep-form";
-import { AddNewTenantDialog } from "./add-tenat";
+import { AddNewTenantDialog } from "./add-tenant";
 import { createLeaseFormSchema } from "./constants";
 import { UseFormReturn } from "react-hook-form";
-import { EmptyState, EmptyStatePrimaryAction, EmptyStateTitle } from "ui";
 import * as z from "zod";
 
 export const TenantsStep: React.FC<{
