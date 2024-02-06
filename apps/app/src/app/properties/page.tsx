@@ -43,7 +43,7 @@ import {
 } from "ui";
 
 const Properties: NextPage = async () => {
-  const properties = await api.property.getAll.useQuery({});
+  const properties = api.property.getAll.useQuery({});
 
   return (
     <div>
