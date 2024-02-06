@@ -9,7 +9,7 @@ import {
   PageHeaderHeading,
 } from "@/components/page-heading";
 import { PropertyDropdown } from "@/components/properties/propertyDropdown";
-import { api } from "@/trpc/server";
+import { api } from "@/trpc/react";
 import { cn } from "lib";
 import { Home, ListFilter, Plus, Search } from "lucide-react";
 import {
@@ -43,7 +43,7 @@ import {
 } from "ui";
 
 const Properties: NextPage = async () => {
-  const properties = await api.property.getAll.query({});
+  const properties = await api.property.getAll.useQuery({});
 
   return (
     <div>
@@ -80,7 +80,7 @@ const Properties: NextPage = async () => {
         </div>
       </div>
 
-      {properties?.data?.length > 0 ? (
+      {properties?.data?.data && properties?.data?.data.length > 0 ? (
         <>
           <Table className="mt-4">
             <TableHeader className="bg-secondary text-secondary-foreground">
@@ -107,58 +107,59 @@ const Properties: NextPage = async () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {properties.data.map((property) => (
-                <TableRow key={property.id}>
-                  <TableCell className="w-3/4 py-5 pl-4 md:w-[45%]">
-                    <div className="flex items-center gap-x-2">
-                      <Badge
-                        variant="outline"
-                        className="hidden h-9 w-9 md:flex"
-                      >
-                        <Home
-                          aria-hidden="true"
-                          className="text-muted-foreground m-auto h-4 w-4"
-                        />
-                      </Badge>
-                      <div className="flex flex-col gap-y-1">
-                        <Link
-                          href={`/properties/${property.id}/`}
-                          className="line-clamp-1 font-medium tracking-tight"
+              {properties.data &&
+                properties?.data?.data.map((property) => (
+                  <TableRow key={property.id}>
+                    <TableCell className="w-3/4 py-5 pl-4 md:w-[45%]">
+                      <div className="flex items-center gap-x-2">
+                        <Badge
+                          variant="outline"
+                          className="hidden h-9 w-9 md:flex"
                         >
-                          {property.name}
-                        </Link>
-                        <div className="flex items-center gap-1">
-                          <span className="line-clamp-2 tracking-tight">
-                            {property.street}, {property.city},{" "}
-                            {property.province}, {property.country}.
-                          </span>
+                          <Home
+                            aria-hidden="true"
+                            className="text-muted-foreground m-auto h-4 w-4"
+                          />
+                        </Badge>
+                        <div className="flex flex-col gap-y-1">
+                          <Link
+                            href={`/properties/${property.id}/`}
+                            className="line-clamp-1 font-medium tracking-tight"
+                          >
+                            {property.name}
+                          </Link>
+                          <div className="flex items-center gap-1">
+                            <span className="line-clamp-2 tracking-tight">
+                              {property.street}, {property.city},{" "}
+                              {property.province}, {property.country}.
+                            </span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </TableCell>
-                  <TableCell className="hidden md:[display:revert]">
-                    <span className="capitalize">
-                      {property.description.toString().toLocaleLowerCase()}
-                    </span>
-                  </TableCell>
-                  <TableCell className="hidden md:[display:revert]">
-                    {property.Unit.length}
-                  </TableCell>
-                  <TableCell className="hidden md:[display:revert]">
-                    2 Months ago
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex justify-end md:justify-start">
-                      <PropertyDropdown propertyId={property.id} />
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
+                    </TableCell>
+                    <TableCell className="hidden md:[display:revert]">
+                      <span className="capitalize">
+                        {property.description.toString().toLocaleLowerCase()}
+                      </span>
+                    </TableCell>
+                    <TableCell className="hidden md:[display:revert]">
+                      {property.Unit.length}
+                    </TableCell>
+                    <TableCell className="hidden md:[display:revert]">
+                      2 Months ago
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex justify-end md:justify-start">
+                        <PropertyDropdown propertyId={property.id} />
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
           </Table>
           <div className="mt-4 flex items-baseline justify-between">
             <p className="text-muted-foreground text-sm">
-              Showing 1 to 10 of {properties.count} results
+              Showing 1 to 10 of {properties.data.count} results
             </p>
             <Pagination className="mx-0 w-fit">
               <PaginationContent>
