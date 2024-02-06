@@ -1,5 +1,5 @@
 import { PageSubheading } from "@/components/page-heading";
-import { api } from "@/trpc/server";
+import { api } from "@/trpc/react";
 import { ChevronDown, MoreVertical, Plus, Search, User } from "lucide-react";
 import {
   Badge,
@@ -23,21 +23,21 @@ import {
   TableRow,
 } from "ui";
 
-export default async function Tenants({ params }: { params: { id: string } }) {
-  const tenants = await api.property.getTenants.query({
+export default function Tenants({ params }: { params: { id: string } }) {
+  const tenants = api.property.getTenants.useQuery({
     propertyId: params.id,
   });
 
   return (
     <div>
       <div>
-        <PageSubheading>Tenants({tenants.length})</PageSubheading>
+        <PageSubheading>Tenants({tenants.data?.length})</PageSubheading>
         <p>
           View and manage all the tenants with leases associated with this
           property.
         </p>
       </div>
-      {tenants.length > 0 ? (
+      {tenants.data && tenants.data?.length > 0 ? (
         <>
           <div className="mt-4 flex items-center justify-between">
             <div className="relative w-96">
@@ -83,48 +83,46 @@ export default async function Tenants({ params }: { params: { id: string } }) {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {tenants.map((tenant) => (
-                    <>
-                      <TableRow key={tenant.id}>
-                        <TableCell className="w-1/3 py-4">
-                          <div className="flex items-center gap-4">
-                            <User
-                              aria-hidden="true"
-                              className="text-muted-foreground h-9 w-9 rounded-full border p-2"
-                            />
-                            <div className="flex flex-col gap-1">
-                              <div className="line-clamp-1 font-medium tracking-tight">
-                                {tenant.firstName} {tenant.lastName}
-                              </div>
-                              <div className="text-muted-foreground flex divide-x text-sm">
-                                {tenant.email}
-                              </div>
+                  {tenants.data?.map((tenant) => (
+                    <TableRow key={tenant.id}>
+                      <TableCell className="w-1/3 py-4">
+                        <div className="flex items-center gap-4">
+                          <User
+                            aria-hidden="true"
+                            className="text-muted-foreground h-9 w-9 rounded-full border p-2"
+                          />
+                          <div className="flex flex-col gap-1">
+                            <div className="line-clamp-1 font-medium tracking-tight">
+                              {tenant.firstName} {tenant.lastName}
+                            </div>
+                            <div className="text-muted-foreground flex divide-x text-sm">
+                              {tenant.email}
                             </div>
                           </div>
-                        </TableCell>
-                        <TableCell className="hidden md:[display:revert]">
-                          {tenant.phone}
-                        </TableCell>
-                        <TableCell className="hidden md:[display:revert]">
-                          <Badge variant="outline">No Active Lease(s)</Badge>
-                        </TableCell>
-                        <TableCell className="hidden md:[display:revert]">
-                          <span className="font-medium">
-                            {tenant.createdAt.toLocaleDateString()}
-                          </span>
-                        </TableCell>
-                        <TableCell>
-                          <div className="flex items-center justify-end md:justify-start">
-                            <button>
-                              <MoreVertical
-                                className="text-muted-foreground h-5 w-5"
-                                aria-hidden="true"
-                              />
-                            </button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    </>
+                        </div>
+                      </TableCell>
+                      <TableCell className="hidden md:[display:revert]">
+                        {tenant.phone}
+                      </TableCell>
+                      <TableCell className="hidden md:[display:revert]">
+                        <Badge variant="outline">No Active Lease(s)</Badge>
+                      </TableCell>
+                      <TableCell className="hidden md:[display:revert]">
+                        <span className="font-medium">
+                          {tenant.createdAt.toLocaleDateString()}
+                        </span>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center justify-end md:justify-start">
+                          <button>
+                            <MoreVertical
+                              className="text-muted-foreground h-5 w-5"
+                              aria-hidden="true"
+                            />
+                          </button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
                   ))}
                 </TableBody>
               </Table>

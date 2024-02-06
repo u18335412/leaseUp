@@ -3,7 +3,7 @@ import { CreateUnit } from "@/components/create-unit/create-unit-modal";
 import { PageSubheading } from "@/components/page-heading";
 import { DeleteUnitModal } from "@/components/properties/delete-unit-modal ";
 import { UnitDropDown } from "@/components/properties/unit-dropdown";
-import { api } from "@/trpc/server";
+import { api } from "@/trpc/react";
 import { DropdownMenuCheckboxItemProps } from "@radix-ui/react-dropdown-menu";
 import { cn } from "lib";
 import {
@@ -18,8 +18,6 @@ import {
 import {
   Badge,
   Button,
-  Card,
-  CardContent,
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
@@ -70,21 +68,21 @@ const sortOptions = [
   "Deposit Desc",
 ] as const;
 
-export default async function Units({ params }: { params: { id: string } }) {
-  const units = await api.property.getUnits.query({
+export default function Units({ params }: { params: { id: string } }) {
+  const units = api.property.getUnits.useQuery({
     propertyId: params.id,
   });
 
   return (
     <div>
       <div>
-        <PageSubheading>Units({units.length})</PageSubheading>
+        <PageSubheading>Units({units.data?.length})</PageSubheading>
         <p>
           View and manage all the units for this property. You can also add new
           units.
         </p>
       </div>
-      {units.length > 0 ? (
+      {units.data && units.data?.length > 0 ? (
         <>
           <div className="mt-4 flex w-full flex-wrap items-center justify-between gap-2">
             <div className="mt-4 flex w-full items-center justify-between gap-x-4">
@@ -156,7 +154,7 @@ export default async function Units({ params }: { params: { id: string } }) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {units.map((unit) => (
+              {units.data?.map((unit) => (
                 <TableRow key={unit.name}>
                   <TableCell className="w-1/3 py-5 pl-4">
                     <div className="flex items-center gap-4">
@@ -228,7 +226,7 @@ export default async function Units({ params }: { params: { id: string } }) {
           </Table>
           <div className="mt-4 flex items-baseline justify-between">
             <p className="text-muted-foreground text-sm">
-              Showing 1 to 10 of {units.length} results
+              Showing 1 to 5 of {units.data.length} results
             </p>
             <Pagination className="mx-0 w-fit">
               <PaginationContent>

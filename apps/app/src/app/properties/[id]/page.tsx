@@ -1,7 +1,6 @@
 "use client";
 
 import type { NextPage } from "next";
-import { usePathname } from "next/navigation";
 import { PageSubheading } from "@/components/page-heading";
 import { Archive, DoorOpen, FileText, User2 } from "lucide-react";
 import { Card, CardDescription, CardHeader, CardTitle } from "ui";

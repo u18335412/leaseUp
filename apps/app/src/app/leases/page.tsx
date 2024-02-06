@@ -1,3 +1,5 @@
+"use client";
+
 /* eslint-disable @typescript-eslint/require-await -- Expected Server component */
 import type { NextPage } from "next";
 import Link from "next/link";
@@ -8,7 +10,6 @@ import {
 } from "@/components/page-heading";
 import { FileText, Plus } from "lucide-react";
 import {
-  Button,
   EmptyState,
   EmptyStateDescription,
   EmptyStateFooter,
@@ -16,7 +17,7 @@ import {
   buttonVariants,
 } from "ui";
 
-const Leases: NextPage = async () => {
+const Leases: NextPage = () => {
   return (
     <div>
       <PageHeader className="flex max-w-none flex-row items-center justify-between">

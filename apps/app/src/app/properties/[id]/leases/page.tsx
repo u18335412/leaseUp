@@ -1,5 +1,5 @@
 import { PageSubheading } from "@/components/page-heading";
-import { api } from "@/trpc/server";
+import { api } from "@/trpc/react";
 import { ChevronDown, FileText, Plus, Search } from "lucide-react";
 import {
   Button,
@@ -16,8 +16,8 @@ import {
   Input,
 } from "ui";
 
-export default async function Leases({ params }: { params: { id: string } }) {
-  const tenants = await api.property.getLeases.query({
+export default function Leases({ params }: { params: { id: string } }) {
+  const tenants = api.property.getLeases.useQuery({
     propertyId: params.id,
   });
 
@@ -25,11 +25,11 @@ export default async function Leases({ params }: { params: { id: string } }) {
     <div>
       <div>
         <PageSubheading className="text-lg font-bold tracking-tight">
-          Leases({tenants.length})
+          Leases({tenants.data?.length})
         </PageSubheading>
         <p>View and manage all the tenants for this property.</p>
       </div>
-      {tenants.length > 0 ? (
+      {tenants.data && tenants.data?.length > 0 ? (
         <>
           <div className="mt-4 flex items-center justify-between">
             <div className="relative w-96">

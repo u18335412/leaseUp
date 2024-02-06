@@ -3,7 +3,7 @@ import { CreateNewTenant } from "@/components/create-tenant/create-tenant";
 import { PageSubheading } from "@/components/page-heading";
 import { DeleteTenant } from "@/components/people/tenants/delete-tenant";
 import { TenantDropdown } from "@/components/people/tenants/tenant-dropdown";
-import { api } from "@/trpc/server";
+import { api } from "@/trpc/react";
 import { cn } from "lib";
 import { Search, User, User2 } from "lucide-react";
 import {
@@ -21,13 +21,13 @@ import {
   TableRow,
 } from "ui";
 
-const Tenants: NextPage = async () => {
-  const tenants = await api.tenant.getAll.query();
+const Tenants: NextPage = () => {
+  const tenants = api.tenant.getAll.useQuery();
   return (
     <div className="mt-6">
       <DeleteTenant />
       <div>
-        <PageSubheading>Tenants({tenants.length})</PageSubheading>
+        <PageSubheading>Tenants({tenants.data?.length})</PageSubheading>
         <p>View and manage all the tenants in your business.</p>
       </div>
 
@@ -51,7 +51,7 @@ const Tenants: NextPage = async () => {
       </div>
 
       <div className="mt-6">
-        {tenants.length !== 0 ? (
+        {tenants.data?.length !== 0 ? (
           <Table>
             <TableHeader>
               <TableRow>
@@ -77,7 +77,7 @@ const Tenants: NextPage = async () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {tenants?.map((tenant) => (
+              {tenants?.data?.map((tenant) => (
                 <TableRow key={tenant.id}>
                   <TableCell className="w-1/3 py-4">
                     <div className="flex items-center gap-4">

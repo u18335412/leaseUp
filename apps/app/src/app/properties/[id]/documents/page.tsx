@@ -15,11 +15,7 @@ import {
   Input,
 } from "ui";
 
-export default async function Documents({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default function Documents({ params }: { params: { id: string } }) {
   const documents = {
     length: 0,
   };
