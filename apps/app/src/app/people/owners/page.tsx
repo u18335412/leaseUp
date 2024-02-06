@@ -1,8 +1,6 @@
-import { NextPage } from "next";
-import { CreateNewTenant } from "@/components/create-tenant/create-tenant";
-import { PageSubheading } from "@/components/page-heading";
+"use client";
 
-("use client");
+import { NextPage } from "next";
 
 const Owners: NextPage = () => {
   return <div className="mt-6">Owners</div>;

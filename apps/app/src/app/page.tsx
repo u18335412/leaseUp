@@ -48,18 +48,14 @@ export default async function Index() {
       </PageHeader>
 
       <div className=" mt-6">
-        <p className="text-lg font-bold tracking-tight">
-          Welcome to the leaseUp
-        </p>
+        <p className="text-lg font-bold tracking-tight">Getting Started</p>
         <p className=" mt-2 max-w-5xl">
-          leaseUp is a property management application that helps you manage
-          your properties, tenants, and leases all in one place. Get started by
-          creating a new property, unit, person, or lease.
+          Create something new or view and manage existing entities.
         </p>
       </div>
 
       <div className="mt-6">
-        <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:gap-4 lg:grid-cols-4 lg:gap-12">
           {entities.map((entity, index) => (
             <Link href={entity.href} className="group">
               <Card
