@@ -77,7 +77,7 @@ const Tenants: NextPage = async () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {tenants.map((tenant) => (
+              {tenants?.map((tenant) => (
                 <TableRow key={tenant.id}>
                   <TableCell className="w-1/3 py-4">
                     <div className="flex items-center gap-4">

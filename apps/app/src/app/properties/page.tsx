@@ -13,8 +13,6 @@ import { Home, ListFilter, Plus, Search } from "lucide-react";
 import {
   Badge,
   Button,
-  Card,
-  CardContent,
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
@@ -80,7 +78,7 @@ const Properties: NextPage = async () => {
         </div>
       </div>
 
-      {properties.data.length > 0 ? (
+      {properties?.data?.length > 0 ? (
         <>
           <Table className="mt-4">
             <TableHeader className="bg-secondary text-secondary-foreground">
