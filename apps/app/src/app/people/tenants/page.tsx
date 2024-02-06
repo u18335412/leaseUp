@@ -7,7 +7,7 @@ import { DeleteTenant } from "@/components/people/tenants/delete-tenant";
 import { TenantDropdown } from "@/components/people/tenants/tenant-dropdown";
 import { api } from "@/trpc/react";
 import { cn } from "lib";
-import { Search, User, User2 } from "lucide-react";
+import { Loader2, Search, User, User2 } from "lucide-react";
 import {
   Badge,
   EmptyState,
@@ -25,8 +25,9 @@ import {
 
 const Tenants: NextPage = () => {
   const tenants = api.tenant.getAll.useQuery();
+
   return (
-    <div className="mt-6">
+    <div className="mt-6 w-full">
       <DeleteTenant />
       <div>
         <PageSubheading>Tenants({tenants.data?.length})</PageSubheading>
@@ -53,87 +54,95 @@ const Tenants: NextPage = () => {
       </div>
 
       <div className="mt-6">
-        {tenants.data && tenants.data?.length !== 0 ? (
-          <Table>
-            <TableHeader>
-              <TableRow>
-                {(
-                  [
-                    "Name",
-                    "Phone number",
-                    "Lease Status",
-                    "Created At",
-                    "Actions",
-                  ] as const
-                ).map((header) => (
-                  <TableHead
-                    key={header}
-                    className={cn(
-                      "bg-secondary text-secondary-foreground h-fit px-1 py-2 tracking-tight first:pl-4 last:pr-4",
-                      header === "Actions" && "[&>*]:sr-only",
-                    )}
-                  >
-                    <span>{header}</span>
-                  </TableHead>
-                ))}
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {tenants?.data?.map((tenant) => (
-                <TableRow key={tenant.id}>
-                  <TableCell className="w-1/3 py-4">
-                    <div className="flex items-center gap-4">
-                      <User
-                        aria-hidden="true"
-                        className="text-muted-foreground h-9 w-9 rounded-full border p-2"
-                      />
-                      <div className="flex flex-col gap-1">
-                        <div className="line-clamp-1 font-medium tracking-tight">
-                          {tenant.firstName} {tenant.lastName}
-                        </div>
-                        <div className="text-muted-foreground flex divide-x text-sm">
-                          {tenant.email}
-                        </div>
-                      </div>
-                    </div>
-                  </TableCell>
-                  <TableCell className="hidden md:[display:revert]">
-                    {tenant.phone}
-                  </TableCell>
-                  <TableCell className="hidden md:[display:revert]">
-                    <Badge variant="outline">No Active Lease(s)</Badge>
-                  </TableCell>
-                  <TableCell className="hidden md:[display:revert]">
-                    {tenant.createdAt.toLocaleDateString()}
-                  </TableCell>
-                  <TableCell>
-                    <TenantDropdown
-                      tenant={{
-                        tenantId: tenant.id,
-                        fullName: `${tenant.firstName} ${tenant.lastName}`,
-                      }}
-                    />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+        {tenants.isLoading ? (
+          <div className="flex h-96 items-center justify-center">
+            <Loader2 className="h-5 w-5 animate-spin text-black" />
+          </div>
         ) : (
-          <EmptyState>
-            <div className="mx-auto rounded-full border p-2">
-              <User2
-                className="text-muted-foreground h-5 w-5"
-                aria-hidden="true"
-              />
-            </div>
-            <EmptyStateTitle>No Tenants</EmptyStateTitle>
-            <EmptyStateDescription>
-              You don't have any tenants yet. Create one to get started.
-            </EmptyStateDescription>
-            <EmptyStateFooter>
-              <CreateNewTenant />
-            </EmptyStateFooter>
-          </EmptyState>
+          <>
+            {tenants.data && tenants.data?.length !== 0 ? (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    {(
+                      [
+                        "Name",
+                        "Phone number",
+                        "Lease Status",
+                        "Created At",
+                        "Actions",
+                      ] as const
+                    ).map((header) => (
+                      <TableHead
+                        key={header}
+                        className={cn(
+                          "bg-secondary text-secondary-foreground h-fit px-1 py-2 tracking-tight first:pl-4 last:pr-4",
+                          header === "Actions" && "[&>*]:sr-only",
+                        )}
+                      >
+                        <span>{header}</span>
+                      </TableHead>
+                    ))}
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {tenants?.data?.map((tenant) => (
+                    <TableRow key={tenant.id}>
+                      <TableCell className="w-1/3 py-4">
+                        <div className="flex items-center gap-4">
+                          <User
+                            aria-hidden="true"
+                            className="text-muted-foreground h-9 w-9 rounded-full border p-2"
+                          />
+                          <div className="flex flex-col gap-1">
+                            <div className="line-clamp-1 font-medium tracking-tight">
+                              {tenant.firstName} {tenant.lastName}
+                            </div>
+                            <div className="text-muted-foreground flex divide-x text-sm">
+                              {tenant.email}
+                            </div>
+                          </div>
+                        </div>
+                      </TableCell>
+                      <TableCell className="hidden md:[display:revert]">
+                        {tenant.phone}
+                      </TableCell>
+                      <TableCell className="hidden md:[display:revert]">
+                        <Badge variant="outline">No Active Lease(s)</Badge>
+                      </TableCell>
+                      <TableCell className="hidden md:[display:revert]">
+                        {tenant.createdAt.toLocaleDateString()}
+                      </TableCell>
+                      <TableCell>
+                        <TenantDropdown
+                          tenant={{
+                            tenantId: tenant.id,
+                            fullName: `${tenant.firstName} ${tenant.lastName}`,
+                          }}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            ) : (
+              <EmptyState>
+                <div className="mx-auto rounded-full border p-2">
+                  <User2
+                    className="text-muted-foreground h-5 w-5"
+                    aria-hidden="true"
+                  />
+                </div>
+                <EmptyStateTitle>No Tenants</EmptyStateTitle>
+                <EmptyStateDescription>
+                  You don't have any tenants yet. Create one to get started.
+                </EmptyStateDescription>
+                <EmptyStateFooter>
+                  <CreateNewTenant />
+                </EmptyStateFooter>
+              </EmptyState>
+            )}
+          </>
         )}
       </div>
     </div>

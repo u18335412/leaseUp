@@ -1,9 +1,9 @@
 "use client";
 
 import { FC, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import { api } from "@/trpc/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { cn } from "lib";
 import { Plus, CalendarIcon, User, X } from "lucide-react";
@@ -266,14 +266,14 @@ export const CreateNewTenant: FC = () => {
     defaultValues: {},
   });
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const router = useRouter();
+  const queryClient = useQueryClient();
 
   const onSubmit = (data: z.infer<typeof NewTenantFormSchema>) => {
     newTenantMutation.mutate(data, {
       onSuccess: () => {
         toast.success("Tenant created successfully.");
         form.reset({});
-        router.refresh();
+        queryClient.invalidateQueries();
         closeButtonRef.current?.click();
       },
       onError: () => {
