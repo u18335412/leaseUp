@@ -42,7 +42,7 @@ import {
   buttonVariants,
 } from "ui";
 
-const Properties: NextPage = async () => {
+const Properties: NextPage = () => {
   const properties = api.property.getAll.useQuery({});
 
   return (
