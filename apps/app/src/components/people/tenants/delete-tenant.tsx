@@ -3,7 +3,6 @@
 import { FC } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { api } from "@/trpc/react";
-import { useToaster } from "react-hot-toast";
 import toast from "react-hot-toast";
 import {
   AlertDialog,
@@ -35,6 +34,9 @@ export const DeleteTenant: FC = () => {
           router.push(path);
           toast.success("Tenant deleted successfully");
           router.refresh();
+        },
+        onError: () => {
+          toast.error("Failed to delete tenant, please try again later.");
         },
       },
     );

@@ -32,7 +32,10 @@ export default async function Tenants({ params }: { params: { id: string } }) {
     <div>
       <div>
         <PageSubheading>Tenants({tenants.length})</PageSubheading>
-        <p>View and manage all the tenants for this property.</p>
+        <p>
+          View and manage all the tenants with leases associated with this
+          property.
+        </p>
       </div>
       {tenants.length > 0 ? (
         <>
@@ -138,7 +141,7 @@ export default async function Tenants({ params }: { params: { id: string } }) {
           </div>
           <EmptyStateTitle>No Tenants</EmptyStateTitle>
           <EmptyStateDescription>
-            There are no tenants for this property.
+            There are no tenants with leases associated with this property.
           </EmptyStateDescription>
           <EmptyStateFooter>
             <Button>

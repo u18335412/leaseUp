@@ -208,13 +208,13 @@ export default async function Units({ params }: { params: { id: string } }) {
                       )}
                     </Badge>
                   </TableCell>
-                  <TableCell className="hidden italic md:[display:revert]">
+                  <TableCell className="hidden italic tabular-nums md:[display:revert]">
                     <span className="w-full text-right">
-                      R {unit.rent.toFixed(2)}
+                      ZAR {unit.rent.toFixed(2)}
                     </span>
                   </TableCell>
-                  <TableCell className="hidden italic md:[display:revert]">
-                    <span>{unit.deposit.toFixed(2)}</span>
+                  <TableCell className="hidden italic tabular-nums md:[display:revert]">
+                    <span>ZAR {unit.deposit.toFixed(2)}</span>
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center justify-end md:justify-start">

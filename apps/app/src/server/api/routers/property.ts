@@ -170,29 +170,50 @@ export const propertyRouter = createTRPCRouter({
         },
       });
     }),
-  getTenants: protectedProcedure.input(z.object({})).query(async ({ ctx }) => {
-    const tenants = await ctx.prisma.tenant.findMany({
-      where: {},
-      select: {
-        id: true,
-        firstName: true,
-        lastName: true,
-        email: true,
-        phone: true,
-        LeaseTenant: {
-          select: {
-            Lease: {
-              select: {
-                id: true,
+  getTenants: protectedProcedure
+    .input(
+      z.object({
+        propertyId: z.string().min(1, {
+          message: "property id is required",
+        }),
+      }),
+    )
+    .query(async ({ ctx }) => {
+      const tenants = await ctx.prisma.tenant.findMany({
+        where: {
+          landlordId: ctx.auth.userId as string,
+          LeaseTenant: {
+            some: {
+              Lease: {
+                Unit: {
+                  every: {
+                    propertyId: ctx.auth.userId as string,
+                  },
+                },
               },
             },
           },
         },
-        createdAt: true,
-      },
-    });
-    return tenants;
-  }),
+        select: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          email: true,
+          phone: true,
+          LeaseTenant: {
+            select: {
+              Lease: {
+                select: {
+                  id: true,
+                },
+              },
+            },
+          },
+          createdAt: true,
+        },
+      });
+      return tenants;
+    }),
   getLeases: protectedProcedure
     .input(
       z.object({
