@@ -1,3 +1,5 @@
+"use client";
+
 import { NextPage } from "next";
 import { CreateNewTenant } from "@/components/create-tenant/create-tenant";
 import { PageSubheading } from "@/components/page-heading";
@@ -51,7 +53,7 @@ const Tenants: NextPage = () => {
       </div>
 
       <div className="mt-6">
-        {tenants.data?.length !== 0 ? (
+        {tenants.data && tenants.data?.length !== 0 ? (
           <Table>
             <TableHeader>
               <TableRow>
