@@ -1,3 +1,5 @@
+"use client";
+
 /* eslint-disable @typescript-eslint/require-await -- Expected this a a server component */
 import type { NextPage } from "next";
 import Link from "next/link";
