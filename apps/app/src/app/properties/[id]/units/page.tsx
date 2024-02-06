@@ -1,3 +1,5 @@
+"use client";
+
 import dynamic from "next/dynamic";
 import { CreateUnit } from "@/components/create-unit/create-unit-modal";
 import { PageSubheading } from "@/components/page-heading";
