@@ -1,10 +1,14 @@
+"use client";
+
+import { Skeleton } from "ui";
 import { Breadcrumb } from "../breadcrumb";
 import {
   PageHeaderHeading,
   PageHeaderDescription,
   PageHeader,
 } from "../page-heading";
-import { api } from "@/trpc/server";
+import { api } from "@/trpc/react";
+import { Loader2 } from "lucide-react";
 
 const propertyAddress = ({
   street,
@@ -18,10 +22,24 @@ const propertyAddress = ({
   country: string;
 }) => `${street}, ${city}, ${province}, ${country}.`;
 
-export const LayoutHeader = async ({ id }: { id: string }) => {
-  const property = await api.property.getById.query({
+export const LayoutHeader = ({ id }: { id: string }) => {
+  const property = api.property.getById.useQuery({
     propertyId: id,
   });
+
+  if (property.isLoading) {
+    return (
+      <PageHeader>
+        <PageHeaderHeading>
+          <Skeleton className="h-7 w-32" />
+        </PageHeaderHeading>
+        <PageHeaderDescription>
+          <Skeleton className="h-6 w-64" />
+        </PageHeaderDescription>
+      </PageHeader>
+    );
+  }
+
   return (
     <div>
       <div>
@@ -34,7 +52,7 @@ export const LayoutHeader = async ({ id }: { id: string }) => {
             },
             {
               href: `/properties/${id}`,
-              name: property.name,
+              name: property.data?.name as string,
               current: true,
             },
           ]}
@@ -42,14 +60,14 @@ export const LayoutHeader = async ({ id }: { id: string }) => {
       </div>
       <PageHeader>
         <PageHeaderHeading className="md:text-lg">
-          {property?.name}
+          {property.data?.name}
         </PageHeaderHeading>
         <PageHeaderDescription>
           {propertyAddress({
-            street: property?.street as string,
-            city: property?.city as string,
-            province: property?.province as string,
-            country: property?.country as string,
+            street: property.data?.street as string,
+            city: property.data?.city as string,
+            province: property.data?.province as string,
+            country: property.data?.country as string,
           })}
         </PageHeaderDescription>
       </PageHeader>
