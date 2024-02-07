@@ -1,3 +1,5 @@
+"use client";
+
 import { PageSubheading } from "@/components/page-heading";
 import { Archive, ChevronDown, Plus, Search } from "lucide-react";
 import {

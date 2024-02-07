@@ -1,3 +1,5 @@
+"use client";
+
 import { PageSubheading } from "@/components/page-heading";
 import { api } from "@/trpc/react";
 import { ChevronDown, MoreVertical, Plus, Search, User } from "lucide-react";
