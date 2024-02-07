@@ -55,12 +55,12 @@ export default async function Index() {
       </div>
 
       <div className="mt-6">
-        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 md:gap-4 lg:grid-cols-4 lg:gap-12">
+        <div className="mt-4 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-12">
           {entities.map((entity, index) => (
             <Link href={entity.href} className="group">
               <Card
                 key={index}
-                className="group-hover:bg-primary text-white transition-colors"
+                className="group-hover:bg-primary h-full text-white transition-colors"
               >
                 <CardHeader>
                   <entity.icon
